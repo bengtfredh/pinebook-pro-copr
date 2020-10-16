@@ -13,5 +13,8 @@ SPEC location | Role | Status | Package build location
 [uboot-pinebookpro/](uboot-pinebookpro/) | U-Boot Pinebook Pro | [![U-Boot Pinebook Pro build status](https://copr.fedorainfracloud.org/coprs/aptupdate/pinebook-pro/package/uboot-pinebookpro/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/aptupdate/pinebook-pro/package/uboot-pinebookpro/) | [U-Boot Pinebook Pro Package](https://copr.fedorainfracloud.org/coprs/aptupdate/pinebook-pro/package/uboot-pinebookpro/)
 [pinebookpro-suspend/](pinebookpro-suspend/) | Pinebookpro Suspend Package | [![Pinebookpro Suspend status](https://copr.fedorainfracloud.org/coprs/aptupdate/pinebook-pro/package/pinebookpro-suspend/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/aptupdate/pinebook-pro/package/pinebookpro-suspend/) | [Pinebookpro Suspend Package](https://copr.fedorainfracloud.org/coprs/aptupdate/pinebook-pro/package/pinebookpro-suspend/)
 
+## Quick Enable
+$ `dnf copr enable aptupdate/pinebook-pro`
+
 ## Credits
 https://github.com/e-minguez
