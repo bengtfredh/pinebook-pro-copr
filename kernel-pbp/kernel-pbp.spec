@@ -54,17 +54,24 @@ patch -Np1 -i "%{srcdir}/0005-drm-sun4i-Mark-one-of-the-UI-planes-as-a-cursor-on
 patch -Np1 -i "%{srcdir}/0006-drm-sun4i-drm-Recover-from-occasional-HW-failures.patch"                #Hardware cursor
 patch -Np1 -i "%{srcdir}/0007-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth on PineTab and PinePhone
 
-cat ${RPM_SOURCE_DIR}/config ${RPM_BUILD_DIR}/.config
+cat ${RPM_SOURCE_DIR}/config ${RPM_BUILD_DIR}/%{name}-%{linuxrel}/.config
 
 %build
-cd ${RPM_BUILD_DIR}
+cd ${RPM_BUILD_DIR}/%{name}-%{linuxrel}
 unset LDFLAGS
 make ${MAKEFLAGS} Image Image.gz modules
 make ${MAKEFLAGS} DTC_FLAGS="-@" dtbs
 
 %install
+cd ${RPM_BUILD_DIR}/%{name}-%{linuxrel}
+mkdir -p %{buildroot}/{boot,usr/lib/modules}
+make INSTALL_MOD_PATH=%{buildroot}/usr modules_install
+make INSTALL_DTBS_PATH=%{buildroot}/boot/dtbs dtbs_install
+cp arch/$KARCH/boot/Image{,.gz} %{buildroot}/boot
 
 %files
+/boot/
+/usr/lib/modules/
 
 %post
 #dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease}-pbp
