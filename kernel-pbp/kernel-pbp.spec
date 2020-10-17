@@ -7,7 +7,7 @@
 %define release %{sourcerelease}%{?dist}
 
 Summary: AArch64 multi-platform
-Name: linux-pbp
+Name: kernel-pbp
 Version: %{version}
 Release: %{release}
 License: GPL2
