@@ -5,6 +5,7 @@
 %define version 5.8.14
 %define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
+%define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
 
 Summary: AArch64 multi-platform
 Name: kernel-pbp
@@ -23,9 +24,35 @@ Patch0: https://cdn.kernel.org/pub/linux/kernel/v5.x/patch-%{version}.xz
 Vanilla kernel patched for Pinebook Pro.
 
 %prep
+git clone https://gitlab.manjaro.org/manjaro-arm/packages/core/linux.git %{srcdir}
+cd %{srcdir}
+git checkout 4e603f4e710b1820e506e54a95c2e0a68b4765c3
 %setup -c
 cd linux-%{linuxrel}
-%patch -P 0 -p1
+%patch -P 0 -s -p1
+
+# ALARM patches
+patch -Np1 -i "%{srcdir}/0001-net-smsc95xx-Allow-mac-address-to-be-set-as-a-parame.patch"             #All
+
+# Manjaro ARM Patches
+patch -Np1 -i "%{srcdir}/0007-pbp-support.patch"                                                      #Pinebook Pro
+patch -Np1 -i "%{srcdir}/0009-drm-bridge-analogix_dp-Add-enable_psr-param.patch"                      #Pinebook Pro
+patch -Np1 -i "%{srcdir}/0017-mmc-core-Add-MMC-Command-Queue-Support-kernel-parame.patch"             #All
+patch -Np1 -i "%{srcdir}/0019-revert-fbcon-remove-now-unusued-softback_lines-cursor-argument.patch"   #All
+patch -Np1 -i "%{srcdir}/0020-revert-fbcon-remove-soft-scrollback-code.patch"                         #All
+patch -Np1 -i "%{srcdir}/0020-nuumio-panfrost-Silence-Panfrost-gem-shrinker-loggin.patch"             #Panfrost
+patch -Np1 -i "%{srcdir}/0021-pwm-rockchip-Keep-enabled-PWMs-running-while-probing.patch"				#Rockchip
+
+# Pinebook patches
+patch -Np1 -i "%{srcdir}/0001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch"            #Bluetooth
+patch -Np1 -i "%{srcdir}/0002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch"                    #Bluetooth
+patch -Np1 -i "%{srcdir}/0003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch"                 #Bluetooth
+patch -Np1 -i "%{srcdir}/0004-drm-sun8i-ui-vi-Fix-layer-zpos-change-atomic-modesetting.patch"         #Hardware cursor
+patch -Np1 -i "%{srcdir}/0005-drm-sun4i-Mark-one-of-the-UI-planes-as-a-cursor-one.patch"              #Hardware cursor
+patch -Np1 -i "%{srcdir}/0006-drm-sun4i-drm-Recover-from-occasional-HW-failures.patch"                #Hardware cursor
+patch -Np1 -i "%{srcdir}/0007-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth on PineTab and PinePhone
+
+
 
 %build
 
