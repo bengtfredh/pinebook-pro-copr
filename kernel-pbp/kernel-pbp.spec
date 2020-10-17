@@ -14,7 +14,7 @@ Release: %{release}
 License: GPL2
 URL: https://git.kernel.org/
 ExclusiveArch: aarch64
-BuildRequires: git-core
+BuildRequires: git-core @development-tools
 Source0: https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-%{linuxrel}.tar.xz
 Source1: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/test/kernel-pbp/config
 Patch0: https://cdn.kernel.org/pub/linux/kernel/v5.x/patch-%{version}.xz
