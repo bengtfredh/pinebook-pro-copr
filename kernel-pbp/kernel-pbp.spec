@@ -28,6 +28,8 @@ Vanilla kernel patched for Pinebook Pro.
 git clone https://gitlab.manjaro.org/manjaro-arm/packages/core/linux.git %{srcdir}
 cd %{srcdir}
 git checkout 4e603f4e710b1820e506e54a95c2e0a68b4765c3
+cd ${RPM_SOURCE_DIR}
+tar zxf fedora-kernel-*.tar.gz
 %setup -c
 cd linux-%{linuxrel}
 %patch -P 0 -p1
@@ -53,7 +55,10 @@ patch -Np1 -i "%{srcdir}/0005-drm-sun4i-Mark-one-of-the-UI-planes-as-a-cursor-on
 patch -Np1 -i "%{srcdir}/0006-drm-sun4i-drm-Recover-from-occasional-HW-failures.patch"                #Hardware cursor
 patch -Np1 -i "%{srcdir}/0007-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth on PineTab and PinePhone
 
-%setup -T -D -a 1
+scripts/kconfig/merge_config.sh %{srcdir}/config ${RPM_SOURCE_DIR}/fedora-kernel-%{release}-*/fedora/configs/kernel-%{release}-aarch64.config
+
+ls -latr
+ls -ltr ${RPM_SOURCE_DIR}
 
 %build
 
