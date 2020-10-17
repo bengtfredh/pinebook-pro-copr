@@ -54,10 +54,9 @@ patch -Np1 -i "%{srcdir}/0005-drm-sun4i-Mark-one-of-the-UI-planes-as-a-cursor-on
 patch -Np1 -i "%{srcdir}/0006-drm-sun4i-drm-Recover-from-occasional-HW-failures.patch"                #Hardware cursor
 patch -Np1 -i "%{srcdir}/0007-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth on PineTab and PinePhone
 
-cat ${RPM_SOURCE_DIR}/config > ${RPM_BUILD_DIR}/%{name}-%{version}/.config
+cat ${RPM_SOURCE_DIR}/config > .config
 
 %build
-cd ${RPM_BUILD_DIR}/%{name}-%{version}
 unset LDFLAGS
 make ${MAKEFLAGS} Image Image.gz modules
 make ${MAKEFLAGS} DTC_FLAGS="-@" dtbs
