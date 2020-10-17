@@ -29,7 +29,7 @@ cd %{srcdir}
 git checkout 4e603f4e710b1820e506e54a95c2e0a68b4765c3
 %setup -c
 cd linux-%{linuxrel}
-%patch -P 0 -p1 -s
+%patch -P 0 -p1
 
 # ALARM patches
 patch -Np1 -i "%{srcdir}/0001-net-smsc95xx-Allow-mac-address-to-be-set-as-a-parame.patch"             #All
