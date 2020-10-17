@@ -13,6 +13,7 @@ Release: %{release}
 License: GPL2
 URL: https://git.kernel.org/
 ExclusiveArch: aarch64
+BuildRequires: git-core
 Source0: https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-%{linuxrel}.tar.xz
 Patch0: https://cdn.kernel.org/pub/linux/kernel/v5.x/patch-%{version}.xz
 
@@ -23,7 +24,7 @@ Vanilla kernel patched for Pinebook Pro.
 
 %prep
 %setup -c
-%patch -P 0 -p1
+%patch -P 0 
 
 %build
 
