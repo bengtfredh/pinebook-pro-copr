@@ -58,6 +58,7 @@ sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-${sourcerelease}|" Makefile
 cat ${RPM_SOURCE_DIR}/config > .config
 
 %build
+cd linux-%{linuxrel}
 unset LDFLAGS
 make ${MAKEFLAGS} Image Image.gz modules
 make ${MAKEFLAGS} DTC_FLAGS="-@" dtbs
