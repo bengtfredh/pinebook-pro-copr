@@ -56,21 +56,13 @@ patch -Np1 -i "%{srcdir}/0007-arm64-dts-allwinner-enable-bluetooth-pinetab-pinep
 
 sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-${sourcerelease}|" Makefile
 cat ${RPM_SOURCE_DIR}/config > .config
-pwd
-ls -ltr
-ls -ltr ${RPM_BUILD_DIR}
-ls -ltr ${RPM_SOURCE_DIR}
-ls -ltr %{build}
-ls -ltr %{buildroot}
 
 %build
-cd ${RPM_BUILD_DIR}/linux-%{linuxrel}
 unset LDFLAGS
 make ${MAKEFLAGS} Image Image.gz modules
 make ${MAKEFLAGS} DTC_FLAGS="-@" dtbs
 
 %install
-cd ${RPM_BUILD_DIR}/linux-%{linuxrel}
 mkdir -p %{buildroot}/{boot,usr/lib/modules}
 make INSTALL_MOD_PATH=%{buildroot}/usr modules_install
 make INSTALL_DTBS_PATH=%{buildroot}/boot/dtbs dtbs_install
