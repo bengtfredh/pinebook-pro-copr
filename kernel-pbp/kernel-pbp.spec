@@ -55,7 +55,7 @@ patch -Np1 -i "%{srcdir}/0005-drm-sun4i-Mark-one-of-the-UI-planes-as-a-cursor-on
 patch -Np1 -i "%{srcdir}/0006-drm-sun4i-drm-Recover-from-occasional-HW-failures.patch"                #Hardware cursor
 patch -Np1 -i "%{srcdir}/0007-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth on PineTab and PinePhone
 
-sed -ri "s|^CONFIG_LOCALVERSION=*|CONFIG_LOCALVERSION="-pbp-"|" ${RPM_SOURCE_DIR}/fedora-kernel-%{release}-*/fedora/configs/kernel-%{release}-aarch64.config
+#sed -ri "s|^CONFIG_LOCALVERSION=*|CONFIG_LOCALVERSION="-pbp-"|" ${RPM_SOURCE_DIR}/fedora-kernel-%{release}-*/fedora/configs/kernel-%{release}-aarch64.config
 scripts/kconfig/merge_config.sh %{srcdir}/config ${RPM_SOURCE_DIR}/fedora-kernel-%{release}-*/fedora/configs/kernel-%{release}-aarch64.config
 
 ls -latr
