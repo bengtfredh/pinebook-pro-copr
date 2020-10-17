@@ -16,7 +16,7 @@ URL: https://git.kernel.org/
 ExclusiveArch: aarch64
 BuildRequires: git-core
 Source0: https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-%{linuxrel}.tar.xz
-Source1: https://git.kernel.org/pub/scm/linux/kernel/git/jwboyer/fedora.git/snapshot/fedora-kernel-5.8.14-200.fc32.tar.gz
+Source1: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/test/kernel-pbp/config
 Patch0: https://cdn.kernel.org/pub/linux/kernel/v5.x/patch-%{version}.xz
 
 %global debug_package %{nil}
@@ -29,7 +29,6 @@ git clone https://gitlab.manjaro.org/manjaro-arm/packages/core/linux.git %{srcdi
 cd %{srcdir}
 git checkout 4e603f4e710b1820e506e54a95c2e0a68b4765c3
 cd ${RPM_SOURCE_DIR}
-tar zxf fedora-kernel-*.tar.gz
 %setup -c
 cd linux-%{linuxrel}
 %patch -P 0 -p1
@@ -55,13 +54,13 @@ patch -Np1 -i "%{srcdir}/0005-drm-sun4i-Mark-one-of-the-UI-planes-as-a-cursor-on
 patch -Np1 -i "%{srcdir}/0006-drm-sun4i-drm-Recover-from-occasional-HW-failures.patch"                #Hardware cursor
 patch -Np1 -i "%{srcdir}/0007-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth on PineTab and PinePhone
 
-#sed -ri "s|^CONFIG_LOCALVERSION=*|CONFIG_LOCALVERSION="-pbp-"|" ${RPM_SOURCE_DIR}/fedora-kernel-%{release}-*/fedora/configs/kernel-%{release}-aarch64.config
-scripts/kconfig/merge_config.sh %{srcdir}/config ${RPM_SOURCE_DIR}/fedora-kernel-%{release}-*/fedora/configs/kernel-%{release}-aarch64.config
-
-ls -latr
-ls -ltr ${RPM_SOURCE_DIR}
+cat ${RPM_SOURCE_DIR}/config ${RPM_BUILD_DIR}/.config
 
 %build
+cd ${RPM_BUILD_DIR}
+unset LDFLAGS
+make ${MAKEFLAGS} Image Image.gz modules
+make ${MAKEFLAGS} DTC_FLAGS="-@" dtbs
 
 %install
 
