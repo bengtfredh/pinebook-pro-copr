@@ -16,6 +16,7 @@ URL: https://git.kernel.org/
 ExclusiveArch: aarch64
 BuildRequires: git-core
 Source0: https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-%{linuxrel}.tar.xz
+Source1: https://git.kernel.org/pub/scm/linux/kernel/git/jwboyer/fedora.git/snapshot/fedora-kernel-5.8.14-200.fc32.tar.gz
 Patch0: https://cdn.kernel.org/pub/linux/kernel/v5.x/patch-%{version}.xz
 
 %global debug_package %{nil}
@@ -52,7 +53,7 @@ patch -Np1 -i "%{srcdir}/0005-drm-sun4i-Mark-one-of-the-UI-planes-as-a-cursor-on
 patch -Np1 -i "%{srcdir}/0006-drm-sun4i-drm-Recover-from-occasional-HW-failures.patch"                #Hardware cursor
 patch -Np1 -i "%{srcdir}/0007-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth on PineTab and PinePhone
 
-
+%setup -T -D -a 1
 
 %build
 
