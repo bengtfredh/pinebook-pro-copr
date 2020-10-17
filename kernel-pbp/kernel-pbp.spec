@@ -24,7 +24,8 @@ Vanilla kernel patched for Pinebook Pro.
 
 %prep
 %setup -c
-%patch -P 0 
+cd linux-%{linuxrel}
+%patch -P 0 -p1
 
 %build
 
