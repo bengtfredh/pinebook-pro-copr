@@ -16,8 +16,7 @@ URL: https://git.kernel.org/
 ExclusiveArch: aarch64
 BuildRequires: git-core gcc flex bison openssl-devel bc perl rng-tools openssl
 Source: https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-%{linuxrel}.tar.xz
-#Source1: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/test/kernel-pbp/config
-Source1: https://git.kernel.org/pub/scm/linux/kernel/git/jwboyer/fedora.git/snapshot/fedora-kernel-5.8.14-200.fc32.tar.gz
+Source1: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/test/kernel-pbp/config
 Patch0: https://cdn.kernel.org/pub/linux/kernel/v5.x/patch-%{version}.xz
 
 %global debug_package %{nil}
@@ -29,8 +28,6 @@ Vanilla kernel patched for Pinebook Pro.
 git clone https://gitlab.manjaro.org/manjaro-arm/packages/core/linux.git %{srcdir}
 cd %{srcdir}
 git checkout 4e603f4e710b1820e506e54a95c2e0a68b4765c3
-%setup -T -b 1 -n fedora-kernel
-ls -latr
 %setup -c
 cd linux-%{linuxrel}
 %patch -P 0 -p1
@@ -57,11 +54,8 @@ patch -Np1 -i "%{srcdir}/0006-drm-sun4i-drm-Recover-from-occasional-HW-failures.
 patch -Np1 -i "%{srcdir}/0007-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth on PineTab and PinePhone
 
 #sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-${sourcerelease}|" Makefile
-ls -latr
-./scripts/kconfig/merge_config.sh %{srcdir}/config ../fedora-kernel-5.8.14-200.fc32/fedora/configs/kernel-5.8.14-aarch64.config
+./scripts/kconfig/merge_config.sh %{srcdir}/config ${RPM_SOURCE_DIR}/config
 make olddefconfig
-
-#cat ${RPM_SOURCE_DIR}/config > .config
 
 %build
 cd linux-%{linuxrel}
