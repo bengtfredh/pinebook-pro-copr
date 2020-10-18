@@ -29,8 +29,6 @@ Vanilla kernel patched for Pinebook Pro.
 git clone https://gitlab.manjaro.org/manjaro-arm/packages/core/linux.git %{srcdir}
 cd %{srcdir}
 git checkout 4e603f4e710b1820e506e54a95c2e0a68b4765c3
-cd ${RPM_SOURCE_DIR}
-tar zxf fedora-kernel-5.8.14-200.fc32.tar.gz
 %setup -c
 cd linux-%{linuxrel}
 %patch -P 0 -p1
@@ -58,6 +56,7 @@ patch -Np1 -i "%{srcdir}/0007-arm64-dts-allwinner-enable-bluetooth-pinetab-pinep
 
 #sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-${sourcerelease}|" Makefile
 
+tar zxf ${RPM_SOURCE_DIR}/fedora-kernel-5.8.14-200.fc32.tar.gz -C ${RPM_SOURCE_DIR}/
 ./scripts/kconfig/merge_config.sh %{srcdir}/config ${RPM_SOURCE_DIR}/fedora-kernel-5.8.14-200.fc32/fedora/configs/kernel-5.8.14-aarch64.config
 make olddefconfig
 
