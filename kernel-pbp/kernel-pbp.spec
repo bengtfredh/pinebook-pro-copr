@@ -15,14 +15,14 @@ License: GPL2
 URL: https://git.kernel.org/
 ExclusiveArch: aarch64
 BuildRequires: git-core gcc flex bison openssl-devel bc perl rng-tools openssl
-Source: https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-%{linuxrel}.tar.xz
+Source0: https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-%{linuxrel}.tar.xz
 Source1: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/test/kernel-pbp/config
 Patch0: https://cdn.kernel.org/pub/linux/kernel/v5.x/patch-%{version}.xz
 
 %global debug_package %{nil}
 
 %description
-Vanilla kernel patched for Pinebook Pro.
+Vanilla kernel with Fedora config patched for Pinebook Pro.
 
 %prep
 git clone https://gitlab.manjaro.org/manjaro-arm/packages/core/linux.git %{srcdir}
