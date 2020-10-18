@@ -58,7 +58,7 @@ patch -Np1 -i "%{srcdir}/0007-arm64-dts-allwinner-enable-bluetooth-pinetab-pinep
 #sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-${sourcerelease}|" Makefile
 
 #tar zxf ${RPM_SOURCE_DIR}/fedora-kernel-5.8.14-200.fc32.tar.gz -C ${RPM_SOURCE_DIR}/
-./scripts/kconfig/merge_config.sh %{srcdir}/config ${RPM_SOURCE_DIR}/fedora-kernel-5.8.14-200.fc32/fedora/configs/kernel-5.8.14-aarch64.config
+#./scripts/kconfig/merge_config.sh %{srcdir}/config ${RPM_SOURCE_DIR}/fedora-kernel-5.8.14-200.fc32/fedora/configs/kernel-5.8.14-aarch64.config
 #make olddefconfig
 
 cat ${RPM_SOURCE_DIR}/config > .config
