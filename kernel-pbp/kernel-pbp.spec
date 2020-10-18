@@ -65,6 +65,7 @@ make -j `nproc` DTC_FLAGS="-@" dtbs
 
 %install
 mkdir -p %{buildroot}/{boot,usr/lib/modules}
+cd ${RPM_BUILD_DIR}/%{name}-%{version}/linux-%{linuxrel}
 make -j `nproc` INSTALL_MOD_PATH=%{buildroot}/usr modules_install
 make -j `nproc` INSTALL_DTBS_PATH=%{buildroot}/boot/dtbs dtbs_install
 cp arch/arm64/boot/Image{,.gz} %{buildroot}/boot
