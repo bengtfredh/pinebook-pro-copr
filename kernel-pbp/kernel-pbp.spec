@@ -42,7 +42,7 @@ patch -Np1 -i "%{srcdir}/0017-mmc-core-Add-MMC-Command-Queue-Support-kernel-para
 patch -Np1 -i "%{srcdir}/0019-revert-fbcon-remove-now-unusued-softback_lines-cursor-argument.patch"   #All
 patch -Np1 -i "%{srcdir}/0020-revert-fbcon-remove-soft-scrollback-code.patch"                         #All
 patch -Np1 -i "%{srcdir}/0020-nuumio-panfrost-Silence-Panfrost-gem-shrinker-loggin.patch"             #Panfrost
-patch -Np1 -i "%{srcdir}/0021-pwm-rockchip-Keep-enabled-PWMs-running-while-probing.patch"				#Rockchip
+patch -Np1 -i "%{srcdir}/0021-pwm-rockchip-Keep-enabled-PWMs-running-while-probing.patch"             #Rockchip
 
 # Pinebook patches
 patch -Np1 -i "%{srcdir}/0001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch"            #Bluetooth
@@ -55,18 +55,18 @@ patch -Np1 -i "%{srcdir}/0007-arm64-dts-allwinner-enable-bluetooth-pinetab-pinep
 
 #sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-${sourcerelease}|" Makefile
 ./scripts/kconfig/merge_config.sh %{srcdir}/config ${RPM_SOURCE_DIR}/config
-make olddefconfig
+make -j `nproc` olddefconfig
 
 %build
 cd linux-%{linuxrel}
 unset LDFLAGS
-make ${MAKEFLAGS} Image Image.gz modules
-make ${MAKEFLAGS} DTC_FLAGS="-@" dtbs
+make -j `nproc` Image Image.gz modules
+make -j `nproc` DTC_FLAGS="-@" dtbs
 
 %install
 mkdir -p %{buildroot}/{boot,usr/lib/modules}
-make INSTALL_MOD_PATH=%{buildroot}/usr modules_install
-make INSTALL_DTBS_PATH=%{buildroot}/boot/dtbs dtbs_install
+make -j `nproc` INSTALL_MOD_PATH=%{buildroot}/usr modules_install
+make -j `nproc` INSTALL_DTBS_PATH=%{buildroot}/boot/dtbs dtbs_install
 cp arch/arm64/boot/Image{,.gz} %{buildroot}/boot
 
 %files
