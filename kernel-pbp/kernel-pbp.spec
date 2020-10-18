@@ -30,7 +30,7 @@ git clone https://gitlab.manjaro.org/manjaro-arm/packages/core/linux.git %{srcdi
 cd %{srcdir}
 git checkout 4e603f4e710b1820e506e54a95c2e0a68b4765c3
 %setup -c
-#cd linux-%{linuxrel}
+cd linux-%{linuxrel}
 %patch -P 0 -p1
 
 # ALARM patches
