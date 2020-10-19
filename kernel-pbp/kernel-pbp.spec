@@ -14,7 +14,7 @@ Release: %{release}
 License: GPL2
 URL: https://git.kernel.org/
 ExclusiveArch: aarch64
-BuildRequires: git-core gcc flex bison openssl-devel bc perl rng-tools openssl
+BuildRequires: git-core gcc flex bison openssl-devel bc perl openssl kmod
 Source0: https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-%{linuxrel}.tar.xz
 Source1: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/test/kernel-pbp/config
 Patch0: https://cdn.kernel.org/pub/linux/kernel/v5.x/patch-%{version}.xz
@@ -57,7 +57,7 @@ patch -Np1 -i "%{srcdir}/0006-drm-sun4i-drm-Recover-from-occasional-HW-failures.
 patch -Np1 -i "%{srcdir}/0007-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth on PineTab and PinePhone
 
 # add sourcerelease to extraversion
-sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-${sourcerelease}|" Makefile
+sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2%{sourcerelease}|" Makefile
 
 # don't run depmod on 'make install'. We'll do this ourselves in packaging
 sed -i '2iexit 0' scripts/depmod.sh
