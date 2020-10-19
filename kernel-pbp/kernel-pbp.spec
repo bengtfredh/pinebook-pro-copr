@@ -25,9 +25,12 @@ Patch0: https://cdn.kernel.org/pub/linux/kernel/v5.x/patch-%{version}.xz
 Vanilla kernel with Fedora config patched for Pinebook Pro.
 
 %prep
+# Clone Manjaro patches and checkout correct version
 git clone https://gitlab.manjaro.org/manjaro-arm/packages/core/linux.git %{srcdir}
 cd %{srcdir}
 git checkout 4e603f4e710b1820e506e54a95c2e0a68b4765c3
+
+# Unpack and apply base patches
 %setup -c
 cd linux-%{linuxrel}
 %patch -P 0 -p1
@@ -53,14 +56,24 @@ patch -Np1 -i "%{srcdir}/0005-drm-sun4i-Mark-one-of-the-UI-planes-as-a-cursor-on
 patch -Np1 -i "%{srcdir}/0006-drm-sun4i-drm-Recover-from-occasional-HW-failures.patch"                #Hardware cursor
 patch -Np1 -i "%{srcdir}/0007-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth on PineTab and PinePhone
 
-#sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-${sourcerelease}|" Makefile
+# add sourcerelease to extraversion
+sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-${sourcerelease}|" Makefile
+
+# don't run depmod on 'make install'. We'll do this ourselves in packaging
+sed -i '2iexit 0' scripts/depmod.sh
+
+# merge Fedora config with Manjaro config as base
 ./scripts/kconfig/merge_config.sh %{srcdir}/config ${RPM_SOURCE_DIR}/config
+
+# Make config accept all default
 make -j `nproc` olddefconfig
 
 %build
+# Build kernel
 cd linux-%{linuxrel}
 unset LDFLAGS
 make -j `nproc` Image Image.gz modules
+# Generate device tree blobs with symbols to support applying device tree overlays in U-Boot
 make -j `nproc` DTC_FLAGS="-@" dtbs
 
 %install
@@ -69,6 +82,21 @@ cd ${RPM_BUILD_DIR}/%{name}-%{version}/linux-%{linuxrel}
 make -j `nproc` INSTALL_MOD_PATH=%{buildroot}/usr modules_install
 make -j `nproc` INSTALL_DTBS_PATH=%{buildroot}/boot/dtbs dtbs_install
 cp arch/arm64/boot/Image{,.gz} %{buildroot}/boot
+
+# remove build and source links
+_kernver="$(make kernelrelease)"
+rm %{buildroot}/usr/lib/modules/${_kernver}/{source,build}
+
+# now we call depmod
+depmod -b %{buildroot}/usr -F System.map ${_kernver}
+
+# add vmlinux
+install -Dt %{buildroot}/usr/lib/modules/${_kernver}/build -m644 vmlinux
+
+local _subst="
+  s|%PKGBASE%|%{buildroot}|g
+  s|%KERNVER%|${_kernver}|g
+  "
 
 %files
 /boot/
