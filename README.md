@@ -1,4 +1,4 @@
-# pinebook-pro-copr-test
+# pinebook-pro-copr:test
 This repository contains unofficial rpms needed for running Fedora on Pinebook Pro. The generated packages are available here:
 https://copr.fedorainfracloud.org/coprs/aptupdate/pinebook-pro-test/
 
