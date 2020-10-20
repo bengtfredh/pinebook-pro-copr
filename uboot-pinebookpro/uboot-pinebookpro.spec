@@ -3,8 +3,8 @@
 # Contributor: Adam <adam900710@gmail.com>
 
 %define name uboot-pinebookpro
-%define version 2020.07
-%define sourcerelease 2
+%define version 2020.10
+%define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
 
 Summary: U-Boot Pinebook Pro 
@@ -14,7 +14,7 @@ Release: %{release}
 License: GPL2
 URL: https://gitlab.manjaro.org/manjaro-arm/packages/core/uboot-pinebookpro.git
 ExclusiveArch: aarch64
-Source0: https://manjaro.moson.org/arm-stable/core/aarch64/%{name}-%{version}-%{sourcerelease}-aarch64.pkg.tar.xz
+Source0: https://manjaro.moson.org/arm-testing/core/aarch64/%{name}-%{version}-%{sourcerelease}-aarch64.pkg.tar.xz
 
 %global debug_package %{nil}
 
