@@ -93,17 +93,12 @@ depmod -b %{buildroot}/usr -F System.map ${_kernver}
 # add vmlinux
 install -Dt %{buildroot}/usr/lib/modules/${_kernver}/build -m644 vmlinux
 
-local _subst="
-  s|%PKGBASE%|%{buildroot}|g
-  s|%KERNVER%|${_kernver}|g
-  "
-
 %files
 /boot/
 /usr/lib/modules/
 
 %post
-#dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease}-pbp
+dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver ${_kernver}
 
 %changelog
 * Sat Oct 17 2020 Bengt Fredh <bengt@fredhs.net> - 5.8.14-1
