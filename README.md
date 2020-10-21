@@ -19,3 +19,4 @@ $ `dnf copr enable aptupdate/pinebook-pro-test`
 
 ## Credits
 https://github.com/e-minguez
+
