@@ -1,5 +1,5 @@
-# AArch64 multi-platform
-# Maintainer: Bengt Fredh <bengt@fredhs.net> 
+# Fedorish Kernel Pinebook Pro
+Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.8
 %define version 5.8.14
@@ -7,10 +7,11 @@
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
 
-Summary: AArch64 multi-platform
+Summary: Kernel Pinebook Pro
 Name: kernel-pbp
 Version: %{version}
 Release: %{release}
+Group: System Environment/Kernel
 License: GPL2
 URL: https://git.kernel.org/
 ExclusiveArch: aarch64
@@ -18,6 +19,8 @@ BuildRequires: git-core gcc flex bison openssl-devel bc perl openssl kmod
 Source0: https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-%{linuxrel}.tar.xz
 Source1: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/test/kernel-pbp/config
 Patch0: https://cdn.kernel.org/pub/linux/kernel/v5.x/patch-%{version}.xz
+Requires: kernel-pbp-core = %{version}
+Requires: kernel-pbp-modules = %{version}
 
 %global debug_package %{nil}
 
@@ -25,7 +28,7 @@ Patch0: https://cdn.kernel.org/pub/linux/kernel/v5.x/patch-%{version}.xz
 Vanilla kernel with Fedora config patched for Pinebook Pro.
 
 %prep
-# Clone Manjaro patches and checkout correct version
+# Clone Manjaro patches and checkout correct commit
 git clone https://gitlab.manjaro.org/manjaro-arm/packages/core/linux.git %{srcdir}
 cd %{srcdir}
 git checkout 4e603f4e710b1820e506e54a95c2e0a68b4765c3
@@ -94,12 +97,26 @@ depmod -b %{buildroot}/usr -F System.map ${_kernver}
 install -Dt %{buildroot}/usr/lib/modules/${_kernver}/build -m644 vmlinux
 
 %files
+
+%package core
+Summary: Kernel Pinebook Pro Core
+Group: System Environment/Kernel
+%description core
+Vanilla kernel Core with Fedora config patched for Pinebook Pro.
+%files core
 /boot/
+
+%package modules
+Summary: Kernel Pinebook Pro Modules
+Group: System Environment/Kernel
+%description modules
+Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
+%files modules
 /usr/lib/modules/
 
 %post
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver ${_kernver}
 
 %changelog
-* Sat Oct 17 2020 Bengt Fredh <bengt@fredhs.net> - 5.8.14-1
+* Sat Oct 22 2020 Bengt Fredh <bengt@fredhs.net> - 5.8.14-1
 - First version
