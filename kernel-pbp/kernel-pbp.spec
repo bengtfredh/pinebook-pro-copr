@@ -104,7 +104,7 @@ Group: System Environment/Kernel
 %description core
 Vanilla kernel Core with Fedora config patched for Pinebook Pro.
 %files core
-/boot/
+/boot/*
 
 %package modules
 Summary: Kernel Pinebook Pro Modules
@@ -112,7 +112,7 @@ Group: System Environment/Kernel
 %description modules
 Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 %files modules
-/usr/lib/modules/
+/usr/lib/modules/*
 
 %post
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver ${_kernver}
