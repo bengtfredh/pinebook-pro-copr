@@ -66,17 +66,17 @@ sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" Makefile
 sed -i '2iexit 0' scripts/depmod.sh
 
 # merge Manjaro config with Fedora config as base
-sed '/MANJARO/d' %{srcdir}/config
-sed '/APPARMOR/d' %{srcdir}/config
-sed '/SELINUX/d' %{srcdir}/config
-sed '/BOOTSPLASH/d' %{srcdir}/config
-sed '/BTRFS/d' %{srcdir}/config
+sed -i '/MANJARO/d' %{srcdir}/config
+sed -i '/APPARMOR/d' %{srcdir}/config
+sed -i '/SELINUX/d' %{srcdir}/config
+sed -i '/BOOTSPLASH/d' %{srcdir}/config
+sed -i '/BTRFS/d' %{srcdir}/config
 ./scripts/kconfig/merge_config.sh ${RPM_SOURCE_DIR}/config %{srcdir}/config
 
 KARCH=arm64
 
 # Make config accept all default
-make $KARCH -j `nproc` olddefconfig
+make -j `nproc` olddefconfig
 
 %build
 # Build kernel
