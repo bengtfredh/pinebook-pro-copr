@@ -65,8 +65,15 @@ sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" Makefile
 # don't run depmod on 'make install'. We'll do this ourselves in packaging
 sed -i '2iexit 0' scripts/depmod.sh
 
-# merge Fedora config with Manjaro config as base
-./scripts/kconfig/merge_config.sh %{srcdir}/config ${RPM_SOURCE_DIR}/config
+# merge Manjaro config with Fedora config as base
+sed -i '/MANJARO/d' %{srcdir}/config
+sed -i '/APPARMOR/d' %{srcdir}/config
+sed -i '/SELINUX/d' %{srcdir}/config
+sed -i '/BOOTSPLASH/d' %{srcdir}/config
+sed -i '/BTRFS/d' %{srcdir}/config
+./scripts/kconfig/merge_config.sh ${RPM_SOURCE_DIR}/config %{srcdir}/config
+
+KARCH=arm64
 
 # Make config accept all default
 make -j `nproc` olddefconfig
@@ -75,19 +82,21 @@ make -j `nproc` olddefconfig
 # Build kernel
 cd linux-%{linuxrel}
 unset LDFLAGS
-make -j `nproc` Image Image.gz modules
+make arch=arm64 -j `nproc` Image Image.gz modules
 # Generate device tree blobs with symbols to support applying device tree overlays in U-Boot
-make -j `nproc` DTC_FLAGS="-@" dtbs
+make arch=arm64 -j `nproc` DTC_FLAGS="-@" dtbs
 
 %install
 mkdir -p %{buildroot}/{boot,usr/lib/modules}
 cd ${RPM_BUILD_DIR}/%{name}-%{version}/linux-%{linuxrel}
-make -j `nproc` INSTALL_MOD_PATH=%{buildroot}/usr modules_install
-make -j `nproc` INSTALL_DTBS_PATH=%{buildroot}/boot/dtbs dtbs_install
+make arch=arm64 -j `nproc` INSTALL_MOD_PATH=%{buildroot}/usr modules_install
+make arch=arm64 -j `nproc` INSTALL_DTBS_PATH=%{buildroot}/boot/dtbs dtbs_install
 cp arch/arm64/boot/Image{,.gz} %{buildroot}/boot
 
-# remove build and source links
+# get kernel version
 _kernver="$(make kernelrelease)"
+
+# remove build and source links
 rm %{buildroot}/usr/lib/modules/${_kernver}/{source,build}
 
 # now we call depmod
@@ -102,7 +111,7 @@ install -Dt %{buildroot}/usr/lib/modules/${_kernver}/build -m644 vmlinux
 Summary: Kernel Pinebook Pro Core
 Group: System Environment/Kernel
 %description core
-Vanilla kernel Core with Fedora config patched for Pinebook Pro.
+Vanilla kernel Core patched for Pinebook Pro.
 %files core
 /boot/*
 
@@ -110,13 +119,13 @@ Vanilla kernel Core with Fedora config patched for Pinebook Pro.
 Summary: Kernel Pinebook Pro Modules
 Group: System Environment/Kernel
 %description modules
-Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
+Vanilla kernel Modules with patched for Pinebook Pro.
 %files modules
 /usr/lib/modules/*
 
 %post
-dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver ${_kernver}
+dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease}
 
 %changelog
-* Sat Oct 22 2020 Bengt Fredh <bengt@fredhs.net> - 5.8.14-1
+* Sun Oct 25 2020 Bengt Fredh <bengt@fredhs.net> - 5.8.14-1
 - First version
