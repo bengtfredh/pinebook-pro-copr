@@ -66,6 +66,7 @@ sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" Makefile
 sed -i '2iexit 0' scripts/depmod.sh
 
 # merge Manjaro config with Fedora config as base
+sed '/MANJARO/d' %{srcdir}/config
 sed '/APPARMOR/d' %{srcdir}/config
 sed '/SELINUX/d' %{srcdir}/config
 sed '/BOOTSPLASH/d' %{srcdir}/config
