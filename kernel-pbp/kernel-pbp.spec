@@ -82,15 +82,15 @@ make -j `nproc` olddefconfig
 # Build kernel
 cd linux-%{linuxrel}
 unset LDFLAGS
-make $KARCH -j `nproc` Image Image.gz modules
+make arch=arm64 -j `nproc` Image Image.gz modules
 # Generate device tree blobs with symbols to support applying device tree overlays in U-Boot
-make $KARCH -j `nproc` DTC_FLAGS="-@" dtbs
+make arch=arm64 -j `nproc` DTC_FLAGS="-@" dtbs
 
 %install
 mkdir -p %{buildroot}/{boot,usr/lib/modules}
 cd ${RPM_BUILD_DIR}/%{name}-%{version}/linux-%{linuxrel}
-make $KARCH -j `nproc` INSTALL_MOD_PATH=%{buildroot}/usr modules_install
-make $KARCH -j `nproc` INSTALL_DTBS_PATH=%{buildroot}/boot/dtbs dtbs_install
+make arch=arm64 -j `nproc` INSTALL_MOD_PATH=%{buildroot}/usr modules_install
+make arch=arm64 -j `nproc` INSTALL_DTBS_PATH=%{buildroot}/boot/dtbs dtbs_install
 cp arch/arm64/boot/Image{,.gz} %{buildroot}/boot
 
 # get kernel version
