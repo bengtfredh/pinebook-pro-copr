@@ -73,38 +73,28 @@ sed '/BOOTSPLASH/d' %{srcdir}/config
 sed '/BTRFS/d' %{srcdir}/config
 ./scripts/kconfig/merge_config.sh ${RPM_SOURCE_DIR}/config %{srcdir}/config
 
+KARCH=arm64
+
 # Make config accept all default
-make -j `nproc` olddefconfig
+make $KARCH -j `nproc` olddefconfig
 
 %build
 # Build kernel
 cd linux-%{linuxrel}
 unset LDFLAGS
-make -j `nproc` Image Image.gz modules
+make $KARCH -j `nproc` Image Image.gz modules
 # Generate device tree blobs with symbols to support applying device tree overlays in U-Boot
-make -j `nproc` DTC_FLAGS="-@" dtbs
+make $KARCH -j `nproc` DTC_FLAGS="-@" dtbs
 
 %install
 mkdir -p %{buildroot}/{boot,usr/lib/modules}
 cd ${RPM_BUILD_DIR}/%{name}-%{version}/linux-%{linuxrel}
-make -j `nproc` INSTALL_MOD_PATH=%{buildroot}/usr modules_install
-make -j `nproc` INSTALL_DTBS_PATH=%{buildroot}/boot/dtbs dtbs_install
+make $KARCH -j `nproc` INSTALL_MOD_PATH=%{buildroot}/usr modules_install
+make $KARCH -j `nproc` INSTALL_DTBS_PATH=%{buildroot}/boot/dtbs dtbs_install
 cp arch/arm64/boot/Image{,.gz} %{buildroot}/boot
-
-KARCH=arm64
 
 # get kernel version
 _kernver="$(make kernelrelease)"
-_basekernel=${_kernver%%-*}
-_basekernel=${_basekernel%.*}
-
-# make room for external modules
-local _extramodules="extramodules-${_basekernel}${_kernelname}"
-ln -s "../${_extramodules}" "%{buildroot}/usr/lib/modules/${_kernver}/extramodules"
-
-# add real version for building modules and running depmod from hook
-echo "${_kernver}" |
-install -Dm644 /dev/stdin "%{buildroot}/usr/lib/modules/${_extramodules}/version"
 
 # remove build and source links
 rm %{buildroot}/usr/lib/modules/${_kernver}/{source,build}
@@ -137,5 +127,5 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease}
 
 %changelog
-* Sat Oct 22 2020 Bengt Fredh <bengt@fredhs.net> - 5.8.14-1
+* Sun Oct 25 2020 Bengt Fredh <bengt@fredhs.net> - 5.8.14-1
 - First version
