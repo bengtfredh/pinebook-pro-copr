@@ -65,8 +65,12 @@ sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" Makefile
 # don't run depmod on 'make install'. We'll do this ourselves in packaging
 sed -i '2iexit 0' scripts/depmod.sh
 
-# merge Fedora config with Manjaro config as base
-./scripts/kconfig/merge_config.sh %{srcdir}/config ${RPM_SOURCE_DIR}/config
+# merge Manjaro config with Fedora config as base
+sed '/APPARMOR/d' %{srcdir}/config
+sed '/SELINUX/d' %{srcdir}/config
+sed '/BOOTSPLASH/d' %{srcdir}/config
+sed '/BTRFS/d' %{srcdir}/config
+./scripts/kconfig/merge_config.sh ${RPM_SOURCE_DIR}/config %{srcdir}/config
 
 # Make config accept all default
 make -j `nproc` olddefconfig
@@ -86,8 +90,22 @@ make -j `nproc` INSTALL_MOD_PATH=%{buildroot}/usr modules_install
 make -j `nproc` INSTALL_DTBS_PATH=%{buildroot}/boot/dtbs dtbs_install
 cp arch/arm64/boot/Image{,.gz} %{buildroot}/boot
 
-# remove build and source links
+KARCH=arm64
+
+# get kernel version
 _kernver="$(make kernelrelease)"
+_basekernel=${_kernver%%-*}
+_basekernel=${_basekernel%.*}
+
+# make room for external modules
+local _extramodules="extramodules-${_basekernel}${_kernelname}"
+ln -s "../${_extramodules}" "%{buildroot}/usr/lib/modules/${_kernver}/extramodules"
+
+# add real version for building modules and running depmod from hook
+echo "${_kernver}" |
+install -Dm644 /dev/stdin "%{buildroot}/usr/lib/modules/${_extramodules}/version"
+
+# remove build and source links
 rm %{buildroot}/usr/lib/modules/${_kernver}/{source,build}
 
 # now we call depmod
