@@ -14,7 +14,7 @@ Release: %{release}
 License: GPL2
 URL: https://gitlab.manjaro.org/manjaro-arm/packages/core/uboot-pinebookpro.git
 ExclusiveArch: aarch64
-Source0: https://manjaro.moson.org/arm-testing/core/aarch64/%{name}-%{version}-%{sourcerelease}-aarch64.pkg.tar.xz
+Source0: https://manjaro.moson.org/arm-stable/core/aarch64/uboot-pinebookpro-%{version}-%{sourcerelease}-aarch64.pkg.tar.xz
 Source1: https://github.com/bengtfredh/pinebook-pro-copr/blob/test/uboot-pinebookpro/extlinux.conf
 
 %global debug_package %{nil}
@@ -43,7 +43,7 @@ if [ ! -f /boot/extlinux/extlinux.conf.rpmnew ]; then
 # Get UUID for rootdisk
 ROOTUUID=$(findmnt / -o UUID -n)
 # Edit extlinux.conf
-sed -i -e "s!APPEND.*!APPEND console=tty1 console=ttyS2,1500000 root=UUID=${ROOTUUID} rw rhgb quiet !g" ${TMPDIR}/root/boot/extlinux/extlinux.conf
+sed -i -e "s!APPEND.*!APPEND console=tty1 console=ttyS2,1500000 root=UUID=${ROOTUUID} ro rootflags=subvol=root rhgb quiet !g" ${TMPDIR}/root/boot/extlinux/extlinux.conf
 fi
 
 echo "A new U-Boot version can be flashed onto your install drive. Please use lsblk to determine your drive, before proceeding."
@@ -55,5 +55,7 @@ echo "# dd if=/boot/u-boot.itb of=/dev/mmcblkX seek=16384 conv=notrunc,fsync"
 %preun
 
 %changelog
+* Tue Oct 27 2020 Bengt Fredh <bengt@fredhs.net> - 2020.10-1
+- Version bump
 * Sun Oct 11 2020 Bengt Fredh <bengt@fredhs.net> - 2020.07-2
 - First version
