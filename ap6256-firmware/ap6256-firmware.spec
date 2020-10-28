@@ -37,8 +37,12 @@ install -Dm644 ${RPM_BUILD_DIR}/%{name}/BCM4345C5.hcd -t %{buildroot}/usr/lib/fi
 install -Dm644 ${RPM_BUILD_DIR}/%{name}/nvram_ap6256.txt -t %{buildroot}/usr/lib/firmware/
 install -Dm644 ${RPM_BUILD_DIR}/%{name}/nvram_ap6256.txt -t %{buildroot}/usr/lib/firmware/brcm/brcmfmac43456-sdio.txt
 install -Dm644 ${RPM_BUILD_DIR}/%{name}/fw_bcm43456c5_ag.bin %{buildroot}/usr/lib/firmware/brcm/brcmfmac43456-sdio.bin
-install -Dm644 ${RPM_BUILD_DIR}/%{name}/brcmfmac43456-sdio.clm_blob %{buildroot}/usr/lib/firmware/brcm/
+install -Dm644 ${RPM_BUILD_DIR}/%{name}/brcmfmac43456-sdio.clm_blob %{buildroot}/usr/lib/firmware/brcm/brcmfmac43456-sdio.clm_blob
+install -Dm644 ${RPM_BUILD_DIR}/%{name}/nvram_ap6256.txt %{buildroot}/usr/lib/firmware/brcm/brcmfmac43456-sdio.radxa,rockpi4b.txt
+install -Dm644 ${RPM_BUILD_DIR}/%{name}/nvram_ap6256.txt %{buildroot}/usr/lib/firmware/brcm/brcmfmac43456-sdio.radxa,rockpi4c.txt
 install -Dm644 ${RPM_BUILD_DIR}/%{name}/nvram_ap6256.txt %{buildroot}/usr/lib/firmware/brcm/brcmfmac43456-sdio.pine64,pinebook-pro.txt
+install -Dm644 ${RPM_BUILD_DIR}/%{name}/nvram_ap6256.txt %{buildroot}/usr/lib/firmware/brcm/brcmfmac43456-sdio.pine64,rockpro64-v2.1.txt
+install -Dm644 ${RPM_BUILD_DIR}/%{name}/nvram_ap6256.txt %{buildroot}/usr/lib/firmware/brcm/brcmfmac43456-sdio.rockchip,rk3399-orangepi.txt.txt
 
 %files
 /usr/lib/firmware/
