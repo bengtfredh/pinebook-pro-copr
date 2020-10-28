@@ -14,6 +14,7 @@ License: GPL2
 URL: https://gitlab.manjaro.org/manjaro-arm/packages/community/pinebookpro-audio.git
 ExclusiveArch: aarch64
 Source0: https://gitlab.manjaro.org/manjaro-arm/packages/community/pinebookpro-post-install/-/raw/master/asound.state
+Source1: https://gitlab.manjaro.org/manjaro-arm/applications/arm-profiles/-/raw/master/overlays/gnome/etc/pulse/default.pa
 BuildRequires: git-core
 Requires: acpid
 
@@ -38,13 +39,15 @@ install -Dm755 ${RPM_BUILD_DIR}/%{name}/audio_jack_plugged_in.sh -t %{buildroot}
 install -Dm755 ${RPM_BUILD_DIR}/%{name}/sync.sh -t %{buildroot}/usr/bin/
 install -Dm644 ${RPM_BUILD_DIR}/%{name}/pinebookpro-audio.service -t %{buildroot}/usr/lib/systemd/system/
 install -Dm644 ${RPM_SOURCE_DIR}/asound.state -t %{buildroot}/var/lib/alsa/
+install -Dm644 ${RPM_SOURCE_DIR}/default.pa -t %{buildroot}/etc/pulse/
 
 %files
 /etc/acpi/events/audio_jack_plugged_in
 /etc/acpi/audio_jack_plugged_in.sh
 /usr/bin/sync.sh
 /usr/lib/systemd/system/pinebookpro-audio.service
-%config /var/lib/alsa/asound.state
+%config(noreplace) /etc/pulse/default.pa
+%config(noreplace) /var/lib/alsa/asound.state
 
 %post
 /usr/bin/systemctl enable acpid.service
