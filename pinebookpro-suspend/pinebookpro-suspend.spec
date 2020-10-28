@@ -10,8 +10,9 @@ Name: %{name}
 Version: %{version}
 Release: %{release}
 License: GPL2
-URL: https://githun.com/bengtfredh/pinebook-pro-copr.git
+URL: https://github.com/bengtfredh/pinebook-pro-copr.git
 ExclusiveArch: aarch64
+Source0: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/test/pinebookpro-suspend/powerconf
 
 %global debug_package %{nil}
 
@@ -23,9 +24,12 @@ Enable suspend2idle
 
 %build
 
+
 %install
+install -Dm644 ${RPM_SOURCE_DIR}/powerconf -t %{buildroot}/etc/acpi/events/
 
 %files
+%config(noreplace) /etc/acpi/events/powerconf
 
 %post
 sed -i s/"#SuspendState=mem standby freeze"/"SuspendState=freeze"/g /etc/systemd/sleep.conf
@@ -33,5 +37,5 @@ sed -i s/"#SuspendState=mem standby freeze"/"SuspendState=freeze"/g /etc/systemd
 %preun
 
 %changelog
-* Thu Oct 15 2020 Bengt Fredh <bengt@fredhs.net> - 1-1
+* Wed Oct 28 2020 Bengt Fredh <bengt@fredhs.net> - 1-1
 - First version
