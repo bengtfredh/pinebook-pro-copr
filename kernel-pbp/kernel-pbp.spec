@@ -1,10 +1,10 @@
 # Fedoraish Kernel Pinebook Pro
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
-%define linuxrel 5.8
-%define version 5.8.14
+%define linuxrel 5.9
+%define version 5.9.1
 %define sourcerelease 1
-%define release %{sourcerelease}%{?dist}
+%define release 1%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
 
 Summary: Kernel Pinebook Pro
@@ -31,14 +31,13 @@ Vanilla kernel with Fedora config patched for Pinebook Pro.
 # Clone Manjaro patches and checkout correct commit
 git clone https://gitlab.manjaro.org/manjaro-arm/packages/core/linux.git %{srcdir}
 cd %{srcdir}
-git checkout 4e603f4e710b1820e506e54a95c2e0a68b4765c3
+git checkout be20bed31d412ed937086eedc917e024df49bee9
 
 # Unpack and apply base patches
 %setup -c
 cd linux-%{linuxrel}
 %patch -P 0 -p1
 
-# ALARM patches
   # ALARM patches
   patch -Np1 -i "%{srcdir}/0001-net-smsc95xx-Allow-mac-address-to-be-set-as-a-parame.patch"             #All
   patch -Np1 -i "%{srcdir}/0002-arm64-dts-rockchip-add-usb3-controller-node-for-RK33.patch"             #RK3328
@@ -54,19 +53,18 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0007-pbp-support.patch"                                                      #Pinebook Pro
   patch -Np1 -i "%{srcdir}/0008-arm64-dts-allwinner-add-ohci-ehci-to-h5-nanopi.patch"                   #Nanopi Neo Plus 2
   patch -Np1 -i "%{srcdir}/0009-drm-bridge-analogix_dp-Add-enable_psr-param.patch"                      #Pinebook Pro
-  #patch -Np1 -i "%{srcdir}/0010-DRM-Panfrost-enable-Bifrost-GPUs.patch"                                #Odroid and Vims (not working right yet)
-  patch -Np1 -i "%{srcdir}/0011-arm64-dts-meson-add-audio-playback-to-odroid-c4.patch"                  #Odroid C4
-  patch -Np1 -i "%{srcdir}/0012-arm64-dts-meson-add-audio-playback-to-khadas-vim3l.patch"               #Khadas Vim3l
-  patch -Np1 -i "%{srcdir}/0013-arm64-dts-amlogic-add-odroid-n2-plus.patch"                             #Odroid N2+ (not working right yet)
-  patch -Np1 -i "%{srcdir}/0014-arm64-dts-rockchip-Mark-rock-pi-4-as-rock-pi-4a-dts.patch"              #Rock Pi 4A
-  patch -Np1 -i "%{srcdir}/0015-arm64-dts-rockchip-Add-Radxa-ROCK-Pi-4B-support.patch"                  #Rock Pi 4B
-  patch -Np1 -i "%{srcdir}/0016-arm64-dts-rockchip-Add-Radxa-ROCK-Pi-4C-support.patch"                  #Rock Pi 4C
-  patch -Np1 -i "%{srcdir}/0017-mmc-core-Add-MMC-Command-Queue-Support-kernel-parame.patch"             #All
-  patch -Np1 -i "%{srcdir}/0018-rockpro64-dts-rk-pcie-add-configurable-delay.patch"                     #RockPro64
-  patch -Np1 -i "%{srcdir}/0019-revert-fbcon-remove-now-unusued-softback_lines-cursor-argument.patch"   #All
-  patch -Np1 -i "%{srcdir}/0020-revert-fbcon-remove-soft-scrollback-code.patch"                         #All
-  patch -Np1 -i "%{srcdir}/0020-nuumio-panfrost-Silence-Panfrost-gem-shrinker-loggin.patch"             #Panfrost
-  patch -Np1 -i "%{srcdir}/0021-pwm-rockchip-Keep-enabled-PWMs-running-while-probing.patch"		#Rockchip
+  patch -Np1 -i "%{srcdir}/0010-PCI-rockchip-Fix-PCIe-probing-in-5.9.patch"                             #Rk3399
+  patch -Np1 -i "%{srcdir}/0011-arm64-dts-amlogic-add-odroid-n2-plus.patch"                             #Odroid N2+
+  patch -Np1 -i "%{srcdir}/0012-pwm-rockchip-Keep-enabled-PWMs-running-while-probing.patch"             #Rockchip
+  patch -Np1 -i "%{srcdir}/0013-nuumio-panfrost-Silence-Panfrost-gem-shrinker-loggin.patch"             #Panfrost
+  patch -Np1 -i "%{srcdir}/0014-drm-panfrost-add-Amlogic-integration-quirks.patch"                      #Panfrost
+  patch -Np1 -i "%{srcdir}/0015-drm-panfrost-Coherency-support.patch"                                   #Panfrost
+  patch -Np1 -i "%{srcdir}/0016-arm64-dts-meson-add-audio-playback-to-odroid-c2.patch"                  #Odroid C2
+  patch -Np1 -i "%{srcdir}/0017-dts-rockchip-remove-pcie-max-speed-from-pinebook-pro.patch"             #Pinebook Pro
+  patch -Np1 -i "%{srcdir}/0018-arm64-dts-rockchip-Mark-rock-pi-4-as-rock-pi-4a-dts.patch"              #Rock Pi 4A
+  patch -Np1 -i "%{srcdir}/0019-arm64-dts-rockchip-Add-Radxa-ROCK-Pi-4B-support.patch"                  #Rock Pi 4B
+  patch -Np1 -i "%{srcdir}/0020-arm64-dts-rockchip-Add-Radxa-ROCK-Pi-4C-support.patch"                  #Rock Pi 4C
+  patch -Np1 -i "%{srcdir}/0021-arm64-dts-rockchip-Add-Firefly-Station-p1-support.patch"                #Firelfy Station P1
   
   # Pinebook patches
   patch -Np1 -i "%{srcdir}/0001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch"            #Bluetooth
@@ -76,7 +74,7 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0005-drm-sun4i-Mark-one-of-the-UI-planes-as-a-cursor-one.patch"              #Hardware cursor
   patch -Np1 -i "%{srcdir}/0006-drm-sun4i-drm-Recover-from-occasional-HW-failures.patch"                #Hardware cursor
   patch -Np1 -i "%{srcdir}/0007-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth on PineTab and PinePhone
-
+  patch -Np1 -i "%{srcdir}/0008-switch-to-new-display-on-pinetab.patch"                                 #PineTab
 
 
 # add sourcerelease to extraversion
@@ -90,6 +88,7 @@ sed -i '/MANJARO/d' %{srcdir}/config
 sed -i '/APPARMOR/d' %{srcdir}/config
 sed -i '/SELINUX/d' %{srcdir}/config
 sed -i '/BOOTSPLASH/d' %{srcdir}/config
+sed -i '/LOGO/d' %{srcdir}/config
 sed -i '/BTRFS/d' %{srcdir}/config
 ./scripts/kconfig/merge_config.sh ${RPM_SOURCE_DIR}/config %{srcdir}/config
 
@@ -147,5 +146,7 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease}
 
 %changelog
+* Thu Oct 29 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.1-1
+- Bump version 5.9.1-1
 * Sun Oct 25 2020 Bengt Fredh <bengt@fredhs.net> - 5.8.14-1
 - First version
