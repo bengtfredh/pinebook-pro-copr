@@ -3,8 +3,8 @@ Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define linuxrel 5.9
 %define version 5.9.1
-%define sourcerelease 1
-%define release 1%{?dist}
+%define sourcerelease 3
+%define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
 
 Summary: Kernel Pinebook Pro
@@ -31,7 +31,7 @@ Vanilla kernel with Fedora config patched for Pinebook Pro.
 # Clone Manjaro patches and checkout correct commit
 git clone https://gitlab.manjaro.org/manjaro-arm/packages/core/linux.git %{srcdir}
 cd %{srcdir}
-git checkout be20bed31d412ed937086eedc917e024df49bee9
+git checkout 3ce552608175131a55cb7a26cf80ec6780ae34fd
 
 # Unpack and apply base patches
 %setup -c
@@ -60,11 +60,14 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0014-drm-panfrost-add-Amlogic-integration-quirks.patch"                      #Panfrost
   patch -Np1 -i "%{srcdir}/0015-drm-panfrost-Coherency-support.patch"                                   #Panfrost
   patch -Np1 -i "%{srcdir}/0016-arm64-dts-meson-add-audio-playback-to-odroid-c2.patch"                  #Odroid C2
-  patch -Np1 -i "%{srcdir}/0017-dts-rockchip-remove-pcie-max-speed-from-pinebook-pro.patch"             #Pinebook Pro
   patch -Np1 -i "%{srcdir}/0018-arm64-dts-rockchip-Mark-rock-pi-4-as-rock-pi-4a-dts.patch"              #Rock Pi 4A
   patch -Np1 -i "%{srcdir}/0019-arm64-dts-rockchip-Add-Radxa-ROCK-Pi-4B-support.patch"                  #Rock Pi 4B
   patch -Np1 -i "%{srcdir}/0020-arm64-dts-rockchip-Add-Radxa-ROCK-Pi-4C-support.patch"                  #Rock Pi 4C
   patch -Np1 -i "%{srcdir}/0021-arm64-dts-rockchip-Add-Firefly-Station-p1-support.patch"                #Firelfy Station P1
+  patch -Np1 -i "%{srcdir}/0022-typec-displayport-some-devices-have-pin-assignments-reversed.patch"     #DP Alt Mode
+  patch -Np1 -i "%{srcdir}/0023-usb-typec-tcpm-Add-generic-extcon-for-tcpm-enabled-devices.patch"       #DP Alt mode
+  patch -Np1 -i "%{srcdir}/0024-usb-typec-tcpm-Add-generic-extcon-to-tcpm.patch"						#DP Alt mode
+  patch -Np1 -i "%{srcdir}/0025-dts-rockpro64-add-type-c-DP-ALT-and-USB3.patch"							#DP Alt mode - RockPro64
   
   # Pinebook patches
   patch -Np1 -i "%{srcdir}/0001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch"            #Bluetooth
@@ -75,7 +78,6 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0006-drm-sun4i-drm-Recover-from-occasional-HW-failures.patch"                #Hardware cursor
   patch -Np1 -i "%{srcdir}/0007-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth on PineTab and PinePhone
   patch -Np1 -i "%{srcdir}/0008-switch-to-new-display-on-pinetab.patch"                                 #PineTab
-
 
 # add sourcerelease to extraversion
 sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" Makefile
@@ -142,11 +144,11 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 %files modules
 /usr/lib/modules/*
 
-%post
+%post core
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease}
 
 %changelog
-* Thu Oct 29 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.1-1
-- Bump version 5.9.1-1
+* Thu Oct 29 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.1-3
+- Bump version 5.9.1-3
 * Sun Oct 25 2020 Bengt Fredh <bengt@fredhs.net> - 5.8.14-1
 - First version

@@ -2,8 +2,8 @@
 # Contributor: Kevin Mihelich <kevin@archlinuxarm.org>
 # Maintainer: Dan Johansen <strit@manjaro.org>
 
-%define version 5.8.14
-%define sourcerelease 1
+%define version 5.9.1
+%define sourcerelease 3
 %define release %{sourcerelease}%{?dist}
 
 Summary: AArch64 multi-platform
@@ -36,7 +36,9 @@ tar -xvpf $RPM_SOURCE_DIR/linux-%{version}-%{sourcerelease}-aarch64.pkg.tar.xz -
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease}-MANJARO-ARM
 
 %changelog
-* Fro Oct 16 2020 Bengt Fredh <bengt@fredhs.net> - 5.8.14-1
+* Thu Oct 29 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.1-3
+- Bump version 5.9.1-3
+* Fre Oct 16 2020 Bengt Fredh <bengt@fredhs.net> - 5.8.14-1
 - Bump version
 * Wed Sep 30 2020 Bengt Fredh <bengt@fredhs.net> - 5.8.10-2
 - First version
