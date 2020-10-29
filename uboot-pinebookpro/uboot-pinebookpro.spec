@@ -43,7 +43,7 @@ if [ ! -f /boot/extlinux/extlinux.conf.rpmnew ]; then
 # Get UUID for rootdisk
 ROOTUUID=$(findmnt / -o UUID -n)
 # Edit extlinux.conf
-sed -i -e "s!APPEND.*!APPEND console=tty1 console=ttyS2,1500000 root=UUID=${ROOTUUID} ro rootflags=subvol=root rhgb quiet !g" ${TMPDIR}/root/boot/extlinux/extlinux.conf
+sed -i -e "s!APPEND.*!APPEND console=tty1 console=ttyS2,1500000 root=UUID=${ROOTUUID} ro rootflags=subvol=root rhgb quiet !g" /boot/extlinux/extlinux.conf
 fi
 
 echo "A new U-Boot version can be flashed onto your install drive. Please use lsblk to determine your drive, before proceeding."
