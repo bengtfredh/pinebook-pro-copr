@@ -1,8 +1,8 @@
 ## kernel-pbp
 
-Vanilla kernel build with Manjaro patches and Fedora config merged on Manjaro config.<LF>
+Vanilla kernel build with Manjaro patches and Manjaro config merged on Fedora config.<LF>
 <LF>
-### Changes in Fedora config v5.8.14:
-CONFIG_CRYPTO_AEGIS128_SIMD=y -> # CONFIG_CRYPTO_AEGIS128_SIMD is not set
-
-CONFIG_DEBUG_INFO_BTF -> # CONFIG_DEBUG_INFO_BTF is not set
+### New version:
+* Get Fedora config for version and push here
+* Update version and release in spec file
+* Update commit hash for same version Manjaro
