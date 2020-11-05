@@ -1,6 +1,7 @@
 # Maintainer: Dan Johansen <strit@manjaro.org>
 # Contributor: Kevin Mihelich
 # Contributor: Adam <adam900710@gmail.com>
+Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define name uboot-pinebookpro
 %define version 2020.10
@@ -42,8 +43,13 @@ install -Dm644 ${RPM_SOURCE_DIR}/extlinux.conf -t %{buildroot}/boot/extlinux/
 if [ ! -f /boot/extlinux/extlinux.conf.rpmnew ]; then
 # Get UUID for rootdisk
 ROOTUUID=$(findmnt / -o UUID -n)
+ROOTFSTYPE=$(findmnt / -o FSTYPE -n)
 # Edit extlinux.conf
+if [ ${ROOTFSTYPE}=btrfs ]; then
 sed -i -e "s!APPEND.*!APPEND console=tty1 console=ttyS2,1500000 root=UUID=${ROOTUUID} rw rootflags=subvol=root rhgb quiet !g" /boot/extlinux/extlinux.conf
+else
+sed -i -e "s!APPEND.*!APPEND console=tty1 console=ttyS2,1500000 root=UUID=${ROOTUUID} rw rhgb quiet !g" /boot/extlinux/extlinux.conf
+fi
 fi
 
 echo "A new U-Boot version can be flashed onto your install drive. Please use lsblk to determine your drive, before proceeding."
@@ -51,11 +57,10 @@ echo "You can do this by running:"
 echo "# dd if=/boot/idbloader.img of=/dev/mmcblkX seek=64 conv=notrunc,fsync"
 echo "# dd if=/boot/u-boot.itb of=/dev/mmcblkX seek=16384 conv=notrunc,fsync"
 
-
 %preun
 
 %changelog
-* Tue Oct 27 2020 Bengt Fredh <bengt@fredhs.net> - 2020.10-1
-- Version bump
+* Thu Nov 05 2020 Bengt Fredh <bengt@fredhs.net> - 2020.10-1
+- Edit postinstall script
 * Sun Oct 11 2020 Bengt Fredh <bengt@fredhs.net> - 2020.07-2
 - First version
