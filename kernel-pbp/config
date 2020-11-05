@@ -1,7 +1,7 @@
 # arm64
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm64 5.9.1 Kernel Configuration
+# Linux/arm64 5.9.2 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 10.2.1 20200723 (Red Hat 10.2.1-1)"
 CONFIG_CC_IS_GCC=y
@@ -9361,6 +9361,7 @@ CONFIG_NFSD_PNFS=y
 CONFIG_NFSD_BLOCKLAYOUT=y
 CONFIG_NFSD_SCSILAYOUT=y
 CONFIG_NFSD_FLEXFILELAYOUT=y
+CONFIG_NFSD_V4_2_INTER_SSC=y
 CONFIG_NFSD_V4_SECURITY_LABEL=y
 CONFIG_GRACE_PERIOD=m
 CONFIG_LOCKD=m
@@ -10276,6 +10277,7 @@ CONFIG_TEST_KSTRTOX=y
 # CONFIG_TEST_OBJAGG is not set
 # CONFIG_TEST_STACKINIT is not set
 # CONFIG_TEST_MEMINIT is not set
+# CONFIG_TEST_FREE_PAGES is not set
 # CONFIG_MEMTEST is not set
 # end of Kernel Testing and Coverage
 # end of Kernel hacking

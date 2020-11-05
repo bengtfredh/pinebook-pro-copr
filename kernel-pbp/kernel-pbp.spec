@@ -2,8 +2,8 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.9
-%define version 5.9.1
-%define sourcerelease 3
+%define version 5.9.2
+%define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
 
@@ -31,7 +31,7 @@ Vanilla kernel with Fedora config patched for Pinebook Pro.
 # Clone Manjaro patches and checkout correct commit
 git clone https://gitlab.manjaro.org/manjaro-arm/packages/core/linux.git %{srcdir}
 cd %{srcdir}
-git checkout 3ce552608175131a55cb7a26cf80ec6780ae34fd
+git checkout cbbc5beea62851e578a3b06a39b89ccef2be74b8
 
 # Unpack and apply base patches
 %setup -c
@@ -42,7 +42,7 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0001-net-smsc95xx-Allow-mac-address-to-be-set-as-a-parame.patch"             #All
   patch -Np1 -i "%{srcdir}/0002-arm64-dts-rockchip-add-usb3-controller-node-for-RK33.patch"             #RK3328
   patch -Np1 -i "%{srcdir}/0003-arm64-dts-rockchip-enable-usb3-nodes-on-rk3328-rock6.patch"             #RK3328
-  
+
   # Manjaro ARM Patches
   patch -Np1 -i "%{srcdir}/0001-arm64-dts-rockchip-add-pcie-node-rockpi4.patch"                         #Rock Pi 4
   patch -Np1 -i "%{srcdir}/0002-arm64-dts-rockchip-modify-pcie-node-rockpro64.patch"                    #RockPro64
@@ -68,7 +68,7 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0023-usb-typec-tcpm-Add-generic-extcon-for-tcpm-enabled-devices.patch"       #DP Alt mode
   patch -Np1 -i "%{srcdir}/0024-usb-typec-tcpm-Add-generic-extcon-to-tcpm.patch"						#DP Alt mode
   patch -Np1 -i "%{srcdir}/0025-dts-rockpro64-add-type-c-DP-ALT-and-USB3.patch"							#DP Alt mode - RockPro64
-  
+
   # Pinebook patches
   patch -Np1 -i "%{srcdir}/0001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch"            #Bluetooth
   patch -Np1 -i "%{srcdir}/0002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch"                    #Bluetooth
@@ -148,6 +148,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease}
 
 %changelog
+* Thu Nov 05 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.2-1
+- Bump version 5.9.2-1
 * Thu Oct 29 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.1-3
 - Bump version 5.9.1-3
 * Sun Oct 25 2020 Bengt Fredh <bengt@fredhs.net> - 5.8.14-1
