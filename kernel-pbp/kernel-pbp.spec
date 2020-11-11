@@ -2,8 +2,8 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.9
-%define version 5.9.1
-%define sourcerelease 3
+%define version 5.9.7
+%define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
 
@@ -31,7 +31,7 @@ Vanilla kernel with Fedora config patched for Pinebook Pro.
 # Clone Manjaro patches and checkout correct commit
 git clone https://gitlab.manjaro.org/manjaro-arm/packages/core/linux.git %{srcdir}
 cd %{srcdir}
-git checkout 3ce552608175131a55cb7a26cf80ec6780ae34fd
+git checkout d4f37a55c2664394251c0fb86fe54d59a027b26d
 
 # Unpack and apply base patches
 %setup -c
@@ -55,9 +55,9 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0009-drm-bridge-analogix_dp-Add-enable_psr-param.patch"                      #Pinebook Pro
   patch -Np1 -i "%{srcdir}/0010-PCI-rockchip-Fix-PCIe-probing-in-5.9.patch"                             #Rk3399
   patch -Np1 -i "%{srcdir}/0011-arm64-dts-amlogic-add-odroid-n2-plus.patch"                             #Odroid N2+
-  patch -Np1 -i "%{srcdir}/0012-pwm-rockchip-Keep-enabled-PWMs-running-while-probing.patch"             #Rockchip
+  #patch -Np1 -i "%{srcdir}/0012-pwm-rockchip-Keep-enabled-PWMs-running-while-probing.patch"             #Rockchip (seems to be added in 5.9.2)
   patch -Np1 -i "%{srcdir}/0013-nuumio-panfrost-Silence-Panfrost-gem-shrinker-loggin.patch"             #Panfrost
-  patch -Np1 -i "%{srcdir}/0014-drm-panfrost-add-Amlogic-integration-quirks.patch"                      #Panfrost
+  #patch -Np1 -i "%{srcdir}/0014-drm-panfrost-add-Amlogic-integration-quirks.patch"                      #Panfrost (seems to be added in 5.9.2)
   patch -Np1 -i "%{srcdir}/0015-drm-panfrost-Coherency-support.patch"                                   #Panfrost
   patch -Np1 -i "%{srcdir}/0016-arm64-dts-meson-add-audio-playback-to-odroid-c2.patch"                  #Odroid C2
   patch -Np1 -i "%{srcdir}/0018-arm64-dts-rockchip-Mark-rock-pi-4-as-rock-pi-4a-dts.patch"              #Rock Pi 4A
@@ -78,6 +78,7 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0006-drm-sun4i-drm-Recover-from-occasional-HW-failures.patch"                #Hardware cursor
   patch -Np1 -i "%{srcdir}/0007-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth on PineTab and PinePhone
   patch -Np1 -i "%{srcdir}/0008-switch-to-new-display-on-pinetab.patch"                                 #PineTab
+
 
 # add sourcerelease to extraversion
 sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" Makefile
@@ -149,6 +150,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease}
 
 %changelog
+* Thu Nov 11 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.7-1
+- Bump version 5.9.7-1
 * Thu Nov 7 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.1-3
 - Bump version 5.9.1-3
 * Sun Oct 25 2020 Bengt Fredh <bengt@fredhs.net> - 5.8.14-1
