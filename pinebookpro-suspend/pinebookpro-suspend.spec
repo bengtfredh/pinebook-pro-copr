@@ -1,7 +1,7 @@
-# Maintainer: Bengt Fredh <bengt@fredhs.net>
+Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define name pinebookpro-suspend
-%define version 1
+%define version 2
 %define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
 
@@ -12,6 +12,8 @@ Release: %{release}
 License: GPL2
 URL: https://github.com/bengtfredh/pinebook-pro-copr.git
 ExclusiveArch: aarch64
+Source0: https://github.com/bengtfredh/pinebook-pro-copr/blob/master/pinebookpro-suspend/freeze.conf
+Requires: acpid
 
 %global debug_package %{nil}
 
@@ -23,17 +25,21 @@ Enable suspend2idle
 
 %build
 
-
 %install
+mkdir %{buildroot}/etc/systemd/sleep.conf.d
+install -Dm644 ${RPM_SOURCE_DIR}/freeze.conf -t %{buildroot}/etc/systemd/sleep.conf.d/sleep.conf
 
 %files
+%config(noreplace) /etc/systemd/sleep.conf.d/freeze.conf
 
 %post
 sed -i "s/^action=.*/action=/g" /etc/acpi/events/powerconf
-sed -i "s/^#SuspendState=.*/SuspendState=freeze/g" /etc/systemd/sleep.conf
+systemct enable acpid
 
 %preun
 
 %changelog
+* Thu Nov 12 2020 Bengt Fredh <bengt@fredhs.net> - 2-1
+- Changed following man sleep.conf
 * Wed Oct 28 2020 Bengt Fredh <bengt@fredhs.net> - 1-1
 - First version
