@@ -27,10 +27,10 @@ Enable suspend2idle
 
 %install
 mkdir %{buildroot}/etc/systemd/sleep.conf.d -p
-install -Dm644 ${RPM_SOURCE_DIR}/freeze.conf -t %{buildroot}/etc/systemd/sleep.conf.d/sleep.conf
+install -Dm644 ${RPM_SOURCE_DIR}/s2idle.conf -t %{buildroot}/etc/systemd/sleep.conf.d/s2idle.conf
 
 %files
-%config(noreplace) /etc/systemd/sleep.conf.d/freeze.conf
+%config(noreplace) /etc/systemd/sleep.conf.d/s2idle.conf
 
 %post
 sed -i "s/^action=.*/action=/g" /etc/acpi/events/powerconf
