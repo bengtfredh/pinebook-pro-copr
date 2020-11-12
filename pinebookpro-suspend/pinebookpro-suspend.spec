@@ -2,7 +2,7 @@ Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define name pinebookpro-suspend
 %define version 2
-%define sourcerelease 1
+%define sourcerelease 2
 %define release %{sourcerelease}%{?dist}
 
 Summary: Enable suspend2idle
@@ -12,7 +12,7 @@ Release: %{release}
 License: GPL2
 URL: https://github.com/bengtfredh/pinebook-pro-copr.git
 ExclusiveArch: aarch64
-Source0: https://github.com/bengtfredh/pinebook-pro-copr/blob/master/pinebookpro-suspend/freeze.conf
+Source0: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/master/pinebookpro-suspend/freeze.conf
 Requires: acpid
 
 %global debug_package %{nil}
@@ -39,6 +39,8 @@ systemct enable acpid
 %preun
 
 %changelog
+* Thu Nov 12 2020 Bengt Fredh <bengt@fredhs.net> - 2-2
+- Fix source path
 * Thu Nov 12 2020 Bengt Fredh <bengt@fredhs.net> - 2-1
 - Changed following man sleep.conf
 * Wed Oct 28 2020 Bengt Fredh <bengt@fredhs.net> - 1-1

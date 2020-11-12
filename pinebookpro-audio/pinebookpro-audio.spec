@@ -1,9 +1,8 @@
-# Maintainer: Dan Johansen <strit@manjaro.org>
-# Maintainer: Furkan Kardame <furkan@fkardame.com>
+Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define name pinebookpro-audio
-%define version 1
-%define sourcerelease 2
+%define version 2
+%define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
 
 Summary: Pinebook Pro audio
@@ -11,12 +10,9 @@ Name: %{name}
 Version: %{version}
 Release: %{release}
 License: GPL2
-URL: https://gitlab.manjaro.org/manjaro-arm/packages/community/pinebookpro-audio.git
+URL: https://github.com/bengtfredh/pinebook-pro-copr.git
 ExclusiveArch: aarch64
-Source0: https://gitlab.manjaro.org/manjaro-arm/packages/community/pinebookpro-post-install/-/raw/master/asound.state
-Source1: https://gitlab.manjaro.org/manjaro-arm/applications/arm-profiles/-/raw/master/overlays/gnome/etc/pulse/default.pa
-BuildRequires: git-core
-Requires: acpid
+Source0: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/master/pinebookpro-audio/asound.state
 
 %global debug_package %{nil}
 
@@ -24,42 +20,21 @@ Requires: acpid
 Patches for Pinebook Pro audio.
 
 %prep
-git clone https://gitlab.manjaro.org/manjaro-arm/packages/community/%{name}.git
-cd %{name}
-git checkout fcb1538d5be5a6324a18a0684b254b52a9138a76
+
 %setup -c -T
 
 %install
-mkdir %{buildroot}/etc/acpi/events -p
-mkdir %{buildroot}/usr/bin -p
-mkdir %{buildroot}/usr/lib/systemd/system -p
-mkdir %{buildroot}/var/lib/alsa -p
-install -Dm644 ${RPM_BUILD_DIR}/%{name}/audio_jack_plugged_in -t %{buildroot}/etc/acpi/events/
-install -Dm755 ${RPM_BUILD_DIR}/%{name}/audio_jack_plugged_in.sh -t %{buildroot}/etc/acpi/
-install -Dm755 ${RPM_BUILD_DIR}/%{name}/sync.sh -t %{buildroot}/usr/bin/
-install -Dm644 ${RPM_BUILD_DIR}/%{name}/pinebookpro-audio.service -t %{buildroot}/usr/lib/systemd/system/
 install -Dm644 ${RPM_SOURCE_DIR}/asound.state -t %{buildroot}/var/lib/alsa/
-install -Dm644 ${RPM_SOURCE_DIR}/default.pa -t %{buildroot}/etc/pulse/
 
 %files
-/etc/acpi/events/audio_jack_plugged_in
-/etc/acpi/audio_jack_plugged_in.sh
-/usr/bin/sync.sh
-/usr/lib/systemd/system/pinebookpro-audio.service
-%config(noreplace) /etc/pulse/default.pa
 %config(noreplace) /var/lib/alsa/asound.state
 
 %post
-/usr/bin/systemctl enable acpid.service
-/usr/bin/systemctl enable pinebookpro-audio.service
 
 %preun
-if [ "$1" -eq 0 ]; then
-  /usr/bin/systemctl stop pinebookpro-audio.service
-  /usr/bin/systemctl disable pinebookpro-audio.service
-fi;
-:;
 
 %changelog
+* Thu Nov 12 2020 Bengt Fredh <bengt@fredhs.net> - 2-1
+- Fix errors
 * Mon Oct 12 2020 Bengt Fredh <bengt@fredhs.net> - 1-2
 - First version
