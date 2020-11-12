@@ -26,7 +26,7 @@ Enable suspend2idle
 %build
 
 %install
-mkdir %{buildroot}/etc/systemd/sleep.conf.d
+mkdir %{buildroot}/etc/systemd/sleep.conf.d -p
 install -Dm644 ${RPM_SOURCE_DIR}/freeze.conf -t %{buildroot}/etc/systemd/sleep.conf.d/sleep.conf
 
 %files

@@ -24,6 +24,7 @@ Patches for Pinebook Pro audio.
 %setup -c -T
 
 %install
+mkdir %{buildroot}/var/lib/alsa/ -p
 install -Dm644 ${RPM_SOURCE_DIR}/asound.state -t %{buildroot}/var/lib/alsa/
 
 %files
