@@ -26,7 +26,7 @@ Pinebook Pro network fixes.
 
 %install
 mkdir %{buildroot}/etc/NetworkManager/conf.d/ -p
-install -Dm644 ${RPM_SOURCE_DIR}/disable-random-mac.conf -t %{buildroot}/etc/NetworkManager/conf.d/disable-random-mac.conf
+install -Dm644 ${RPM_SOURCE_DIR}/disable-random-mac.conf -t %{buildroot}/etc/NetworkManager/conf.d/
 
 %files
 %config(noreplace) /etc/NetworkManager/conf.d/disable-random-mac.conf
