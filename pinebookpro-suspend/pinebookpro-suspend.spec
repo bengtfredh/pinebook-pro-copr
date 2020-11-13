@@ -2,7 +2,7 @@ Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define name pinebookpro-suspend
 %define version 2
-%define sourcerelease 2
+%define sourcerelease 3
 %define release %{sourcerelease}%{?dist}
 
 Summary: Enable suspend2idle
@@ -34,11 +34,13 @@ install -Dm644 ${RPM_SOURCE_DIR}/s2idle.conf -t %{buildroot}/etc/systemd/sleep.c
 
 %post
 sed -i "s/^action=.*/action=/g" /etc/acpi/events/powerconf
-systemct enable acpid
+systemctl enable acpid
 
 %preun
 
 %changelog
+* Thu Nov 13 2020 Bengt Fredh <bengt@fredhs.net> - 2-3
+- Fix post script
 * Thu Nov 12 2020 Bengt Fredh <bengt@fredhs.net> - 2-2
 - Fix source path
 * Thu Nov 12 2020 Bengt Fredh <bengt@fredhs.net> - 2-1
