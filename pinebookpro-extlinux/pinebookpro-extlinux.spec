@@ -20,7 +20,7 @@ Source0: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/master/p
 Pinebook Pro exlinux.
 
 %prep
-%setup -c
+%setup -c -T
 
 %build
 
