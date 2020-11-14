@@ -147,7 +147,7 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 /usr/lib/modules/*
 
 %post core
-dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease}
+dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
 * Thu Nov 11 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.7-1

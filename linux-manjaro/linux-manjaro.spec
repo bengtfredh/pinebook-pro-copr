@@ -34,7 +34,7 @@ tar -xvpf $RPM_SOURCE_DIR/linux-%{version}-%{sourcerelease}-aarch64.pkg.tar.xz -
 /usr/lib/modules/*
 
 %post
-dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease}-MANJARO-ARM
+dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease}-MANJARO-ARM 1> /dev/null 2>&1
 
 %changelog
 * Thu Nov 09 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.6-1
