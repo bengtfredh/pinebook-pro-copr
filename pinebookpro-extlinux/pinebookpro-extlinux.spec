@@ -12,7 +12,7 @@ Release: %{release}
 License: GPL2
 URL: https://github.com/bengtfredh/pinebook-pro-copr.git
 ExclusiveArch: aarch64
-Source0: https://github.com/bengtfredh/pinebook-pro-copr/blob/master/pinebookpro-extlinux/extlinux.conf
+Source0: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/master/pinebookpro-extlinux/extlinux.conf
 
 %global debug_package %{nil}
 
