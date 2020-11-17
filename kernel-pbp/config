@@ -1,7 +1,7 @@
 # arm64
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm64 5.9.7 Kernel Configuration
+# Linux/arm64 5.9.8 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 10.2.1 20200723 (Red Hat 10.2.1-1)"
 CONFIG_CC_IS_GCC=y

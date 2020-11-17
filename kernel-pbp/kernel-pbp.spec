@@ -2,7 +2,7 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.9
-%define version 5.9.7
+%define version 5.9.8
 %define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
@@ -31,7 +31,7 @@ Vanilla kernel with Fedora config patched for Pinebook Pro.
 # Clone Manjaro patches and checkout correct commit
 git clone https://gitlab.manjaro.org/manjaro-arm/packages/core/linux.git %{srcdir}
 cd %{srcdir}
-git checkout d4f37a55c2664394251c0fb86fe54d59a027b26d
+git checkout 10c61c7f44ba55c0c87b564eb80e0307ad373f40
 
 # Unpack and apply base patches
 %setup -c
@@ -150,6 +150,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Tue Nov 17 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.8-1
+- Bump version kernel-pbp 5.9.8-1
 * Thu Nov 11 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.7-1
 - Bump version 5.9.7-1
 * Thu Nov 7 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.1-3
