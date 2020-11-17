@@ -2,7 +2,7 @@ Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define name pinebookpro-suspend
 %define version 2
-%define sourcerelease 3
+%define sourcerelease 4
 %define release %{sourcerelease}%{?dist}
 
 Summary: Enable suspend2idle
@@ -27,7 +27,7 @@ Enable suspend2idle
 
 %install
 mkdir %{buildroot}/etc/systemd/sleep.conf.d -p
-install -Dm644 ${RPM_SOURCE_DIR}/s2idle.conf -t %{buildroot}/etc/systemd/sleep.conf.d/s2idle.conf
+install -Dm644 ${RPM_SOURCE_DIR}/s2idle.conf -t %{buildroot}/etc/systemd/sleep.conf.d/
 
 %files
 %config(noreplace) /etc/systemd/sleep.conf.d/s2idle.conf
@@ -39,6 +39,8 @@ systemctl enable acpid
 %preun
 
 %changelog
+* Tue Nov 17 2020 Bengt Fredh <bengt@fredhs.net> - 2-4
+- Fix install file
 * Thu Nov 13 2020 Bengt Fredh <bengt@fredhs.net> - 2-3
 - Fix post script
 * Thu Nov 12 2020 Bengt Fredh <bengt@fredhs.net> - 2-2
