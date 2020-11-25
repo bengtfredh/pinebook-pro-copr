@@ -3,7 +3,7 @@ Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define linuxrel 5.9
 %define version 5.9.9
-%define sourcerelease 2
+%define sourcerelease 3
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
 
@@ -121,11 +121,14 @@ mkdir -p %{buildroot}/{boot,usr/lib/modules}
 cd ${RPM_BUILD_DIR}/%{name}-%{version}/linux-%{linuxrel}
 make arch=arm64 -j `nproc` INSTALL_MOD_PATH=%{buildroot}/usr modules_install
 make arch=arm64 -j `nproc` INSTALL_DTBS_PATH=%{buildroot}/boot/dtbs dtbs_install
-make arch=arm64 -j `nproc` INSTALL_DTBS_PATH=%{buildroot}/usr/lib/modules/${_kernver}/dtbs dtbs_install
 cp arch/arm64/boot/Image{,.gz} %{buildroot}/boot
+
+# get kernel version
+_kernver="$(make kernelrelease)"
 
 # remove build and source links
 rm %{buildroot}/usr/lib/modules/${_kernver}/{source,build}
+cp -r %{buildroot}/boot/dtbs %{buildroot}/usr/lib/modules/${_kernver}/
 
 # now we call depmod
 depmod -b %{buildroot}/usr -F System.map ${_kernver}
@@ -155,8 +158,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
-* Mon Nov 23 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.9-2
-- Bump version kernel-pbp 5.9.9-2
+* Mon Nov 23 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.9-3
+- Bump version kernel-pbp 5.9.9-3
 * Mon Nov 23 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.9-1
 - Bump version kernel-pbp 5.9.9-1
 * Tue Nov 17 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.8-1
