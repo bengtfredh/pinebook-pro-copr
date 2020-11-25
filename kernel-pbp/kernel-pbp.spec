@@ -3,7 +3,7 @@ Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define linuxrel 5.9
 %define version 5.9.9
-%define sourcerelease 3
+%define sourcerelease 4
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
 
@@ -114,8 +114,6 @@ make arch=arm64 -j `nproc` Image Image.gz modules
 make arch=arm64 -j `nproc` DTC_FLAGS="-@" dtbs
 
 %install
-# get kernel version
-_kernver="$(make kernelrelease)"
 
 mkdir -p %{buildroot}/{boot,usr/lib/modules}
 cd ${RPM_BUILD_DIR}/%{name}-%{version}/linux-%{linuxrel}
@@ -158,6 +156,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Mon Nov 23 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.9-4
+- Add dtbs to /usr/lib/modules
 * Mon Nov 23 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.9-3
 - Bump version kernel-pbp 5.9.9-3
 * Mon Nov 23 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.9-1
