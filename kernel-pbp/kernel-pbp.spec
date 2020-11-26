@@ -2,10 +2,11 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.9
-%define version 5.9.9
-%define sourcerelease 4
+%define version 5.9.11
+%define sourcerelease 2
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
+%define srccommit a340baadcf01fc3575b5d78a164296a287f38be1
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -31,7 +32,7 @@ Vanilla kernel with Fedora config patched for Pinebook Pro.
 # Clone Manjaro patches and checkout correct commit
 git clone https://gitlab.manjaro.org/manjaro-arm/packages/core/linux.git %{srcdir}
 cd %{srcdir}
-git checkout 74948d1eb939d17d3e5e56f88b2d4a623cd153c9
+git checkout %{srccommit}
 
 # Unpack and apply base patches
 %setup -c
@@ -42,7 +43,7 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0001-net-smsc95xx-Allow-mac-address-to-be-set-as-a-parame.patch"             #All
   patch -Np1 -i "%{srcdir}/0002-arm64-dts-rockchip-add-usb3-controller-node-for-RK33.patch"             #RK3328
   patch -Np1 -i "%{srcdir}/0003-arm64-dts-rockchip-enable-usb3-nodes-on-rk3328-rock6.patch"             #RK3328
-
+  
   # Manjaro ARM Patches
   patch -Np1 -i "%{srcdir}/0001-arm64-dts-rockchip-add-pcie-node-rockpi4.patch"                         #Rock Pi 4
   patch -Np1 -i "%{srcdir}/0002-arm64-dts-rockchip-modify-pcie-node-rockpro64.patch"                    #RockPro64
@@ -55,9 +56,9 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0009-drm-bridge-analogix_dp-Add-enable_psr-param.patch"                      #Pinebook Pro
   patch -Np1 -i "%{srcdir}/0010-PCI-rockchip-Fix-PCIe-probing-in-5.9.patch"                             #Rk3399
   patch -Np1 -i "%{srcdir}/0011-arm64-dts-amlogic-add-odroid-n2-plus.patch"                             #Odroid N2+
-  #patch -Np1 -i "%{srcdir}/0012-pwm-rockchip-Keep-enabled-PWMs-running-while-probing.patch"             #Rockchip (seems to be added in 5.9.2)
+  patch -Np1 -i "%{srcdir}/0012-gpu-drm-add-new-display-resolution-2560x1440.patch"             		#Odroid
   patch -Np1 -i "%{srcdir}/0013-nuumio-panfrost-Silence-Panfrost-gem-shrinker-loggin.patch"             #Panfrost
-  #patch -Np1 -i "%{srcdir}/0014-drm-panfrost-add-Amlogic-integration-quirks.patch"                      #Panfrost (seems to be added in 5.9.2)
+  patch -Np1 -i "%{srcdir}/0014-sound-soc-remove-mono-channel-as-it-currently.patch"                    #Odroid
   patch -Np1 -i "%{srcdir}/0015-drm-panfrost-Coherency-support.patch"                                   #Panfrost
   patch -Np1 -i "%{srcdir}/0016-arm64-dts-meson-add-audio-playback-to-odroid-c2.patch"                  #Odroid C2
   patch -Np1 -i "%{srcdir}/0018-arm64-dts-rockchip-Mark-rock-pi-4-as-rock-pi-4a-dts.patch"              #Rock Pi 4A
@@ -68,7 +69,8 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0023-usb-typec-tcpm-Add-generic-extcon-for-tcpm-enabled-devices.patch"       #DP Alt mode
   patch -Np1 -i "%{srcdir}/0024-usb-typec-tcpm-Add-generic-extcon-to-tcpm.patch"						#DP Alt mode
   patch -Np1 -i "%{srcdir}/0025-dts-rockpro64-add-type-c-DP-ALT-and-USB3.patch"							#DP Alt mode - RockPro64
-
+  patch -Np1 -i "%{srcdir}/0026-rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch"        #RK3399
+  
   # Pinebook patches
   patch -Np1 -i "%{srcdir}/0001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch"            #Bluetooth
   patch -Np1 -i "%{srcdir}/0002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch"                    #Bluetooth
@@ -78,11 +80,6 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0006-drm-sun4i-drm-Recover-from-occasional-HW-failures.patch"                #Hardware cursor
   patch -Np1 -i "%{srcdir}/0007-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth on PineTab and PinePhone
   patch -Np1 -i "%{srcdir}/0008-switch-to-new-display-on-pinetab.patch"                                 #PineTab
-
-  # Bootsplash patches
-  patch -Np1 -i "%{srcdir}/0001-revert-fbcon-remove-now-unusued-softback_lines-cursor-argument.patch"
-  patch -Np1 -i "%{srcdir}/0002-revert-fbcon-remove-soft-scrollback-code.patch"
-
 
 # add sourcerelease to extraversion
 sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" Makefile
@@ -156,6 +153,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Mon Nov 23 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.11-2
+- Bump version kernel-pbp 5.9.11-2
 * Mon Nov 23 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.9-4
 - Add dtbs to /usr/lib/modules
 * Mon Nov 23 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.9-3
