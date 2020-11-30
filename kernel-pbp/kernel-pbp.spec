@@ -2,10 +2,18 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.9
-%define version 5.9.9
-%define sourcerelease 2
+%define version 5.9.11
+%define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
-%define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
+%define srcdir ${RPM_SOURCE_DIR}/pbp-packages
+%define srccommiti 810e4687579e90cdb57a04b8fd3072cbba8b974b
+%define _patches=(
+        '0004-tty-serdev-support-shutdown-op.patch'
+        '0005-bluetooth-hci_serdev-Clear-registered-bit-on-unregis.patch'
+        '0006-bluetooth-hci_bcm-disable-power-on-shutdown.patch'
+        '0007-mmc-core-pwrseq_simple-disable-mmc-power-on-shutdown.patch'
+        '0024-arm64-dts-rockchip-setup-USB-type-c-port-as-dual-dat.patch'
+)
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -28,61 +36,21 @@ Requires: kernel-pbp-modules = %{version}
 Vanilla kernel with Fedora config patched for Pinebook Pro.
 
 %prep
-# Clone Manjaro patches and checkout correct commit
-git clone https://gitlab.manjaro.org/manjaro-arm/packages/core/linux.git %{srcdir}
+# Clone arch patches and checkout correct commit
+git clone https://github.com/nadiaholmquist/pbp-packages.git %{srcdir}
 cd %{srcdir}
-git checkout 74948d1eb939d17d3e5e56f88b2d4a623cd153c9
+git checkout %{srccommit}
 
 # Unpack and apply base patches
 %setup -c
 cd linux-%{linuxrel}
 %patch -P 0 -p1
 
-  # ALARM patches
-  patch -Np1 -i "%{srcdir}/0001-net-smsc95xx-Allow-mac-address-to-be-set-as-a-parame.patch"             #All
-  patch -Np1 -i "%{srcdir}/0002-arm64-dts-rockchip-add-usb3-controller-node-for-RK33.patch"             #RK3328
-  patch -Np1 -i "%{srcdir}/0003-arm64-dts-rockchip-enable-usb3-nodes-on-rk3328-rock6.patch"             #RK3328
-
-  # Manjaro ARM Patches
-  patch -Np1 -i "%{srcdir}/0001-arm64-dts-rockchip-add-pcie-node-rockpi4.patch"                         #Rock Pi 4
-  patch -Np1 -i "%{srcdir}/0002-arm64-dts-rockchip-modify-pcie-node-rockpro64.patch"                    #RockPro64
-  patch -Np1 -i "%{srcdir}/0003-text_offset.patch"                                                      #Amlogic
-  patch -Np1 -i "%{srcdir}/0004-board-rockpi4-dts-upper-port-host.patch"                                #Rock Pi 4
-  patch -Np1 -i "%{srcdir}/0005-arm64-dts-rockchip-add-HDMI-sound-node-for-rk3328-ro.patch"             #Rock64
-  patch -Np1 -i "%{srcdir}/0006-arm64-dts-allwinner-add-hdmi-sound-to-pine-devices.patch"               #Pine64
-  patch -Np1 -i "%{srcdir}/0007-pbp-support.patch"                                                      #Pinebook Pro
-  patch -Np1 -i "%{srcdir}/0008-arm64-dts-allwinner-add-ohci-ehci-to-h5-nanopi.patch"                   #Nanopi Neo Plus 2
-  patch -Np1 -i "%{srcdir}/0009-drm-bridge-analogix_dp-Add-enable_psr-param.patch"                      #Pinebook Pro
-  patch -Np1 -i "%{srcdir}/0010-PCI-rockchip-Fix-PCIe-probing-in-5.9.patch"                             #Rk3399
-  patch -Np1 -i "%{srcdir}/0011-arm64-dts-amlogic-add-odroid-n2-plus.patch"                             #Odroid N2+
-  #patch -Np1 -i "%{srcdir}/0012-pwm-rockchip-Keep-enabled-PWMs-running-while-probing.patch"             #Rockchip (seems to be added in 5.9.2)
-  patch -Np1 -i "%{srcdir}/0013-nuumio-panfrost-Silence-Panfrost-gem-shrinker-loggin.patch"             #Panfrost
-  #patch -Np1 -i "%{srcdir}/0014-drm-panfrost-add-Amlogic-integration-quirks.patch"                      #Panfrost (seems to be added in 5.9.2)
-  patch -Np1 -i "%{srcdir}/0015-drm-panfrost-Coherency-support.patch"                                   #Panfrost
-  patch -Np1 -i "%{srcdir}/0016-arm64-dts-meson-add-audio-playback-to-odroid-c2.patch"                  #Odroid C2
-  patch -Np1 -i "%{srcdir}/0018-arm64-dts-rockchip-Mark-rock-pi-4-as-rock-pi-4a-dts.patch"              #Rock Pi 4A
-  patch -Np1 -i "%{srcdir}/0019-arm64-dts-rockchip-Add-Radxa-ROCK-Pi-4B-support.patch"                  #Rock Pi 4B
-  patch -Np1 -i "%{srcdir}/0020-arm64-dts-rockchip-Add-Radxa-ROCK-Pi-4C-support.patch"                  #Rock Pi 4C
-  patch -Np1 -i "%{srcdir}/0021-arm64-dts-rockchip-Add-Firefly-Station-p1-support.patch"                #Firelfy Station P1
-  patch -Np1 -i "%{srcdir}/0022-typec-displayport-some-devices-have-pin-assignments-reversed.patch"     #DP Alt Mode
-  patch -Np1 -i "%{srcdir}/0023-usb-typec-tcpm-Add-generic-extcon-for-tcpm-enabled-devices.patch"       #DP Alt mode
-  patch -Np1 -i "%{srcdir}/0024-usb-typec-tcpm-Add-generic-extcon-to-tcpm.patch"						#DP Alt mode
-  patch -Np1 -i "%{srcdir}/0025-dts-rockpro64-add-type-c-DP-ALT-and-USB3.patch"							#DP Alt mode - RockPro64
-
-  # Pinebook patches
-  patch -Np1 -i "%{srcdir}/0001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch"            #Bluetooth
-  patch -Np1 -i "%{srcdir}/0002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch"                    #Bluetooth
-  patch -Np1 -i "%{srcdir}/0003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch"                 #Bluetooth
-  patch -Np1 -i "%{srcdir}/0004-drm-sun8i-ui-vi-Fix-layer-zpos-change-atomic-modesetting.patch"         #Hardware cursor
-  patch -Np1 -i "%{srcdir}/0005-drm-sun4i-Mark-one-of-the-UI-planes-as-a-cursor-one.patch"              #Hardware cursor
-  patch -Np1 -i "%{srcdir}/0006-drm-sun4i-drm-Recover-from-occasional-HW-failures.patch"                #Hardware cursor
-  patch -Np1 -i "%{srcdir}/0007-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth on PineTab and PinePhone
-  patch -Np1 -i "%{srcdir}/0008-switch-to-new-display-on-pinetab.patch"                                 #PineTab
-
-  # Bootsplash patches
-  patch -Np1 -i "%{srcdir}/0001-revert-fbcon-remove-now-unusued-softback_lines-cursor-argument.patch"
-  patch -Np1 -i "%{srcdir}/0002-revert-fbcon-remove-soft-scrollback-code.patch"
-
+# Apply patches
+for patch in "%{_patches[@]}"; do
+  echo "Applying $patch"
+	patch -Np1 -i "%{srcdir}/linux-pbp/$patch"
+done
 
 # add sourcerelease to extraversion
 sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" Makefile
@@ -91,15 +59,15 @@ sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" Makefile
 sed -i '2iexit 0' scripts/depmod.sh
 
 # merge Manjaro config with Fedora config as base
-sed -i '/MANJARO/d' %{srcdir}/config
-sed -i '/APPARMOR/d' %{srcdir}/config
-sed -i '/SELINUX/d' %{srcdir}/config
-sed -i '/BOOTSPLASH/d' %{srcdir}/config
-sed -i '/LOGO/d' %{srcdir}/config
-sed -i '/BTRFS/d' %{srcdir}/config
-sed -i '/_BPF/d' %{srcdir}/config
-sed -i '/CONFIG_DRM_PANFROST/d' %{srcdir}/config
-./scripts/kconfig/merge_config.sh ${RPM_SOURCE_DIR}/config %{srcdir}/config
+sed -i '/CONFIG_LOCALVERSION/d' %{srcdir}/linux-pbp/config
+sed -i '/APPARMOR/d' %{srcdir}/linux-pbp/config
+sed -i '/SELINUX/d' %{srcdir}/linux-pbp/config
+sed -i '/BOOTSPLASH/d' %{srcdir}/linux-pbp/config
+sed -i '/LOGO/d' %{srcdir}/linux-pbp/config
+sed -i '/BTRFS/d' %{srcdir}/linux-pbp/config
+sed -i '/_BPF/d' %{srcdir}/linux-pbp/config
+
+./scripts/kconfig/merge_config.sh ${RPM_SOURCE_DIR}/config %{srcdir}/linux-pbp/config
 
 KARCH=arm64
 
@@ -126,6 +94,7 @@ _kernver="$(make kernelrelease)"
 
 # remove build and source links
 rm %{buildroot}/usr/lib/modules/${_kernver}/{source,build}
+cp -r %{buildroot}/boot/dtbs %{buildroot}/usr/lib/modules/${_kernver}/
 
 # now we call depmod
 depmod -b %{buildroot}/usr -F System.map ${_kernver}
@@ -155,6 +124,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Mon Nov 30 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.11-1
+- Bump version kernel-pbp 5.9.11-1 - switch arch patches
 * Mon Nov 23 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.9-1
 - Bump version kernel-pbp 5.9.9-1
 * Tue Nov 17 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.8-1
