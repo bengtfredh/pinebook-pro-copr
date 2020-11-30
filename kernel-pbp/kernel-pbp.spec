@@ -7,7 +7,7 @@ Packager: Bengt Fredh <bengt@fredhs.net>
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/pbp-packages
 %define srccommiti 810e4687579e90cdb57a04b8fd3072cbba8b974b
-%define _patches=(
+%define _patches (
         '0004-tty-serdev-support-shutdown-op.patch'
         '0005-bluetooth-hci_serdev-Clear-registered-bit-on-unregis.patch'
         '0006-bluetooth-hci_bcm-disable-power-on-shutdown.patch'
