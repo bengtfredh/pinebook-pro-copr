@@ -6,7 +6,7 @@ Packager: Bengt Fredh <bengt@fredhs.net>
 %define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/pbp-packages
-%define srccommiti 810e4687579e90cdb57a04b8fd3072cbba8b974b
+%define srccommit 810e4687579e90cdb57a04b8fd3072cbba8b974b
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
