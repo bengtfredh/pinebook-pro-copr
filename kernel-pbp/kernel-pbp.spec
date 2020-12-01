@@ -47,7 +47,7 @@ _patches=(
         '0007-mmc-core-pwrseq_simple-disable-mmc-power-on-shutdown.patch'
         '0024-arm64-dts-rockchip-setup-USB-type-c-port-as-dual-dat.patch'
 )
-for patch in "%{_patches[@]}"; do
+for patch in "${_patches[@]}"; do
   echo "Applying $patch"
 	patch -Np1 -i "%{srcdir}/linux-pbp/$patch"
 done
