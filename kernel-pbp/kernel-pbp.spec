@@ -2,11 +2,11 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.9
-%define version 5.9.12
-%define sourcerelease 2
+%define version 5.9.13
+%define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
-%define srccommit 9021b9ea36e9683ff8e3e0fd56d1aac8fb452889
+%define srccommit 609ba77566a844e7d864211f8c25982615abdde1
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -48,7 +48,7 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0001-arm64-dts-rockchip-add-pcie-node-rockpi4.patch"                         #Rock Pi 4
   patch -Np1 -i "%{srcdir}/0002-arm64-dts-rockchip-modify-pcie-node-rockpro64.patch"                    #RockPro64
   patch -Np1 -i "%{srcdir}/0003-text_offset.patch"                                                      #Amlogic
-  patch -Np1 -i "%{srcdir}/0004-board-rockpi4-dts-upper-port-host.patch"                                #Rock Pi 4
+  #patch -Np1 -i "%{srcdir}/0004-board-rockpi4-dts-upper-port-host.patch"                                #Rock Pi 4
   patch -Np1 -i "%{srcdir}/0005-arm64-dts-rockchip-add-HDMI-sound-node-for-rk3328-ro.patch"             #Rock64
   patch -Np1 -i "%{srcdir}/0006-arm64-dts-allwinner-add-hdmi-sound-to-pine-devices.patch"               #Pine64
   patch -Np1 -i "%{srcdir}/0007-pbp-support.patch"                                                      #Pinebook Pro
@@ -68,8 +68,10 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0022-typec-displayport-some-devices-have-pin-assignments-reversed.patch"     #DP Alt Mode
   patch -Np1 -i "%{srcdir}/0023-usb-typec-tcpm-Add-generic-extcon-for-tcpm-enabled-devices.patch"       #DP Alt mode
   patch -Np1 -i "%{srcdir}/0024-usb-typec-tcpm-Add-generic-extcon-to-tcpm.patch"						#DP Alt mode
-  patch -Np1 -i "%{srcdir}/0025-dts-rockpro64-add-type-c-DP-ALT-and-USB3.patch"							#DP Alt mode - RockPro64
+  patch -Np1 -i "%{srcdir}/0025-arm64-rockchip-add-DP-ALT-rockpro64.patch"							    #DP Alt mode - RockPro64
   patch -Np1 -i "%{srcdir}/0026-rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch"        #RK3399
+  patch -Np1 -i "%{srcdir}/0027-ayufan-drm-rockchip-add-support-for-modeline-32MHz-e.patch"             #DP Alt mode
+  patch -Np1 -i "%{srcdir}/0028-arm64-dts-rockchip-use-USB-host-by-default-on-rk3399-rock-pi-4.patch"   #Rock Pi 4
 
   # Pinebook patches
   patch -Np1 -i "%{srcdir}/0001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch"            #Bluetooth
@@ -156,6 +158,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Mon Dec 14 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.13-1
+- Bump version kernel-pbp 5.9.13-1
 * Mon Nov 23 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.12-2
 - Bump version kernel-pbp 5.9.12-2
 * Mon Nov 23 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.11-2
