@@ -83,6 +83,7 @@ sed -i '/BOOTSPLASH/d' %{srcdir}/config
 sed -i '/LOGO/d' %{srcdir}/config
 sed -i '/BTRFS/d' %{srcdir}/config
 sed -i '/_BPF/d' %{srcdir}/config
+sed -i '/_OCFS2/d' %{srcdir}/config
 ./scripts/kconfig/merge_config.sh ${RPM_SOURCE_DIR}/config %{srcdir}/config
 
 KARCH=arm64
