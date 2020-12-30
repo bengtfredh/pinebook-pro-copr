@@ -159,9 +159,9 @@ dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}
 - Bump version kernel-pbp 5.9.9-1
 * Tue Nov 17 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.8-1
 - Bump version kernel-pbp 5.9.8-1
-* Thu Nov 11 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.7-1
+* Wed Nov 11 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.7-1
 - Bump version 5.9.7-1
-* Thu Nov 7 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.1-3
+* Sat Nov 7 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.1-3
 - Bump version 5.9.1-3
 * Sun Oct 25 2020 Bengt Fredh <bengt@fredhs.net> - 5.8.14-1
 - First version
