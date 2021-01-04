@@ -39,9 +39,6 @@ git checkout %{srccommit}
 cd linux-%{linuxrel}
 %patch -P 0 -p1
 
-  # add upstream patch
-  patch -Np1 -i "%{srcdir}/patch-${pkgver}"
-
   # ALARM patches
   patch -Np1 -i "%{srcdir}/0001-net-smsc95xx-Allow-mac-address-to-be-set-as-a-parame.patch"             #All
   patch -Np1 -i "%{srcdir}/0002-arm64-dts-rockchip-add-usb3-controller-node-for-RK33.patch"             #RK3328
