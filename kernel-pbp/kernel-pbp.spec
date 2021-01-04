@@ -3,10 +3,10 @@ Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define linuxrel 5.10
 %define version 5.10.3
-%define sourcerelease 1
+%define sourcerelease 2
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
-%define srccommit 8a7adba0e60b03f04376b45a32cf94dc278dbb61
+%define srccommit 954260d940189bd6ca5d79c5e91cae312420a8b1
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -61,6 +61,7 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0017-arm64-rockchip-add-DP-ALT-rockpro64.patch"							    #DP Alt mode - RockPro64
   patch -Np1 -i "%{srcdir}/0018-ayufan-drm-rockchip-add-support-for-modeline-32MHz-e.patch"             #DP Alt mode
   patch -Np1 -i "%{srcdir}/0019-rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch"        #RockPro64
+  patch -Np1 -i "%{srcdir}/0020-arm64-dts-rockchip-setup-USB-type-c-port-as-dual-data-role.patch"       #Pinebook Pro
 
   # Pinebook patches
   patch -Np1 -i "%{srcdir}/0001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch"            #Bluetooth
@@ -142,6 +143,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Mon Jan 04 2021 Bengt Fredh <bengt@fredhs.net> - 5.10.3-2
+- add patch for USB-C data role on PBP
 * Mon Jan 04 2021 Bengt Fredh <bengt@fredhs.net> - 5.10.3-1
 - Bump version kernel-pbp 5.10.3-1
 * Wed Dec 30 2020 Bengt Fredh <bengt@fredhs.net> - 5.10.2-1
