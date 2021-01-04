@@ -2,11 +2,11 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.10
-%define version 5.10.2
+%define version 5.10.3
 %define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
-%define srccommit 74dda591af407161b1165f08d9ccd7f177028f8d
+%define srccommit 8a7adba0e60b03f04376b45a32cf94dc278dbb61
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -39,11 +39,14 @@ git checkout %{srccommit}
 cd linux-%{linuxrel}
 %patch -P 0 -p1
 
+  # add upstream patch
+  patch -Np1 -i "%{srcdir}/patch-${pkgver}"
+
   # ALARM patches
   patch -Np1 -i "%{srcdir}/0001-net-smsc95xx-Allow-mac-address-to-be-set-as-a-parame.patch"             #All
   patch -Np1 -i "%{srcdir}/0002-arm64-dts-rockchip-add-usb3-controller-node-for-RK33.patch"             #RK3328
   patch -Np1 -i "%{srcdir}/0003-arm64-dts-rockchip-enable-usb3-nodes-on-rk3328-rock6.patch"             #RK3328
-  
+
   # Manjaro ARM Patches
   patch -Np1 -i "%{srcdir}/0004-arm64-dts-rockchip-use-USB-host-by-default-on-rk3399-rock-pi-4.patch"   #Rock Pi 4
   patch -Np1 -i "%{srcdir}/0005-arm64-dts-rockchip-add-HDMI-sound-node-for-rk3328-ro.patch"             #Rock64
@@ -142,6 +145,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Mon Jan 04 2021 Bengt Fredh <bengt@fredhs.net> - 5.10.3-1
+- Bump version kernel-pbp 5.10.3-1
 * Wed Dec 30 2020 Bengt Fredh <bengt@fredhs.net> - 5.10.2-1
 - Bump version kernel-pbp 5.10.2-1
 * Tue Dec 15 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.14-1
