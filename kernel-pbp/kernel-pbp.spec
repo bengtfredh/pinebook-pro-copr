@@ -2,11 +2,11 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.10
-%define version 5.10.3
-%define sourcerelease 2
+%define version 5.10.4
+%define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
-%define srccommit 954260d940189bd6ca5d79c5e91cae312420a8b1
+%define srccommit c60ca9aefeffb6e6cfafe36712bec2c3e265aa0a
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -143,6 +143,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Mon Jan 04 2021 Bengt Fredh <bengt@fredhs.net> - 5.10.4-1
+- Bump version kernel-pbp 5.10.4-1
 * Mon Jan 04 2021 Bengt Fredh <bengt@fredhs.net> - 5.10.3-2
 - add patch for USB-C data role on PBP
 * Mon Jan 04 2021 Bengt Fredh <bengt@fredhs.net> - 5.10.3-1
