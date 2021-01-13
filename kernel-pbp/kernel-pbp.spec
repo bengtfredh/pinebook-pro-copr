@@ -7,7 +7,7 @@ Packager: Bengt Fredh <bengt@fredhs.net>
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
 %define srccommit ad92c2cc5e1eeb11b8c528ce553e1c76d20276ca
-%define _rpmdir /kernel-pbp-%{version}
+%define _rpmdir kernel-pbp-%{version}
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
