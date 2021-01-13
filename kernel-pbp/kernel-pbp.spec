@@ -9,7 +9,7 @@ Packager: Bengt Fredh <bengt@fredhs.net>
 %define srccommit ad92c2cc5e1eeb11b8c528ce553e1c76d20276ca
 
 Summary: Kernel Pinebook Pro
-Name: linux
+Name: kernel-pbp
 Version: %{version}
 Release: %{release}
 Group: System Environment/Kernel
@@ -32,7 +32,7 @@ Requires: kernel-pbp-modules = %{version}
 Vanilla kernel with Fedora config patched for Pinebook Pro.
 
 %prep
-%autosetup -S git
+%autosetup -S git -n kernel-pbp-%{version}
 
 # add sourcerelease to extraversion
 sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" linux-%{linuxrel}/Makefile
