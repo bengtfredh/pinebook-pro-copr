@@ -33,7 +33,7 @@ Requires: kernel-pbp-modules = %{version}
 Vanilla kernel with Fedora config patched for Pinebook Pro.
 
 %prep
-%autosetup -p1 
+%autosetup -c -p1 
 
 # add sourcerelease to extraversion
 sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" linux-%{linuxrel}/Makefile
