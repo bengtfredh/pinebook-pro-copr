@@ -1,12 +1,12 @@
 # Fedoraish Kernel Pinebook Pro
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
-%define linuxrel 5.9
-%define version 5.9.11
+%define linuxrel 5.10
+%define version 5.10.5
 %define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
-%define srcdir ${RPM_SOURCE_DIR}/pbp-packages
-%define srccommit 810e4687579e90cdb57a04b8fd3072cbba8b974b
+%define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
+%define srccommit ad92c2cc5e1eeb11b8c528ce553e1c76d20276ca
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -16,10 +16,13 @@ Group: System Environment/Kernel
 License: GPL2
 URL: https://git.kernel.org/
 ExclusiveArch: aarch64
-BuildRequires: git-core gcc flex bison openssl-devel bc perl openssl kmod
+BuildRequires: git-core gcc flex bison openssl-devel bc perl openssl kmod filesystem zlib elfutils-libelf-devel
 Source0: https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-%{linuxrel}.tar.xz
-Source1: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/test/kernel-pbp/config
+Source1: config
+Source2: kernel-%{version}-aarch64.config
 Patch0: https://cdn.kernel.org/pub/linux/kernel/v5.x/patch-%{version}.xz
+Patch1: 0007-mmc-core-pwrseq_simple-disable-mmc-power-on-shutdown.patch
+Patch2: 0024-arm64-dts-rockchip-setup-USB-type-c-port-as-dual-dat.patch
 Requires: kernel-pbp-core = %{version}
 Requires: kernel-pbp-modules = %{version}
 
@@ -29,45 +32,25 @@ Requires: kernel-pbp-modules = %{version}
 Vanilla kernel with Fedora config patched for Pinebook Pro.
 
 %prep
-# Clone arch patches and checkout correct commit
-git clone https://github.com/nadiaholmquist/pbp-packages.git %{srcdir}
-cd %{srcdir}
-git checkout %{srccommit}
 
-# Unpack and apply base patches
-%setup -c
-cd linux-%{linuxrel}
-%patch -P 0 -p1
-
-# Apply patches
-_patches=(
-        '0004-tty-serdev-support-shutdown-op.patch'
-        '0005-bluetooth-hci_serdev-Clear-registered-bit-on-unregis.patch'
-        '0006-bluetooth-hci_bcm-disable-power-on-shutdown.patch'
-        '0007-mmc-core-pwrseq_simple-disable-mmc-power-on-shutdown.patch'
-        '0024-arm64-dts-rockchip-setup-USB-type-c-port-as-dual-dat.patch'
-)
-for patch in "${_patches[@]}"; do
-  echo "Applying $patch"
-	patch -Np1 -i "%{srcdir}/linux-pbp/$patch"
-done
+%autosetup -p1
 
 # add sourcerelease to extraversion
-sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" Makefile
+sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" linux-%{linuxrel}/Makefile
 
 # don't run depmod on 'make install'. We'll do this ourselves in packaging
 sed -i '2iexit 0' scripts/depmod.sh
 
 # merge Manjaro config with Fedora config as base
-sed -i '/CONFIG_LOCALVERSION/d' %{srcdir}/linux-pbp/config
-sed -i '/APPARMOR/d' %{srcdir}/linux-pbp/config
-sed -i '/SELINUX/d' %{srcdir}/linux-pbp/config
-sed -i '/BOOTSPLASH/d' %{srcdir}/linux-pbp/config
-sed -i '/LOGO/d' %{srcdir}/linux-pbp/config
-sed -i '/BTRFS/d' %{srcdir}/linux-pbp/config
-sed -i '/_BPF/d' %{srcdir}/linux-pbp/config
-
-./scripts/kconfig/merge_config.sh ${RPM_SOURCE_DIR}/config %{srcdir}/linux-pbp/config
+sed -i '/-ARCH/d' config
+sed -i '/APPARMOR/d' config
+sed -i '/SELINUX/d' config
+sed -i '/BOOTSPLASH/d' config
+sed -i '/LOGO/d' config
+sed -i '/BTRFS/d' config
+sed -i '/_BPF/d' config
+sed -i '/_OCFS2/d' config
+.linux-%{linuxrel}/scripts/kconfig/merge_config.sh kernel-%{version}-aarch64.config config
 
 KARCH=arm64
 
@@ -83,6 +66,7 @@ make arch=arm64 -j `nproc` Image Image.gz modules
 make arch=arm64 -j `nproc` DTC_FLAGS="-@" dtbs
 
 %install
+
 mkdir -p %{buildroot}/{boot,usr/lib/modules}
 cd ${RPM_BUILD_DIR}/%{name}-%{version}/linux-%{linuxrel}
 make arch=arm64 -j `nproc` INSTALL_MOD_PATH=%{buildroot}/usr modules_install
@@ -124,15 +108,35 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
-* Mon Nov 30 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.11-1
-- Bump version kernel-pbp 5.9.11-1 - switch arch patches
+* Thu Jan 07 2021 Bengt Fredh <bengt@fredhs.net> - 5.10.5-1
+- Bump version kernel-pbp 5.10.5-1
+* Mon Jan 04 2021 Bengt Fredh <bengt@fredhs.net> - 5.10.4-1
+- Bump version kernel-pbp 5.10.4-1
+* Mon Jan 04 2021 Bengt Fredh <bengt@fredhs.net> - 5.10.3-2
+- add patch for USB-C data role on PBP
+* Mon Jan 04 2021 Bengt Fredh <bengt@fredhs.net> - 5.10.3-1
+- Bump version kernel-pbp 5.10.3-1
+* Wed Dec 30 2020 Bengt Fredh <bengt@fredhs.net> - 5.10.2-1
+- Bump version kernel-pbp 5.10.2-1
+* Tue Dec 15 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.14-1
+- Bump version kernel-pbp 5.9.14-1
+* Mon Dec 14 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.13-1
+- Bump version kernel-pbp 5.9.13-1
+* Mon Nov 23 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.12-2
+- Bump version kernel-pbp 5.9.12-2
+* Mon Nov 23 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.11-2
+- Bump version kernel-pbp 5.9.11-2
+* Mon Nov 23 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.9-4
+- Add dtbs to /usr/lib/modules
+* Mon Nov 23 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.9-3
+- Bump version kernel-pbp 5.9.9-3
 * Mon Nov 23 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.9-1
 - Bump version kernel-pbp 5.9.9-1
 * Tue Nov 17 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.8-1
 - Bump version kernel-pbp 5.9.8-1
-* Thu Nov 11 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.7-1
+* Wed Nov 11 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.7-1
 - Bump version 5.9.7-1
-* Thu Nov 7 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.1-3
+* Sat Nov 7 2020 Bengt Fredh <bengt@fredhs.net> - 5.9.1-3
 - Bump version 5.9.1-3
 * Sun Oct 25 2020 Bengt Fredh <bengt@fredhs.net> - 5.8.14-1
 - First version

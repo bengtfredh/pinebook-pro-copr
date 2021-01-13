@@ -1,7 +1,7 @@
 ## kernel-pbp
 
-Vanilla kernel build with Manjaro patches and Manjaro config merged on Fedora config.<LF>
-<LF>
+Vanilla kernel build with Manjaro patches and Manjaro config merged on Fedora config.  
+  
 ### New version:
 * Get Fedora config for version and push here
 * Update version and release in spec file
