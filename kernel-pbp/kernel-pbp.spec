@@ -7,7 +7,6 @@ Packager: Bengt Fredh <bengt@fredhs.net>
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
 %define srccommit ad92c2cc5e1eeb11b8c528ce553e1c76d20276ca
-%define _rpmdir kernel-pbp-%{version}
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -33,7 +32,7 @@ Requires: kernel-pbp-modules = %{version}
 Vanilla kernel with Fedora config patched for Pinebook Pro.
 
 %prep
-%autosetup -c -p1 
+%autosetup -p1 -n kernel-pbp-%{version}
 
 # add sourcerelease to extraversion
 sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" linux-%{linuxrel}/Makefile
