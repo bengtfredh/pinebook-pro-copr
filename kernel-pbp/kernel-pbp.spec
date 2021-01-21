@@ -32,16 +32,17 @@ Requires: kernel-pbp-modules = %{version}
 Vanilla kernel with Fedora config patched for Pinebook Pro.
 
 %prep
-%autosetup -c -n kernel-pbp-%{version} -Np1
+%autosetup -c -n kernel-pbp-%{version} -v -Np1
 
 # add sourcerelease to extraversion
 ls -ltr
 sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" linux-%{linuxrel}/Makefile
 
 # don't run depmod on 'make install'. We'll do this ourselves in packaging
-sed -i '2iexit 0' scripts/depmod.sh
+sed -i '2iexit 0' linux-%{linuxrel}/scripts/depmod.sh
 
 # merge Manjaro config with Fedora config as base
+cd linux-%{linuxrel}
 sed -i '/-ARCH/d' config
 sed -i '/APPARMOR/d' config
 sed -i '/SELINUX/d' config
