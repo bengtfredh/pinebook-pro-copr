@@ -1,7 +1,7 @@
 Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define name pinebookpro-extlinux
-%define version 1
+%define version 2
 %define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
 
@@ -38,14 +38,16 @@ ROOTUUID=$(findmnt / -o UUID -n)
 ROOTFSTYPE=$(findmnt / -o FSTYPE -n)
 # Edit extlinux.conf
 if [ ${ROOTFSTYPE}=btrfs ]; then
-sed -i -e "s!APPEND.*!APPEND console=tty1 console=ttyS2,1500000 root=UUID=${ROOTUUID} rw rootflags=subvol=root rhgb quiet !g" /boot/extlinux/extlinux.conf
+sed -i -e "s!APPEND.*!APPEND console=tty1 console=ttyS2,1500000 root=UUID=${ROOTUUID} rw rootflags=subvol=root splash plymouth.ignore-serial-consoles rhgb quiet !g" /boot/extlinux/extlinux.conf
 else
-sed -i -e "s!APPEND.*!APPEND console=tty1 console=ttyS2,1500000 root=UUID=${ROOTUUID} rw rhgb quiet !g" /boot/extlinux/extlinux.conf
+sed -i -e "s!APPEND.*!APPEND console=tty1 console=ttyS2,1500000 root=UUID=${ROOTUUID} rw splash plymouth.ignore-serial-consoles rhgb quiet !g" /boot/extlinux/extlinux.conf
 fi
 fi
 
 %preun
 
 %changelog
+* Thu Jan 21 2021 Bengt Fredh <bengt@fredhs.net> - 2-1
+- Add plymouth boot splash extlinux
 * Sat Nov 14 2020 Bengt Fredh <bengt@fredhs.net> - 1-1
 - First version
