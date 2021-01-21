@@ -32,7 +32,7 @@ Requires: kernel-pbp-modules = %{version}
 Vanilla kernel with Fedora config patched for Pinebook Pro.
 
 %prep
-%autosetup -c -n kernel-pbp-%{version} -p1
+%autosetup -c -n kernel-pbp-%{version} -Np1
 
 # add sourcerelease to extraversion
 ls -ltr
