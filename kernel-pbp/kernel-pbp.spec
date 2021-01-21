@@ -35,23 +35,22 @@ Vanilla kernel with Fedora config patched for Pinebook Pro.
 %autosetup -c -n kernel-pbp-%{version} -v -Np1
 
 # add sourcerelease to extraversion
-ls -ltr
 sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" linux-%{linuxrel}/Makefile
 
 # don't run depmod on 'make install'. We'll do this ourselves in packaging
 sed -i '2iexit 0' linux-%{linuxrel}/scripts/depmod.sh
 
 # merge Manjaro config with Fedora config as base
+sed -i '/-ARCH/d' ${RPM_SOURCE_DIR}/config
+sed -i '/APPARMOR/d' ${RPM_SOURCE_DIR}/config
+sed -i '/SELINUX/d' ${RPM_SOURCE_DIR}/config
+sed -i '/BOOTSPLASH/d' ${RPM_SOURCE_DIR}/config
+sed -i '/LOGO/d' ${RPM_SOURCE_DIR}/config
+sed -i '/BTRFS/d' ${RPM_SOURCE_DIR}/config
+sed -i '/_BPF/d' ${RPM_SOURCE_DIR}/config
+sed -i '/_OCFS2/d' ${RPM_SOURCE_DIR}/config
 cd linux-%{linuxrel}
-sed -i '/-ARCH/d' config
-sed -i '/APPARMOR/d' config
-sed -i '/SELINUX/d' config
-sed -i '/BOOTSPLASH/d' config
-sed -i '/LOGO/d' config
-sed -i '/BTRFS/d' config
-sed -i '/_BPF/d' config
-sed -i '/_OCFS2/d' config
-.linux-%{linuxrel}/scripts/kconfig/merge_config.sh kernel-%{version}-aarch64.config config
+./scripts/kconfig/merge_config.sh ${RPM_SOURCE_DIR}/kernel-%{version}-aarch64.config ${RPM_SOURCE_DIR}/config
 
 KARCH=arm64
 
