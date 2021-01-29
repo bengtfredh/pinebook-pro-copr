@@ -2,11 +2,11 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.10
-%define version 5.10.9
+%define version 5.10.10
 %define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
-%define srccommit 5e1439e26dc0f3c93ce68a7b3c4d1eb68054cfe9
+%define srccommit eaaa2000a19d8c04506abe934e5d470f2f64fcbf
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -76,7 +76,6 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch"                    #Bluetooth
   patch -Np1 -i "%{srcdir}/0003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch"                 #Bluetooth
   patch -Np1 -i "%{srcdir}/0004-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth on PineTab and PinePhone
-  #patch -Np1 -i "%{srcdir}/0005-Switch-PineTab-DT-LCD-panel-to-retail-one.patch"                        #PineTab
   patch -Np1 -i "%{srcdir}/0005-dt-bindings-arm-sunxi-add-PineTab-Early-Adopter-edition.patch"          #PineTab display
 
 # add sourcerelease to extraversion
@@ -152,6 +151,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Fri Jan 29 2021 Bengt Fredh <bengt@fredhs.net> - 5.10.10-1
+- Bump version kernel-pbp 5.10.10-1
 * Thu Jan 21 2021 Bengt Fredh <bengt@fredhs.net> - 5.10.9-1
 - Bump version kernel-pbp 5.10.9-1
 * Thu Jan 21 2021 Bengt Fredh <bengt@fredhs.net> - 5.10.8-1
