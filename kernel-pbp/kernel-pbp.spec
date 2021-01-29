@@ -1,7 +1,7 @@
 # Fedoraish Kernel Pinebook Pro
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
-%define linuxrel 5.11
+%define linuxrel 5.10
 %define version 5.10.11
 %define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
