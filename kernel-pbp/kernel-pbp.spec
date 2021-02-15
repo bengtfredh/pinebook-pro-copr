@@ -2,11 +2,11 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.10
-%define version 5.10.14
+%define version 5.10.15
 %define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
-%define srccommit 50f51a623fba62cbbcbbaba229490fef8789d356
+%define srccommit 406aa644cc97413208a971737ace141a82de55d2
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -43,7 +43,7 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0001-net-smsc95xx-Allow-mac-address-to-be-set-as-a-parame.patch"             #All
   patch -Np1 -i "%{srcdir}/0002-arm64-dts-rockchip-add-usb3-controller-node-for-RK33.patch"             #RK3328
   patch -Np1 -i "%{srcdir}/0003-arm64-dts-rockchip-enable-usb3-nodes-on-rk3328-rock6.patch"             #RK3328
-  
+
   # Manjaro ARM Patches
   patch -Np1 -i "%{srcdir}/0004-arm64-dts-rockchip-use-USB-host-by-default-on-rk3399-rock-pi-4.patch"   #Rock Pi 4
   patch -Np1 -i "%{srcdir}/0005-arm64-dts-rockchip-add-HDMI-sound-node-for-rk3328-ro.patch"             #Rock64
@@ -62,7 +62,7 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0018-ayufan-drm-rockchip-add-support-for-modeline-32MHz-e.patch"             #DP Alt mode
   patch -Np1 -i "%{srcdir}/0019-rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch"        #RockPro64
   patch -Np1 -i "%{srcdir}/0020-arm64-dts-rockchip-setup-USB-type-c-port-as-dual-data-role.patch"       #Pinebook Pro
-  
+
   # PineH64 patches
   patch -Np1 -i "%{srcdir}/0021-arm64-sun4i-hdmi-sound.patch"                                           #Sound
   patch -Np1 -i "%{srcdir}/0022-arm64-h6-bluetooth-1.patch"                                             #Bluetooth
@@ -152,6 +152,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Mon Feb 15 2021 Bengt Fredh <bengt@fredhs.net> - 5.10.15-1
+- Bump version kernel-pbp 5.10.15-1
 * Mon Feb 15 2021 Bengt Fredh <bengt@fredhs.net> - 5.10.14-1
 - Bump version kernel-pbp 5.10.14-1
 * Mon Feb 15 2021 Bengt Fredh <bengt@fredhs.net> - 5.10.13-1
