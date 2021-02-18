@@ -39,8 +39,8 @@ git checkout %{srccommit}
 cd linux-%{linuxrel}
 %patch -P 0 -p1
 
-patch -Np1 -i "${srcdir}/0007-pbp-support.patch" #Pinebook Pro
-patch -Np1 -i "${srcdir}/0020-arm64-dts-rockchip-setup-USB-type-c-port-as-dual-data-role.patch" #Pinebook Pro
+patch -Np1 -i "%{srcdir}/0007-pbp-support.patch" #Pinebook Pro
+patch -Np1 -i "%{srcdir}/0020-arm64-dts-rockchip-setup-USB-type-c-port-as-dual-data-role.patch" #Pinebook Pro
 
 # add sourcerelease to extraversion
 sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" Makefile
