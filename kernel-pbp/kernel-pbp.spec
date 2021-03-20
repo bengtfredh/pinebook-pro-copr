@@ -16,7 +16,7 @@ Group: System Environment/Kernel
 License: GPL2
 URL: https://git.kernel.org/
 ExclusiveArch: aarch64
-BuildRequires: git-core gcc flex bison openssl-devel bc perl openssl kmod filesystem zlib elfutils-libelf-devel
+BuildRequires: git-core wget gcc flex bison openssl-devel bc perl openssl kmod filesystem zlib elfutils-libelf-devel
 Source0: https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-%{linuxrel}.tar.xz
 #Source1: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/master/kernel-pbp/config
 Patch0: https://cdn.kernel.org/pub/linux/kernel/v5.x/patch-%{version}.xz
