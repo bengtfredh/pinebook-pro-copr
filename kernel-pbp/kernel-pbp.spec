@@ -16,14 +16,12 @@ Group: System Environment/Kernel
 License: GPL2
 URL: https://git.kernel.org/
 ExclusiveArch: aarch64
-BuildRequires: git-core wget gcc flex bison openssl-devel bc perl openssl kmod filesystem zlib elfutils-libelf-devel
+BuildRequires: git-core gcc flex bison openssl-devel bc perl openssl kmod filesystem zlib elfutils-libelf-devel
 Source0: https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-%{linuxrel}.tar.xz
 #Source1: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/master/kernel-pbp/config
 Patch0: https://cdn.kernel.org/pub/linux/kernel/v5.x/patch-%{version}.xz
-Requires: kernel-pbp-core = %{version}-%{release}
-Requires: kernel-pbp-modules = %{version}-%{release}
-Provides: kernel-pbp = %{version}-%{release}
-Conflicts: kernel
+Requires: kernel-pbp-core
+Requires: kernel-pbp-modules
 
 %global debug_package %{nil}
 
@@ -38,7 +36,7 @@ git checkout %{srccommit}
 
 mkdir -p ${RPM_SOURCE_DIR}/fedora-rpm
 cd ${RPM_SOURCE_DIR}/fedora-rpm
-wget https://kojipkgs.fedoraproject.org//packages/kernel/%{version}/200.fc33/aarch64/kernel-core-%{version}-200.fc33.aarch64.rpm
+curl -O https://kojipkgs.fedoraproject.org//packages/kernel/%{version}/200.fc33/aarch64/kernel-core-%{version}-200.fc33.aarch64.rpm
 rpm2cpio kernel-core-%{version}-200.fc33.aarch64.rpm | cpio -idmv
 
 # Unpack and apply base patches
@@ -145,8 +143,6 @@ install -Dt %{buildroot}/usr/lib/modules/${_kernver}/build -m644 vmlinux
 %package core
 Summary: Kernel Pinebook Pro Core
 Group: System Environment/Kernel
-Provides: kernel-pbp-core = %{version}-%{release}
-Conflicts: kernel-core
 %description core
 Vanilla kernel Core with Fedora config patched for Pinebook Pro.
 %files core
@@ -155,8 +151,6 @@ Vanilla kernel Core with Fedora config patched for Pinebook Pro.
 %package modules
 Summary: Kernel Pinebook Pro Modules
 Group: System Environment/Kernel
-Provides: kernel-pbp-modules = %{version}-%{release}
-Conflicts: kernel-modules
 %description modules
 Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 %files modules
@@ -166,7 +160,7 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
-* Sat Mar 20 2021 Bengt Fredh <bengt@fredhs.net> - 5.11.7-1
+* Sun Mar 21 2021 Bengt Fredh <bengt@fredhs.net> - 5.11.7-1
 - Bump version kernel-pbp 5.11.7-1
 * Fri Feb 19 2021 Bengt Fredh <bengt@fredhs.net> - 5.10.17-2
 - Bump version kernel-pbp 5.10.17-2
