@@ -2,11 +2,11 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.11
-%define version 5.11.7
+%define version 5.11.8
 %define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
-%define srccommit e79d1bb490a15d47e0b0aa12383d7848b6b62af7
+%define srccommit 4557ac474a7ec65ef507fb8b99d4262096c1e1ca
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -18,7 +18,6 @@ URL: https://git.kernel.org/
 ExclusiveArch: aarch64
 BuildRequires: git-core gcc flex bison openssl-devel bc perl openssl kmod filesystem zlib elfutils-libelf-devel
 Source0: https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-%{linuxrel}.tar.xz
-#Source1: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/master/kernel-pbp/config
 Patch0: https://cdn.kernel.org/pub/linux/kernel/v5.x/patch-%{version}.xz
 Requires: kernel-pbp-core
 Requires: kernel-pbp-modules
@@ -160,6 +159,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Wed Mar 24 2021 Bengt Fredh <bengt@fredhs.net> - 5.11.8-1
+- Bump version kernel-pbp 5.11.8-1
 * Sun Mar 21 2021 Bengt Fredh <bengt@fredhs.net> - 5.11.7-1
 - Bump version kernel-pbp 5.11.7-1
 * Fri Feb 19 2021 Bengt Fredh <bengt@fredhs.net> - 5.10.17-2
