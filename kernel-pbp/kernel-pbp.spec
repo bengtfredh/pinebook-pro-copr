@@ -4,6 +4,7 @@ Packager: Bengt Fredh <bengt@fredhs.net>
 %define linuxrel 5.11
 %define version 5.11.12
 %define sourcerelease 1
+%define rpmrelease 200.fc33
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
 %define srccommit 6ecd276a393494527808b6eaf957225fa4035c8b
@@ -35,8 +36,8 @@ git checkout %{srccommit}
 
 mkdir -p ${RPM_SOURCE_DIR}/fedora-rpm
 cd ${RPM_SOURCE_DIR}/fedora-rpm
-curl -O https://kojipkgs.fedoraproject.org//packages/kernel/%{version}/200.fc33/aarch64/kernel-core-%{version}-200.fc33.aarch64.rpm
-rpm2cpio kernel-core-%{version}-200.fc33.aarch64.rpm | cpio -idmv
+curl -O https://kojipkgs.fedoraproject.org//packages/kernel/%{version}/%{rpmrelease}/aarch64/kernel-core-%{version}-%{rpmrelease}.aarch64.rpm
+rpm2cpio kernel-core-%{version}-%{rpmrelease}.aarch64.rpm | cpio -idmv
 
 # Unpack and apply base patches
 %setup -c
@@ -101,7 +102,7 @@ sed -i '/LOGO/d' %{srcdir}/config
 sed -i '/BTRFS/d' %{srcdir}/config
 sed -i '/_BPF/d' %{srcdir}/config
 sed -i '/_OCFS2/d' %{srcdir}/config
-./scripts/kconfig/merge_config.sh ${RPM_SOURCE_DIR}/fedora-rpm/lib/modules/%{version}-200.fc33.aarch64/config %{srcdir}/config
+./scripts/kconfig/merge_config.sh ${RPM_SOURCE_DIR}/fedora-rpm/lib/modules/%{version}-%{rpmrelease}.aarch64/config %{srcdir}/config
 
 KARCH=arm64
 
