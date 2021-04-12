@@ -102,6 +102,13 @@ sed -i '/LOGO/d' %{srcdir}/config
 sed -i '/BTRFS/d' %{srcdir}/config
 sed -i '/_BPF/d' %{srcdir}/config
 sed -i '/_OCFS2/d' %{srcdir}/config
+
+# add config to kernel
+sed -i '/CONFIG_EXTRA_FIRMWARE/d' %{srcdir}/config
+sed -i '/CONFIG_EXTRA_FIRMWARE_DIR/d' %{srcdir}/config
+echo 'CONFIG_EXTRA_FIRMWARE="rockchip/dptx.bin"' >> %{srcdir}/config
+echo 'CONFIG_EXTRA_FIRMWARE_DIR="firmware/"' >> %{srcdir}/config
+
 ./scripts/kconfig/merge_config.sh ${RPM_SOURCE_DIR}/fedora-rpm/lib/modules/%{version}-%{rpmrelease}.aarch64/config %{srcdir}/config
 
 KARCH=arm64
