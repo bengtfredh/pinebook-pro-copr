@@ -2,12 +2,12 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.11
-%define version 5.11.12
+%define version 5.11.13
 %define sourcerelease 1
 %define rpmrelease 200.fc33
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
-%define srccommit 6ecd276a393494527808b6eaf957225fa4035c8b
+%define srccommit becd59c5927bd2f50c7326ae4df8f53aaf65a857
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -103,12 +103,6 @@ sed -i '/BTRFS/d' %{srcdir}/config
 sed -i '/_BPF/d' %{srcdir}/config
 sed -i '/_OCFS2/d' %{srcdir}/config
 
-# add config to kernel
-sed -i '/CONFIG_EXTRA_FIRMWARE/d' %{srcdir}/config
-sed -i '/CONFIG_EXTRA_FIRMWARE_DIR/d' %{srcdir}/config
-echo 'CONFIG_EXTRA_FIRMWARE="rockchip/dptx.bin"' >> %{srcdir}/config
-echo 'CONFIG_EXTRA_FIRMWARE_DIR="firmware/"' >> %{srcdir}/config
-
 ./scripts/kconfig/merge_config.sh ${RPM_SOURCE_DIR}/fedora-rpm/lib/modules/%{version}-%{rpmrelease}.aarch64/config %{srcdir}/config
 
 KARCH=arm64
@@ -167,6 +161,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Sat Apr 24 2021 Bengt Fredh <bengt@fredhs.net> - 5.11.13-1
+- Bump version kernel-pbp 5.11.13-1
 * Sat Apr 24 2021 Bengt Fredh <bengt@fredhs.net> - 5.11.12-1
 - Bump version kernel-pbp 5.11.12-1
 * Wed Mar 24 2021 Bengt Fredh <bengt@fredhs.net> - 5.11.9-1
