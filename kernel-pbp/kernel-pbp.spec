@@ -2,12 +2,12 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.11
-%define version 5.11.15
+%define version 5.11.16
 %define sourcerelease 1
 %define rpmrelease 200.fc33
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
-%define srccommit a260726dd621ad9676281345d88f10aaabe6b5c7
+%define srccommit b58a73f5d0523d18197ff3a67c40d7db607ec1e7
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -63,6 +63,8 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0014-arm64-rockchip-add-DP-ALT-rockpro64.patch"							    #DP Alt mode - RockPro64
   patch -Np1 -i "%{srcdir}/0015-ayufan-drm-rockchip-add-support-for-modeline-32MHz-e.patch"             #DP Alt mode
   patch -Np1 -i "%{srcdir}/0016-rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch"        #RockPro64
+  #patch -Np1 -i "%{srcdir}/0029-drm-meson-not-load-RGB709-to-YUV709-coefficient.patch"					#Odroid
+  patch -Np1 -i "%{srcdir}/0030-arm64-dts-allwinner-Revert-SD-card-CD-GPIO-for-Pine6.patch"				#Pine64-LTS
 
   # Pinebook Pro patches
   patch -Np1 -i "%{srcdir}/0017-tty-serdev-support-shutdown-op.patch"                                   #Wifi/BT
@@ -161,6 +163,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Sat Apr 24 2021 Bengt Fredh <bengt@fredhs.net> - 5.11.16-1
+- Bump version kernel-pbp 5.11.16-1
 * Sat Apr 24 2021 Bengt Fredh <bengt@fredhs.net> - 5.11.15-1
 - Bump version kernel-pbp 5.11.15-1
 * Sat Apr 24 2021 Bengt Fredh <bengt@fredhs.net> - 5.11.14-1
