@@ -15,7 +15,7 @@ Release: %{release}
 License: GPL2
 URL: https://gitlab.manjaro.org/manjaro-arm/packages/core/uboot-pinebookpro.git
 ExclusiveArch: aarch64
-Source0: https://manjaro.moson.org/arm-stable/core/aarch64/uboot-pinebookpro-%{version}-%{sourcerelease}-aarch64.pkg.tar.xz
+Source0: https://manjaro.moson.org/arm-stable/core/aarch64/uboot-pinebookpro-%{version}-%{sourcerelease}-aarch64.pkg.tar.zst
 
 %global debug_package %{nil}
 
