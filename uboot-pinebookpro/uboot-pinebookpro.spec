@@ -5,7 +5,7 @@ Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define name uboot-pinebookpro
 %define version 2021.04
-%define sourcerelease 1
+%define sourcerelease 2
 %define release %{sourcerelease}%{?dist}
 
 Summary: U-Boot Pinebook Pro 
@@ -45,6 +45,8 @@ echo "# dd if=/boot/u-boot.itb of=/dev/mmcblkX seek=16384 conv=notrunc,fsync"
 %preun
 
 %changelog
+* Sun May 09 2021 Bengt Fredh <bengt@fredhs.net> - 2021.04-2
+- Bump uboot-pinebookpro 2021.04-2
 * Wed Apr 28 2021 Bengt Fredh <bengt@fredhs.net> - 2021.04-1
 - Bump uboot-pinebookpro 2021.04-1
 * Thu Nov 05 2020 Bengt Fredh <bengt@fredhs.net> - 2020.10-1
