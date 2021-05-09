@@ -1,13 +1,13 @@
 # Fedoraish Kernel Pinebook Pro
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
-%define linuxrel 5.11
-%define version 5.11.16
-%define sourcerelease 1
-%define rpmrelease 200.fc33
+%define linuxrel 5.12
+%define version 5.12.2
+%define sourcerelease 2
+%define rpmrelease 300.fc34
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
-%define srccommit b58a73f5d0523d18197ff3a67c40d7db607ec1e7
+%define srccommit adfc1b0432ecc59f5e82e9753cab81b47a820c66
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -50,7 +50,6 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0003-arm64-dts-rockchip-enable-usb3-nodes-on-rk3328-rock6.patch"             #RK3328
 
   # Manjaro ARM Patches
-  patch -Np1 -i "%{srcdir}/0004-arm64-dts-rockchip-add-HDMI-sound-node-for-rk3328-ro.patch"             #Rock64
   patch -Np1 -i "%{srcdir}/0005-arm64-dts-allwinner-add-hdmi-sound-to-pine-devices.patch"               #Pine64
   patch -Np1 -i "%{srcdir}/0006-arm64-dts-allwinner-add-ohci-ehci-to-h5-nanopi.patch"                   #Nanopi Neo Plus 2
   patch -Np1 -i "%{srcdir}/0007-drm-bridge-analogix_dp-Add-enable_psr-param.patch"                      #Pinebook Pro
@@ -63,8 +62,10 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0014-arm64-rockchip-add-DP-ALT-rockpro64.patch"							    #DP Alt mode - RockPro64
   patch -Np1 -i "%{srcdir}/0015-ayufan-drm-rockchip-add-support-for-modeline-32MHz-e.patch"             #DP Alt mode
   patch -Np1 -i "%{srcdir}/0016-rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch"        #RockPro64
-  #patch -Np1 -i "%{srcdir}/0029-drm-meson-not-load-RGB709-to-YUV709-coefficient.patch"					#Odroid
-  patch -Np1 -i "%{srcdir}/0030-arm64-dts-allwinner-Revert-SD-card-CD-GPIO-for-Pine6.patch"				#Pine64-LTS
+  patch -Np1 -i "%{srcdir}/0029-fix-g12-hdmi.patch"                                                     #G12B
+  patch -Np1 -i "%{srcdir}/0030-arm64-dts-meson-add-initial-Beelink-GT1-Ultimate-dev.patch"             #Beelink
+  patch -Np1 -i "%{srcdir}/0031-add-ugoos-device.patch"                                                 #Ugoos
+  patch -Np1 -i "%{srcdir}/0032-drm-meson-fix-green-pink-color-distortion-set-from-u.patch"				#AMLogic
 
   # Pinebook Pro patches
   patch -Np1 -i "%{srcdir}/0017-tty-serdev-support-shutdown-op.patch"                                   #Wifi/BT
@@ -84,9 +85,12 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch"            #Bluetooth
   patch -Np1 -i "%{srcdir}/0002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch"                    #Bluetooth
   patch -Np1 -i "%{srcdir}/0003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch"                 #Bluetooth
-  patch -Np1 -i "%{srcdir}/0004-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth on PineTab and PinePhone
-  patch -Np1 -i "%{srcdir}/0005-dt-bindings-arm-sunxi-add-PineTab-Early-Adopter-edition.patch"          #PineTab screen
-  patch -Np1 -i "%{srcdir}/0006-staging-add-rtl8723cs-driver.patch"                                     #Wifi
+  patch -Np1 -i "%{srcdir}/0004-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth
+  patch -Np1 -i "%{srcdir}/0005-staging-add-rtl8723cs-driver.patch"                                     #Wifi
+  patch -Np1 -i "%{srcdir}/0006-pinetab-accelerometer.patch"                                            #accelerometer
+  patch -Np1 -i "%{srcdir}/0007-enable-jack-detection-pinetab.patch"                                    #Audio
+  patch -Np1 -i "%{srcdir}/0008-enable-hdmi-output-pinetab.patch"                                       #HDMI
+  patch -Np1 -i "%{srcdir}/0009-drm-panel-fix-PineTab-display.patch"                                    #Display
 
 # add sourcerelease to extraversion
 sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" Makefile
@@ -163,6 +167,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Sun May 09 2021 Bengt Fredh <bengt@fredhs.net> - 5.12.2-2
+- Bump version kernel-pbp 5.12.2-2
 * Sat Apr 24 2021 Bengt Fredh <bengt@fredhs.net> - 5.11.16-1
 - Bump version kernel-pbp 5.11.16-1
 * Sat Apr 24 2021 Bengt Fredh <bengt@fredhs.net> - 5.11.15-1
