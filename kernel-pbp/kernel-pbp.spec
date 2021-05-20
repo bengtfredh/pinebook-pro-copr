@@ -2,12 +2,12 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.12
-%define version 5.12.3
+%define version 5.12.4
 %define sourcerelease 1
 %define rpmrelease 300.fc34
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
-%define srccommit d69a295351a107254b757af511a571a611d82c5d
+%define srccommit 02a482aee84cc17987f014861b99fa7194387f9b
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -167,6 +167,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Thu May 20 2021 Bengt Fredh <bengt@fredhs.net> - 5.12.4-1
+- Bump version kernel-pbp 5.12.4-1
 * Thu May 20 2021 Bengt Fredh <bengt@fredhs.net> - 5.12.3-1
 - Bump version kernel-pbp 5.12.3-1
 * Sun May 09 2021 Bengt Fredh <bengt@fredhs.net> - 5.12.2-2
