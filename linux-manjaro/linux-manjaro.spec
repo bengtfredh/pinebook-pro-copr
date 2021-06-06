@@ -49,7 +49,7 @@ dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}
 - Bump linux-manjaro version 5.11.10-1
 * Sun Mar 21 2021 Bengt Fredh <bengt@fredhs.net> - 5.11.6-1
 - Bump linux-manjaro version 5.11.6-1
-* Thu Mar 27 2021 Bengt Fredh <bengt@fredhs.net> - 5.11.3-1
+* Thu Mar 18 2021 Bengt Fredh <bengt@fredhs.net> - 5.11.3-1
 - Bump linux-manjaro version 5.11.3-1
 * Sat Feb 27 2021 Bengt Fredh <bengt@fredhs.net> - 5.11.1-1
 - Bump linux-manjaro version 5.11.1-1
