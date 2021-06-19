@@ -2,7 +2,7 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.12
-%define version 5.12.9
+%define version 5.12.10
 %define sourcerelease 1
 %define rpmrelease 300.fc34
 %define release %{sourcerelease}%{?dist}
@@ -167,6 +167,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Sat Jun 19 2021 Bengt Fredh <bengt@fredhs.net> - 5.12.10-1
+- Bump version kernel-pbp 5.12.10-1
 * Sat Jun 19 2021 Bengt Fredh <bengt@fredhs.net> - 5.12.9-1
 - Bump version kernel-pbp 5.12.9-1
 * Fri May 28 2021 Bengt Fredh <bengt@fredhs.net> - 5.12.8-1
