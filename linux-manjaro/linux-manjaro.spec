@@ -3,7 +3,7 @@
 # Maintainer: Dan Johansen <strit@manjaro.org>
 Packager: Bengt Fredh <bengt@fredhs.net>
 
-%define version 5.13.0
+%define version 5.13.4
 %define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
 
@@ -37,6 +37,8 @@ tar -xvpf $RPM_SOURCE_DIR/linux-%{version}-%{sourcerelease}-aarch64.pkg.tar.zst 
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease}-MANJARO-ARM 1> /dev/null 2>&1
 
 %changelog
+* Fri Jul 23 2021 Bengt Fredh <bengt@fredhs.net> - 5.13.4-1
+- Bump linux-manjaro version 5.13.4-1
 * Wed Jul 07 2021 Bengt Fredh <bengt@fredhs.net> - 5.13.0-1
 - Bump linux-manjaro version 5.13.0-1
 * Sat Jun 19 2021 Bengt Fredh <bengt@fredhs.net> - 5.12.11-1
