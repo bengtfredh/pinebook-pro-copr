@@ -1,13 +1,13 @@
 # Fedoraish Kernel Pinebook Pro
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
-%define linuxrel 5.12
-%define version 5.12.13
+%define linuxrel 5.13
+%define version 5.13.4
 %define sourcerelease 1
-%define rpmrelease 300.fc34
+%define rpmrelease 200.fc34
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
-%define srccommit bf48fd62447a2e03e4b3603c6066621adb779be3
+%define srccommit 5134eb0a9e3887f7b72082e68ab5ac27174a31ee
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -46,51 +46,44 @@ cd linux-%{linuxrel}
 
   # ALARM patches
   patch -Np1 -i "%{srcdir}/0001-net-smsc95xx-Allow-mac-address-to-be-set-as-a-parame.patch"             #All
-  patch -Np1 -i "%{srcdir}/0002-arm64-dts-rockchip-add-usb3-controller-node-for-RK33.patch"             #RK3328
-  patch -Np1 -i "%{srcdir}/0003-arm64-dts-rockchip-enable-usb3-nodes-on-rk3328-rock6.patch"             #RK3328
 
   # Manjaro ARM Patches
-  patch -Np1 -i "%{srcdir}/0005-arm64-dts-allwinner-add-hdmi-sound-to-pine-devices.patch"               #Pine64
-  patch -Np1 -i "%{srcdir}/0006-arm64-dts-allwinner-add-ohci-ehci-to-h5-nanopi.patch"                   #Nanopi Neo Plus 2
-  patch -Np1 -i "%{srcdir}/0007-drm-bridge-analogix_dp-Add-enable_psr-param.patch"                      #Pinebook Pro
-  patch -Np1 -i "%{srcdir}/0008-gpu-drm-add-new-display-resolution-2560x1440.patch"             		#Odroid
-  patch -Np1 -i "%{srcdir}/0009-nuumio-panfrost-Silence-Panfrost-gem-shrinker-loggin.patch"             #Panfrost
-  patch -Np1 -i "%{srcdir}/0010-arm64-dts-rockchip-Add-Firefly-Station-p1-support.patch"                #Firelfy Station P1
-  patch -Np1 -i "%{srcdir}/0011-typec-displayport-some-devices-have-pin-assignments-reversed.patch"     #DP Alt Mode
-  patch -Np1 -i "%{srcdir}/0012-usb-typec-tcpm-Add-generic-extcon-for-tcpm-enabled-devices.patch"       #DP Alt mode
-  patch -Np1 -i "%{srcdir}/0013-usb-typec-tcpm-Add-generic-extcon-to-tcpm.patch"						#DP Alt mode
-  patch -Np1 -i "%{srcdir}/0014-arm64-rockchip-add-DP-ALT-rockpro64.patch"							    #DP Alt mode - RockPro64
-  patch -Np1 -i "%{srcdir}/0015-ayufan-drm-rockchip-add-support-for-modeline-32MHz-e.patch"             #DP Alt mode
-  patch -Np1 -i "%{srcdir}/0016-rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch"        #RockPro64
-  patch -Np1 -i "%{srcdir}/0029-fix-g12-hdmi.patch"                                                     #G12B
-  patch -Np1 -i "%{srcdir}/0030-arm64-dts-meson-add-initial-Beelink-GT1-Ultimate-dev.patch"             #Beelink
-  patch -Np1 -i "%{srcdir}/0031-add-ugoos-device.patch"                                                 #Ugoos
-  patch -Np1 -i "%{srcdir}/0032-drm-meson-fix-green-pink-color-distortion-set-from-u.patch"				#AMLogic
+  patch -Np1 -i "%{srcdir}/0002-arm64-dts-rockchip-add-usb3-node-to-roc-cc-rock64.patch"                #RK3328
+  patch -Np1 -i "%{srcdir}/0003-arm64-dts-allwinner-add-hdmi-sound-to-pine-devices.patch"               #Pine64
+  patch -Np1 -i "%{srcdir}/0004-arm64-dts-allwinner-add-ohci-ehci-to-h5-nanopi.patch"                   #Nanopi Neo Plus 2
+  patch -Np1 -i "%{srcdir}/0005-drm-bridge-analogix_dp-Add-enable_psr-param.patch"                      #Pinebook Pro
+  patch -Np1 -i "%{srcdir}/0006-gpu-drm-add-new-display-resolution-2560x1440.patch"                     #Odroid
+  patch -Np1 -i "%{srcdir}/0007-nuumio-panfrost-Silence-Panfrost-gem-shrinker-loggin.patch"             #Panfrost
+  patch -Np1 -i "%{srcdir}/0008-arm64-dts-rockchip-Add-Firefly-Station-p1-support.patch"                #Firelfy Station P1
+  patch -Np1 -i "%{srcdir}/0009-typec-displayport-some-devices-have-pin-assignments-reversed.patch"     #DP Alt Mode
+  patch -Np1 -i "%{srcdir}/0010-usb-typec-add-extcon-to-tcpm.patch"                                     #DP Alt Mode
+  patch -Np1 -i "%{srcdir}/0011-arm64-rockchip-add-DP-ALT-rockpro64.patch"                              #DP Alt mode - RockPro64
+  patch -Np1 -i "%{srcdir}/0012-ayufan-drm-rockchip-add-support-for-modeline-32MHz-e.patch"             #DP Alt mode
+  patch -Np1 -i "%{srcdir}/0013-rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch"        #RockPro64
+  patch -Np1 -i "%{srcdir}/0014-drm-meson-add-YUV422-output-support.patch"                              #G12B
+  patch -Np1 -i "%{srcdir}/0015-arm64-dts-meson-add-initial-Beelink-GT1-Ultimate-dev.patch"             #Beelink
+  patch -Np1 -i "%{srcdir}/0016-add-ugoos-device.patch"                                                 #Ugoos
+  patch -Np1 -i "%{srcdir}/0017-drm-meson-fix-green-pink-color-distortion-set-from-u.patch"             #AMLogic
+  patch -Np1 -i "%{srcdir}/0018-drm-bridge-dw-hdmi-disable-loading-of-DW-HDMI-CEC-sub-driver.patch"     #AMLogic
+  patch -Np1 -i "%{srcdir}/0019-drm-panfrost-Handle-failure-in-panfrost_job_hw_submit.patch"            #AMLogic
 
   # Pinebook Pro patches
-  patch -Np1 -i "%{srcdir}/0017-tty-serdev-support-shutdown-op.patch"                                   #Wifi/BT
-  patch -Np1 -i "%{srcdir}/0018-bluetooth-hci_serdev-Clear-registered-bit-on-unregister.patch"          #Bluetooth
-  patch -Np1 -i "%{srcdir}/0019-bluetooth-hci_bcm-disable-power-on-shutdown.patch"                      #Bluetooth
-  patch -Np1 -i "%{srcdir}/0020-mmc-core-pwrseq_simple-disable-mmc-power-on-shutdown.patch"             #Wifi
-  patch -Np1 -i "%{srcdir}/0021-usb-typec-bus-Catch-crash-due-to-partner-NULL-value.patch"              #USB-C
-  patch -Np1 -i "%{srcdir}/0022-phy-rockchip-typec-Set-extcon-capabilities.patch"                       #DP Alt mode
-  patch -Np1 -i "%{srcdir}/0023-usb-typec-altmodes-displayport-Add-hacky-generic-altmode.patch"         #DP Alt mode
-  patch -Np1 -i "%{srcdir}/0024-sound-soc-codecs-es8316-Run-micdetect-only-if-jack-status.patch"        #Audio
-  patch -Np1 -i "%{srcdir}/0025-ASoC-soc-jack.c-supported-inverted-jack-detect-GPIOs.patch"             #Audio
-  patch -Np1 -i "%{srcdir}/0026-arm64-dts-rockchip-add-typec-extcon-hack.patch"                         #DP Alt mode
-  patch -Np1 -i "%{srcdir}/0027-arm64-dts-rockchip-setup-USB-type-c-port-as-dual-data-role.patch"       #USB-C charging
+  patch -Np1 -i "%{srcdir}/0001-phy-rockchip-typec-Set-extcon-capabilities.patch"                       #DP Alt mode
+  patch -Np1 -i "%{srcdir}/0002-usb-typec-altmodes-displayport-Add-hacky-generic-altmode.patch"         #DP Alt mode
+  patch -Np1 -i "%{srcdir}/0003-arm64-dts-rockchip-add-typec-extcon-hack.patch"                         #DP Alt mode
+  patch -Np1 -i "%{srcdir}/0004-arm64-dts-rockchip-setup-USB-type-c-port-as-dual-data-role.patch"       #USB-C charging
 
   # Pinebook, PinePhone and PineTab patches
-  patch -Np1 -i "%{srcdir}/0028-revert-arm64-dts-allwinner-a64-Add-I2S2-node.patch"                     #Allwinner
-  patch -Np1 -i "%{srcdir}/0001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch"            #Bluetooth
-  patch -Np1 -i "%{srcdir}/0002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch"                    #Bluetooth
-  patch -Np1 -i "%{srcdir}/0003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch"                 #Bluetooth
-  patch -Np1 -i "%{srcdir}/0004-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth
-  patch -Np1 -i "%{srcdir}/0005-staging-add-rtl8723cs-driver.patch"                                     #Wifi
-  patch -Np1 -i "%{srcdir}/0006-pinetab-accelerometer.patch"                                            #accelerometer
-  patch -Np1 -i "%{srcdir}/0007-enable-jack-detection-pinetab.patch"                                    #Audio
-  patch -Np1 -i "%{srcdir}/0008-enable-hdmi-output-pinetab.patch"                                       #HDMI
-  patch -Np1 -i "%{srcdir}/0009-drm-panel-fix-PineTab-display.patch"                                    #Display
+  patch -Np1 -i "%{srcdir}/0001-revert-arm64-dts-allwinner-a64-Add-I2S2-node.patch"                     #Allwinner
+  patch -Np1 -i "%{srcdir}/0002-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch"            #Bluetooth
+  patch -Np1 -i "%{srcdir}/0003-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch"                    #Bluetooth
+  patch -Np1 -i "%{srcdir}/0004-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch"                 #Bluetooth
+  patch -Np1 -i "%{srcdir}/0005-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"             #Bluetooth
+  patch -Np1 -i "%{srcdir}/0006-staging-add-rtl8723cs-driver.patch"                                     #Wifi
+  patch -Np1 -i "%{srcdir}/0007-pinetab-accelerometer.patch"                                            #accelerometer
+  patch -Np1 -i "%{srcdir}/0008-enable-jack-detection-pinetab.patch"                                    #Audio
+  patch -Np1 -i "%{srcdir}/0009-enable-hdmi-output-pinetab.patch"                                       #HDMI
+  patch -Np1 -i "%{srcdir}/0010-drm-panel-fix-PineTab-display.patch"                                    #Display
 
 # add sourcerelease to extraversion
 sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" Makefile
@@ -167,6 +160,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Wed Jul 28 2021 Bengt Fredh <bengt@fredhs.net> - 5.13.4-1
+- Bump version kernel-pbp 5.13.4-1
 * Sat Jul 03 2021 Bengt Fredh <bengt@fredhs.net> - 5.12.13-1
 - Bump version kernel-pbp 5.12.13-1
 * Sat Jun 19 2021 Bengt Fredh <bengt@fredhs.net> - 5.12.12-1
