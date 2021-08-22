@@ -2,12 +2,12 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.13
-%define version 5.13.4
+%define version 5.13.12
 %define sourcerelease 1
 %define rpmrelease 200.fc34
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
-%define srccommit 5134eb0a9e3887f7b72082e68ab5ac27174a31ee
+%define srccommit ccc51b36f5c6c435c5177ba481daddfeb17e59d6
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -44,9 +44,6 @@ rpm2cpio kernel-core-%{version}-%{rpmrelease}.aarch64.rpm | cpio -idmv
 cd linux-%{linuxrel}
 %patch -P 0 -p1
 
-  # ALARM patches
-  patch -Np1 -i "%{srcdir}/0001-net-smsc95xx-Allow-mac-address-to-be-set-as-a-parame.patch"             #All
-
   # Manjaro ARM Patches
   patch -Np1 -i "%{srcdir}/0002-arm64-dts-rockchip-add-usb3-node-to-roc-cc-rock64.patch"                #RK3328
   patch -Np1 -i "%{srcdir}/0003-arm64-dts-allwinner-add-hdmi-sound-to-pine-devices.patch"               #Pine64
@@ -63,7 +60,6 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0014-drm-meson-add-YUV422-output-support.patch"                              #G12B
   patch -Np1 -i "%{srcdir}/0015-arm64-dts-meson-add-initial-Beelink-GT1-Ultimate-dev.patch"             #Beelink
   patch -Np1 -i "%{srcdir}/0016-add-ugoos-device.patch"                                                 #Ugoos
-  patch -Np1 -i "%{srcdir}/0017-drm-meson-fix-green-pink-color-distortion-set-from-u.patch"             #AMLogic
   patch -Np1 -i "%{srcdir}/0018-drm-bridge-dw-hdmi-disable-loading-of-DW-HDMI-CEC-sub-driver.patch"     #AMLogic
   patch -Np1 -i "%{srcdir}/0019-drm-panfrost-Handle-failure-in-panfrost_job_hw_submit.patch"            #AMLogic
 
@@ -160,6 +156,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Sun Aug 22 2021 Bengt Fredh <bengt@fredhs.net> - 5.13.12-1
+- Bump version kernel-pbp 5.13.12-1
 * Wed Jul 28 2021 Bengt Fredh <bengt@fredhs.net> - 5.13.4-1
 - Bump version kernel-pbp 5.13.4-1
 * Sat Jul 03 2021 Bengt Fredh <bengt@fredhs.net> - 5.12.13-1
