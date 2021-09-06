@@ -37,6 +37,8 @@ tar -xvpf $RPM_SOURCE_DIR/linux-%{version}-%{sourcerelease}-aarch64.pkg.tar.zst 
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease}-MANJARO-ARM 1> /dev/null 2>&1
 
 %changelog
+* Mon Sep 06 2021 Bengt Fredh <bengt@fredhs.net> - 5.14.1-1
+- Bump linux-manjaro version 5.14.1-1
 * Sun Aug 22 2021 Bengt Fredh <bengt@fredhs.net> - 5.13.12-1
 - Bump linux-manjaro version 5.13.12-1
 * Thu Aug 05 2021 Bengt Fredh <bengt@fredhs.net> - 5.13.7-1
