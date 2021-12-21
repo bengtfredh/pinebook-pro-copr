@@ -2,12 +2,12 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.15
-%define version 5.15.5
+%define version 5.15.10
 %define sourcerelease 1
 %define rpmrelease 200.fc35
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
-%define srccommit 49499e516c1f8ca48b12bf2d3f252636cb620218
+%define srccommit 3c64ec69a3791616e66258a43b3e98f4c5590dad
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -69,7 +69,6 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/0022-arm64-dts-rockchip-Add-pcie-bus-scan-delay-to-rockpr.patch"             #RockPro64
   patch -Np1 -i "%{srcdir}/0023-drm-rockchip-support-gamma-control-on-RK3399.patch"                     #RK3399
   patch -Np1 -i "%{srcdir}/0024-Bluetooth-btsdio-Do-not-bind-to-non-removable-BCM4345-and-BCM43455.patch" #Bluetooth
-  patch -Np1 -i "%{srcdir}/0025-usb-typec-fusb302-fix-masking-of-comparator.patch"                      #USB-C
   patch -Np1 -i "%{srcdir}/0026-arm64-dts-rockchip-Add-back-cdn_dp-to-Pinebook-Pro.patch"               #DP Alt mode - Pinebook Pro
   
   # Pinebook Pro patches
@@ -161,6 +160,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Tue Dec 21 2021 Bengt Fredh <bengt@fredhs.net> - 5.15.10-1
+- Bump version kernel-pbp 5.15.10-1
 * Wed Dec 01 2021 Bengt Fredh <bengt@fredhs.net> - 5.15.5-1
 - Bump version kernel-pbp 5.15.5-1
 * Fri Oct 29 2021 Bengt Fredh <bengt@fredhs.net> - 5.14.13-1
