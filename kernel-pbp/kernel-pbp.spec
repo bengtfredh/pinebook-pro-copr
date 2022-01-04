@@ -2,12 +2,12 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.15
-%define version 5.15.10
+%define version 5.15.11
 %define sourcerelease 1
 %define rpmrelease 200.fc35
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
-%define srccommit 3c64ec69a3791616e66258a43b3e98f4c5590dad
+%define srccommit d19f88490aba09bf922c5217d20347b60440551e
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -43,6 +43,7 @@ rpm2cpio kernel-core-%{version}-%{rpmrelease}.aarch64.rpm | cpio -idmv
 %setup -c
 cd linux-%{linuxrel}
 %patch -P 0 -p1
+
 
   # ALARM patches
   patch -Np1 -i "%{srcdir}/0001-net-smsc95xx-Allow-mac-address-to-be-set-as-a-parame.patch"             #All
@@ -160,6 +161,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Tue Jan 04 2022 Bengt Fredh <bengt@fredhs.net> - 5.15.11-1
+- Bump version kernel-pbp 5.15.11-1
 * Tue Dec 21 2021 Bengt Fredh <bengt@fredhs.net> - 5.15.10-1
 - Bump version kernel-pbp 5.15.10-1
 * Wed Dec 01 2021 Bengt Fredh <bengt@fredhs.net> - 5.15.5-1
