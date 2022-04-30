@@ -1,13 +1,13 @@
 # Fedoraish Kernel Pinebook Pro
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
-%define linuxrel 5.16
-%define version 5.16.16
+%define linuxrel 5.17
+%define version 5.17.5
 %define sourcerelease 1
 %define rpmrelease 200.fc35
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
-%define srccommit ccc11fcd371dc9d1a1b7f2b440ca6b61f955d34c
+%define srccommit 22f5b4a710c1e67be1c59d383dff205d871019f5
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -44,60 +44,48 @@ rpm2cpio kernel-core-%{version}-%{rpmrelease}.aarch64.rpm | cpio -idmv
 cd linux-%{linuxrel}
 %patch -P 0 -p1
 
-  # Assorted Manjaro ARM patches
-  patch -Np1 -i "%{srcdir}/1001-arm64-dts-allwinner-add-hdmi-sound-to-pine-devices.patch"            # Pine64
+  patch -Np1 -i "%{srcdir}/1001-arm64-dts-allwinner-add-hdmi-sound-to-pine-devices.patch"            # A64-based devices
   patch -Np1 -i "%{srcdir}/1002-arm64-dts-allwinner-add-ohci-ehci-to-h5-nanopi.patch"                # Nanopi Neo Plus 2
-  patch -Np1 -i "%{srcdir}/1003-drm-bridge-analogix_dp-Add-enable_psr-param.patch"                   # Pinebook Pro
+  patch -Np1 -i "%{srcdir}/1003-drm-bridge-analogix_dp-Add-enable_psr-param.patch"                   # Pinebook Pro;  From list: https://patchwork.kernel.org/project/dri-devel/patch/20200626033023.24214-2-shawn@anastas.io/
   patch -Np1 -i "%{srcdir}/1004-gpu-drm-add-new-display-resolution-2560x1440.patch"                  # Odroid
   patch -Np1 -i "%{srcdir}/1005-panfrost-Silence-Panfrost-gem-shrinker-loggin.patch"                 # Panfrost
-  patch -Np1 -i "%{srcdir}/1006-arm64-dts-rockchip-Add-Firefly-Station-p1-support.patch"             # Firelfy Station P1
+  patch -Np1 -i "%{srcdir}/1006-arm64-dts-rockchip-Add-Firefly-Station-p1-support.patch"             # Firefly Station P1
   patch -Np1 -i "%{srcdir}/1007-drm-rockchip-add-support-for-modeline-32MHz-e.patch"                 # DP Alt Mode
   patch -Np1 -i "%{srcdir}/1008-rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch"     # RockPro64
-  patch -Np1 -i "%{srcdir}/1009-drm-meson-add-YUV422-output-support.patch"                           # Meson G12B
-  patch -Np1 -i "%{srcdir}/1010-arm64-dts-meson-add-initial-Beelink-GT1-Ultimate-dev.patch"          # Beelink
-  patch -Np1 -i "%{srcdir}/1011-add-dts-meson-g12b-ugoos-am6-plus.patch"                             # Meson Ugoos
-  patch -Np1 -i "%{srcdir}/1012-drm-panfrost-scheduler-improvements.patch"                           # Panfrost
+  patch -Np1 -i "%{srcdir}/1009-drm-meson-encoder-add-YUV422-output-support.patch"                   # Meson G12B
+  patch -Np1 -i "%{srcdir}/1010-arm64-dts-amlogic-add-initial-Beelink-GT1-Ultimate-dev.patch"        # Beelink GT1 Ultimate
+  patch -Np1 -i "%{srcdir}/1011-arm64-dts-amlogic-add-meson-g12b-ugoos-am6-plus.patch"               # Meson Ugoos
+  patch -Np1 -i "%{srcdir}/1012-drm-panfrost-scheduler-improvements.patch"                           # Panfrost;  Will be submitted upstream by the author
   patch -Np1 -i "%{srcdir}/1013-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-RockPr.patch"          # RockPro64
-  patch -Np1 -i "%{srcdir}/1014-drm-rockchip-support-gamma-control-on-RK3399.patch"                  # RK3399 VOP
-  patch -Np1 -i "%{srcdir}/1015-media-rockchip-rga-do-proper-error-checking-in-probe.patch"          # Rockchip RGA
-  #patch -Np1 -i "%{srcdir}/1016-arm-dts-rockchip-firefly-station-m2.patch"                          # Firefly Station M2
-  #patch -Np1 -i "%{srcdir}/1017-add-dts-rk3568-station-p2.patch"                                    # Firefly Station P2
-  #patch -Np1 -i "%{srcdir}/1018-add-dts-rk3568-radxa-rock3a.patch"                                  # Radxa Rock 3A
-  patch -Np1 -i "%{srcdir}/1019-arm64-dts-rockchip-switch-to-hs200-on-rockpi4.patch"                 # Radxa Rock Pi 4
-  patch -Np1 -i "%{srcdir}/1020-arm64-dts-meson-remove-CPU-opps-below-1GHz-for-G12B-boards.patch"    # AMLogic [1/2]
-  patch -Np1 -i "%{srcdir}/1021-arm64-dts-meson-remove-CPU-opps-below-1GHz-for-SM1-boards.patch"     # AMLogic [2/2]
-  patch -Np1 -i "%{srcdir}/1022-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-Rock-P.patch"          # Radxa Rock Pi 4
+  patch -Np1 -i "%{srcdir}/1014-drm-rockchip-support-gamma-control-on-RK3399.patch"                  # RK3399 VOP;  From list: https://patchwork.kernel.org/project/linux-arm-kernel/cover/20211019215843.42718-1-sigmaris@gmail.com/
+  patch -Np1 -i "%{srcdir}/1015-arm64-dts-rockchip-switch-to-hs200-on-rockpi4.patch"                 # Radxa Rock Pi 4;  Temporary hotfix, not for upstreaming
+  patch -Np1 -i "%{srcdir}/1016-arm64-dts-meson-remove-CPU-opps-below-1GHz-for-G12B-boards.patch"    # AMLogic [1/2];  From list: https://patchwork.kernel.org/project/linux-amlogic/patch/20220210100638.19130-2-christianshewitt@gmail.com/
+  patch -Np1 -i "%{srcdir}/1017-arm64-dts-meson-remove-CPU-opps-below-1GHz-for-SM1-boards.patch"     # AMLogic [2/2];  From list: https://patchwork.kernel.org/project/linux-amlogic/patch/20220210100638.19130-3-christianshewitt@gmail.com/
+  patch -Np1 -i "%{srcdir}/1018-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-Rock-P.patch"          # Radxa Rock Pi 4
+  patch -Np1 -i "%{srcdir}/2001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch"         # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-2-anarsoul@gmail.com/
+  patch -Np1 -i "%{srcdir}/2002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch"                 # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-3-anarsoul@gmail.com/
+  patch -Np1 -i "%{srcdir}/2003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch"              # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-4-anarsoul@gmail.com/
+  patch -Np1 -i "%{srcdir}/2004-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"          # Bluetooth;  The PinePhone part is in linux-next
+  patch -Np1 -i "%{srcdir}/2005-staging-add-rtl8723cs-driver.patch"                                  # Realtek WiFi;  Not upstreamable
+  patch -Np1 -i "%{srcdir}/2006-arm64-dts-allwinner-pinetab-add-accelerometer.patch"                 # PineTab Accelerometer
+  patch -Np1 -i "%{srcdir}/2007-arm64-dts-allwinner-pinetab-enable-jack-detection.patch"             # PineTab Audio
+  patch -Np1 -i "%{srcdir}/2008-brcmfmac-USB-probing-provides-no-board-type.patch"                   # Bluetooth;  Will be submitted upstream by the author
+  patch -Np1 -i "%{srcdir}/2009-dts-rockchip-Adapt-and-adopt-Type-C-support-from-Pin.patch"          # RockPro64 DP Alt Mode;  Not upstreamable
+  patch -Np1 -i "%{srcdir}/3170-arm64-dts-rk3399-pinebook-pro-Fix-USB-PD-charging.patch"             # Third set of patches: START
+  patch -Np1 -i "%{srcdir}/3172-arm64-dts-rk3399-pinebook-pro-Improve-Type-C-support.patch"          # Pinebook Pro Type-C patches from megous; original patch numbers found
+  patch -Np1 -i "%{srcdir}/3174-arm64-dts-rk3399-pinebook-pro-Remove-redundant-pinct.patch"          # on https://xff.cz/kernels/5.17/patches/ are retained, with just the first
+  patch -Np1 -i "%{srcdir}/3178-arm64-dts-rk3399-pinebook-pro-Don-t-allow-usb2-phy-d.patch"          # digit changed from 0 to 3, to make tracking easier
+  patch -Np1 -i "%{srcdir}/3339-drm-rockchip-cdn-dp-Disable-CDN-DP-on-disconnect.patch"
+  patch -Np1 -i "%{srcdir}/3355-usb-typec-fusb302-Set-the-current-before-enabling-pu.patch"
+  patch -Np1 -i "%{srcdir}/3359-usb-typec-fusb302-Update-VBUS-state-even-if-VBUS-int.patch"
+  patch -Np1 -i "%{srcdir}/3361-usb-typec-fusb302-Add-OF-extcon-support.patch"
+  patch -Np1 -i "%{srcdir}/3362-usb-typec-fusb302-Fix-register-definitions.patch"
+  patch -Np1 -i "%{srcdir}/3363-usb-typec-fusb302-Clear-interrupts-before-we-start-t.patch"
+  patch -Np1 -i "%{srcdir}/3364-usb-typec-typec-extcon-Add-typec-extcon-bridge-drive.patch"
+  patch -Np1 -i "%{srcdir}/3365-phy-rockchip-typec-Make-sure-the-plug-orientation-is.patch"
+  patch -Np1 -i "%{srcdir}/3372-phy-rockchip-inno-usb2-More-robust-charger-detection.patch"
+  patch -Np1 -i "%{srcdir}/3373-usb-typec-extcon-Don-t-touch-charger-proprties.patch"
 
-  # Assorted Pinebook, PinePhone and PineTab patches
-  patch -Np1 -i "%{srcdir}/2001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch"         # Bluetooth
-  patch -Np1 -i "%{srcdir}/2002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch"                 # Bluetooth
-  patch -Np1 -i "%{srcdir}/2003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch"              # Bluetooth
-  patch -Np1 -i "%{srcdir}/2004-arm64-dts-allwinner-enable-bluetooth-pinetab-pinepho.patch"          # Bluetooth
-  patch -Np1 -i "%{srcdir}/2005-staging-add-rtl8723cs-driver.patch"                                  # Realtek WiFi
-  patch -Np1 -i "%{srcdir}/2006-arm64-dts-allwinner-pinetab-add-accelerometer.patch"                 # Accelerometer
-  patch -Np1 -i "%{srcdir}/2007-arm64-dts-allwinner-pinetab-enable-jack-detection.patch"             # Audio
-  patch -Np1 -i "%{srcdir}/2008-Bluetooth-Read-codec-capabilities-only-if-supported.patch"           # Bluetooth
-  patch -Np1 -i "%{srcdir}/2009-btsdio-Do-not-bind-to-non-removable-BCM4345-and-BCM43455.patch"      # Bluetooth
-  patch -Np1 -i "%{srcdir}/2010-brcmfmac-USB-probing-provides-no-board-type.patch"                   # Bluetooth
-  patch -Np1 -i "%{srcdir}/2011-dts-rockchip-Adapt-and-adopt-Type-C-support-from-Pin.patch"          # DP Alt Mode
-
-  # Pinebook Pro Type-C patches from megous; original patch numbers found
-  # on https://xff.cz/kernels/5.16/patches/ are retained, with just the first
-  # digit changed from 0 to 3, to make tracking easier
-  patch -Np1 -i "%{srcdir}/3172-arm64-dts-rk3399-pinebook-pro-Fix-USB-PD-charging.patch"
-  patch -Np1 -i "%{srcdir}/3174-arm64-dts-rk3399-pinebook-pro-Improve-Type-C-support.patch"
-  patch -Np1 -i "%{srcdir}/3176-arm64-dts-rk3399-pinebook-pro-Remove-redundant-pinct.patch"
-  patch -Np1 -i "%{srcdir}/3376-drm-rockchip-cdn-dp-Disable-CDN-DP-on-disconnect.patch"
-  patch -Np1 -i "%{srcdir}/3392-usb-typec-fusb302-Set-the-current-before-enabling-pu.patch"
-  patch -Np1 -i "%{srcdir}/3396-usb-typec-fusb302-Update-VBUS-state-even-if-VBUS-int.patch"
-  patch -Np1 -i "%{srcdir}/3398-usb-typec-fusb302-Add-OF-extcon-support.patch"
-  patch -Np1 -i "%{srcdir}/3399-usb-typec-fusb302-Fix-register-definitions.patch"
-  patch -Np1 -i "%{srcdir}/3400-usb-typec-fusb302-Clear-interrupts-before-we-start-t.patch"
-  patch -Np1 -i "%{srcdir}/3401-usb-typec-typec-extcon-Add-typec-extcon-bridge-drive.patch"
-  patch -Np1 -i "%{srcdir}/3402-phy-rockchip-typec-Make-sure-the-plug-orientation-is.patch"
-  patch -Np1 -i "%{srcdir}/3457-phy-rockchip-inno-usb2-More-robust-charger-detection.patch"
-  patch -Np1 -i "%{srcdir}/3458-usb-typec-extcon-Don-t-touch-charger-proprties.patch"
-  patch -Np1 -i "%{srcdir}/3459-arm64-dts-rk3399-pinebook-pro-Don-t-allow-usb2-phy-d.patch"
 
 # add sourcerelease to extraversion
 sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" Makefile
@@ -174,6 +162,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Sat Apr 30 2022 Bengt Fredh <bengt@fredhs.net> - 5.17.5-1
+- Bump version kernel-pbp 5.17.5-1
 * Sat Apr 30 2022 Bengt Fredh <bengt@fredhs.net> - 5.16.16-1
 - Bump version kernel-pbp 5.16.16-1
 * Tue Jan 04 2022 Bengt Fredh <bengt@fredhs.net> - 5.15.11-1
