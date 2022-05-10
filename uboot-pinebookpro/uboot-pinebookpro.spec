@@ -53,7 +53,7 @@ echo "# dd if=/boot/u-boot.itb of=/dev/mmcblkX seek=16384 conv=notrunc,fsync"
 - Bump uboot-pinebookpro 2021.07-3
 * Thu Aug 05 2021 Bengt Fredh <bengt@fredhs.net> - 2021.07-2
 - Bump uboot-pinebookpro 2021.07-2
-* Fri Jun 23 2021 Bengt Fredh <bengt@fredhs.net> - 2021.07-1
+* Wed Jun 23 2021 Bengt Fredh <bengt@fredhs.net> - 2021.07-1
 - Bump uboot-pinebookpro 2021.07-1
 * Sun Jun 06 2021 Bengt Fredh <bengt@fredhs.net> - 2021.04-3
 - Bump uboot-pinebookpro 2021.04-3

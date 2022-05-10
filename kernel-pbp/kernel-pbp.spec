@@ -3,11 +3,11 @@ Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define linuxrel 5.17
 %define version 5.17.5
-%define sourcerelease 1
+%define sourcerelease 2
 %define rpmrelease 200.fc35
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
-%define srccommit 22f5b4a710c1e67be1c59d383dff205d871019f5
+%define srccommit 693a27d80d1d2feb1fc866428094d9088db66d54
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -62,6 +62,10 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/1016-arm64-dts-meson-remove-CPU-opps-below-1GHz-for-G12B-boards.patch"    # AMLogic [1/2];  From list: https://patchwork.kernel.org/project/linux-amlogic/patch/20220210100638.19130-2-christianshewitt@gmail.com/
   patch -Np1 -i "%{srcdir}/1017-arm64-dts-meson-remove-CPU-opps-below-1GHz-for-SM1-boards.patch"     # AMLogic [2/2];  From list: https://patchwork.kernel.org/project/linux-amlogic/patch/20220210100638.19130-3-christianshewitt@gmail.com/
   patch -Np1 -i "%{srcdir}/1018-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-Rock-P.patch"          # Radxa Rock Pi 4
+  patch -Np1 -i "%{srcdir}/1019-ASOC-sun9i-hdmi-audio-Initial-implementation.patch"                  # Allwinner H6 HDMI audio
+  patch -Np1 -i "%{srcdir}/1020-arm64-dts-allwinner-h6-Add-hdmi-sound-card.patch"                    # Allwinner H6 HDMI audio
+  patch -Np1 -i "%{srcdir}/1021-arm64-dts-allwinner-h6-Enable-hdmi-sound-card-on-boards.patch"       # Allwinner H6 HDMI audio
+  patch -Np1 -i "%{srcdir}/1022-arm64-dts-allwinner-add-OrangePi-3-LTS.patch"                        # OrangePi 3 LTS
   patch -Np1 -i "%{srcdir}/2001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch"         # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-2-anarsoul@gmail.com/
   patch -Np1 -i "%{srcdir}/2002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch"                 # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-3-anarsoul@gmail.com/
   patch -Np1 -i "%{srcdir}/2003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch"              # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-4-anarsoul@gmail.com/
@@ -84,8 +88,7 @@ cd linux-%{linuxrel}
   patch -Np1 -i "%{srcdir}/3364-usb-typec-typec-extcon-Add-typec-extcon-bridge-drive.patch"
   patch -Np1 -i "%{srcdir}/3365-phy-rockchip-typec-Make-sure-the-plug-orientation-is.patch"
   patch -Np1 -i "%{srcdir}/3372-phy-rockchip-inno-usb2-More-robust-charger-detection.patch"
-  patch -Np1 -i "%{srcdir}/3373-usb-typec-extcon-Don-t-touch-charger-proprties.patch"
-
+  patch -Np1 -i "%{srcdir}/3373-usb-typec-extcon-Don-t-touch-charger-proprties.patch"                # Third set of patches: END
 
 # add sourcerelease to extraversion
 sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" Makefile
@@ -162,6 +165,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Wed May 11 2022 Bengt Fredh <bengt@fredhs.net> - 5.17.5-2
+- Bump version kernel-pbp 5.17.5-2
 * Sat Apr 30 2022 Bengt Fredh <bengt@fredhs.net> - 5.17.5-1
 - Bump version kernel-pbp 5.17.5-1
 * Sat Apr 30 2022 Bengt Fredh <bengt@fredhs.net> - 5.16.16-1
