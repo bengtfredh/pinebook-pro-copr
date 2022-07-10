@@ -14,7 +14,7 @@ Release: %{release}
 License: GPL2
 URL: https://gitlab.manjaro.org/manjaro-arm/packages/core/linux.git
 ExclusiveArch: aarch64
-Source0: https://repo.ialab.dsu.edu/manjaro/arm-stable/core/aarch64/linux-%{version}-%{sourcerelease}-aarch64.pkg.tar.zst
+Source0: https://manjaro.moson.eu/arm-stable/core/aarch64/linux-%{version}-%{sourcerelease}-aarch64.pkg.tar.zst
 
 %global debug_package %{nil}
 
