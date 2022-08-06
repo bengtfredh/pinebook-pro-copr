@@ -5,7 +5,7 @@ Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define name uboot-pinebookpro
 %define version 2022.04
-%define sourcerelease 3
+%define sourcerelease 4
 %define release %{sourcerelease}%{?dist}
 
 Summary: U-Boot Pinebook Pro 
@@ -45,6 +45,8 @@ echo "# dd if=/boot/u-boot.itb of=/dev/mmcblkX seek=16384 conv=notrunc,fsync"
 %preun
 
 %changelog
+* Fri Aug 05 2022 Bengt Fredh <bengt@fredhs.net> - 2022.04-4
+- Bump uboot-pinebookpro 2022.04-4
 * Sat Jun 25 2022 Bengt Fredh <bengt@fredhs.net> - 2022.04-3
 - Bump uboot-pinebookpro 2022.04-3
 * Tue Jun 03 2022 Bengt Fredh <bengt@fredhs.net> - 2022.04-2
