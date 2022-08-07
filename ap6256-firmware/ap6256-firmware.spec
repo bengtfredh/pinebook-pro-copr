@@ -2,7 +2,7 @@
 
 %define name ap6256-firmware
 %define version 2020.02
-%define sourcerelease 6
+%define sourcerelease 10
 %define release %{sourcerelease}%{?dist}
 
 Summary: ap6256-firmware
@@ -35,7 +35,8 @@ install -Dm644 ${RPM_BUILD_DIR}/%{name}/BCM4345C5.hcd -t %{buildroot}/usr/lib/fi
 install -Dm644 ${RPM_BUILD_DIR}/%{name}/fw_bcm43456c5_ag.bin -t %{buildroot}/usr/lib/firmware/brcm/
 install -Dm644 ${RPM_BUILD_DIR}/%{name}/brcmfmac43456-sdio.clm_blob -t %{buildroot}/usr/lib/firmware/brcm/
 install -Dm644 ${RPM_BUILD_DIR}/%{name}/brcmfmac43456-sdio.AP6256.txt -t %{buildroot}/usr/lib/firmware/brcm/
-install -Dm644 ${RPM_BUILD_DIR}/%{name}/brcmfmac43456-sdio.AP6256.txt %{buildroot}/usr/lib/firmware/brcm/brcmfmac43456-sdio.pine64,pinebook-pro.txt
+ln -s brcmfmac43456-sdio.AP6256.txt %{buildroot}/usr/lib/firmware/brcm/brcmfmac43456-sdio.txt
+ln -s brcmfmac43456-sdio.AP6256.txt %{buildroot}/usr/lib/firmware/brcm/brcmfmac43456-sdio.pine64,pinebook-pro.txt
 
 %files
 /usr/lib/firmware/
@@ -45,6 +46,8 @@ install -Dm644 ${RPM_BUILD_DIR}/%{name}/brcmfmac43456-sdio.AP6256.txt %{buildroo
 %preun
 
 %changelog
+* Sat Aug 06 2022 Bengt Fredh <bengt@fredhs.net> - 2020.02-10
+- Clean up
 * Sat Aug 06 2022 Bengt Fredh <bengt@fredhs.net> - 2020.02-6
 - Clean up
 * Mon Oct 12 2020 Bengt Fredh <bengt@fredhs.net> - 2020.02-5
