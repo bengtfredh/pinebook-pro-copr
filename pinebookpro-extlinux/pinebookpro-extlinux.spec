@@ -2,7 +2,7 @@ Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define name pinebookpro-extlinux
 %define version 2
-%define sourcerelease 3
+%define sourcerelease 4
 %define release %{sourcerelease}%{?dist}
 
 Summary: Pinebook Pro exlinux.
@@ -39,14 +39,14 @@ ROOTFSTYPE=$(findmnt / -o FSTYPE -n)
 
 if [ ! -f /boot/extlinux/extlinux.conf.rpmnew ]; then
    # Edit extlinux.conf
-   if [ ${ROOTFSTYPE}=btrfs ]; then
+   if [ "${ROOTFSTYPE}" = "btrfs" ]; then
       sed -i -e "s!APPEND.*!APPEND console=tty1 console=ttyS2,1500000 root=UUID=${ROOTUUID} rw rootflags=subvol=root splash plymouth.ignore-serial-consoles rhgb quiet !g" /boot/extlinux/extlinux.conf
    else
       sed -i -e "s!APPEND.*!APPEND console=tty1 console=ttyS2,1500000 root=UUID=${ROOTUUID} rw splash plymouth.ignore-serial-consoles rhgb quiet !g" /boot/extlinux/extlinux.conf
    fi
 else
    # Edit extlinux.conf.rpmnew
-   if [ ${ROOTFSTYPE}=btrfs ]; then
+   if [ "${ROOTFSTYPE}" = "btrfs" ]; then
       sed -i -e "s!APPEND.*!APPEND console=tty1 console=ttyS2,1500000 root=UUID=${ROOTUUID} rw rootflags=subvol=root splash plymouth.ignore-serial-consoles rhgb quiet !g" /boot/extlinux/extlinux.conf.rpmnew
    else
       sed -i -e "s!APPEND.*!APPEND console=tty1 console=ttyS2,1500000 root=UUID=${ROOTUUID} rw splash plymouth.ignore-serial-consoles rhgb quiet !g" /boot/extlinux/extlinux.conf.rpmnew
