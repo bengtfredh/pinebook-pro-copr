@@ -2,12 +2,12 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.18
-%define version 5.18.11
+%define version 5.18.18
 %define sourcerelease 1
 %define rpmrelease 200.fc36
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
-%define srccommit 5f2076348c5c819aa7505668d369e619afa7db9a
+%define srccommit 25bd828cd47b1c6e09fcbcf394a649b89d2876dd
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -66,7 +66,7 @@ patch -Np1 -i "%{srcdir}/1019-arm64-dts-allwinner-h6-Enable-hdmi-sound-card-on-b
 patch -Np1 -i "%{srcdir}/1020-arm64-dts-allwinner-add-OrangePi-3-LTS.patch"                        # Orange Pi 3 LTS (by Furkan)
 patch -Np1 -i "%{srcdir}/1021-arm64-dts-meson-radxa-zero-add-support-for-the-usb-t.patch"          # Radxa Zero (by Furkan)
 patch -Np1 -i "%{srcdir}/1022-arm64-dts-rockchip-add-OrangePi-4-LTS.patch"                         # Orange Pi 4 LTS (by Furkan)
-patch -Np1 -i "%{srcdir}/1023-Add-YT8531C-phy-support.patch"					   # Ethernet: Motorcomm YT8531C (by Furkan) - Will be upstreamed soon.
+patch -Np1 -i "%{srcdir}/1023-Add-YT8531C-phy-support.patch"                                       # Ethernet: Motorcomm YT8531C (by Furkan) - Will be upstreamed soon.
 patch -Np1 -i "%{srcdir}/2001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch"         # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-2-anarsoul@gmail.com/ (no updates since July 2020)
 patch -Np1 -i "%{srcdir}/2002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch"                 # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-3-anarsoul@gmail.com/ (no updates since July 2020)
 patch -Np1 -i "%{srcdir}/2003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch"              # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-4-anarsoul@gmail.com/ (no updates since July 2020)
@@ -152,6 +152,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Thu Aug 18 2022 Bengt Fredh <bengt@fredhs.net> - 5.18.18-1
+- Bump version kernel-pbp 5.18.18-1
 * Wed Jul 13 2022 Bengt Fredh <bengt@fredhs.net> - 5.18.11-1
 - Bump version kernel-pbp 5.18.11-1
 * Sun Jul 10 2022 Bengt Fredh <bengt@fredhs.net> - 5.18.9-1
