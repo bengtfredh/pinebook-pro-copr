@@ -3,8 +3,8 @@
 # Maintainer: Dan Johansen <strit@manjaro.org>
 Packager: Bengt Fredh <bengt@fredhs.net>
 
-%define version 5.19.1
-%define sourcerelease 2
+%define version 5.19.8
+%define sourcerelease 1
 %define release %{sourcerelease}%{?dist}
 
 Summary: AArch64 multi-platform
@@ -37,6 +37,8 @@ tar -xvpf $RPM_SOURCE_DIR/linux-%{version}-%{sourcerelease}-aarch64.pkg.tar.zst 
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease}-MANJARO-ARM 1> /dev/null 2>&1
 
 %changelog
+* Mon Sep 12 2022 Bengt Fredh <bengt@fredhs.net> - 5.19.8-1
+- Bump linux-manjaro version 5.19.8-1
 * Wed Aug 18 2022 Bengt Fredh <bengt@fredhs.net> - 5.19.1-2
 - Bump linux-manjaro version 5.19.1-2
 * Wed Aug 17 2022 Bengt Fredh <bengt@fredhs.net> - 5.19.1-1
