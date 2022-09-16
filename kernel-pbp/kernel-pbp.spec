@@ -108,7 +108,7 @@ patch -Np1 -i "%{srcdir}/3029-arm64-dts-rockchip-Add-HDMI-sound-node-to-SoQuartz
 patch -Np1 -i "%{srcdir}/3030-arm64-dts-rockchip-Add-PCIe-2-nodes-to-quartz64-b.patch"             # Quartz64 and associated patches that are still being upstreamed: END
 
 # add sourcerelease to extraversion
-sed -ri.patch"s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" Makefile
+sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" Makefile
 
 # don't run depmod on 'make install'. We'll do this ourselves in packaging
 sed -i '2iexit 0' scripts/depmod.sh
@@ -137,7 +137,7 @@ cd linux-%{linuxrel}
 unset LDFLAGS
 make arch=arm64 -j `nproc` Image Image.gz modules
 # Generate device tree blobs with symbols to support applying device tree overlays in U-Boot
-make arch=arm64 -j `nproc` DTC_FLAGS.patch"-@" dtbs
+make arch=arm64 -j `nproc` DTC_FLAGS="-@" dtbs
 
 %install
 
@@ -148,7 +148,7 @@ make arch=arm64 -j `nproc` INSTALL_DTBS_PATH=%{buildroot}/boot/dtbs dtbs_install
 cp arch/arm64/boot/Image{,.gz} %{buildroot}/boot
 
 # get kernel version
-_kernver.patch"$(make kernelrelease)"
+_kernver="$(make kernelrelease)"
 
 # remove build and source links
 rm %{buildroot}/usr/lib/modules/${_kernver}/{source,build}
@@ -208,7 +208,7 @@ dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}
 - Bump version kernel-pbp 5.15.5-1
 * Fri Oct 29 2021 Bengt Fredh <bengt@fredhs.net> - 5.14.13-1
 - Bump version kernel-pbp 5.14.13-1
-* Sat Oct 22 2021 Bengt Fredh <bengt@fredhs.net> - 5.14.12-1
+* Fri Oct 22 2021 Bengt Fredh <bengt@fredhs.net> - 5.14.12-1
 - Bump version kernel-pbp 5.14.12-1
 * Sun Aug 22 2021 Bengt Fredh <bengt@fredhs.net> - 5.13.12-1
 - Bump version kernel-pbp 5.13.12-1
