@@ -44,68 +44,68 @@ rpm2cpio kernel-core-%{version}-%{rpmrelease}.aarch64.rpm | cpio -idmv
 cd linux-%{linuxrel}
 %patch -P 0 -p1
 
-patch -Np1 -i.patch"%{srcdir}/1001-arm64-dts-allwinner-add-hdmi-sound-to-pine-devices."            # A64-based devices
-patch -Np1 -i.patch"%{srcdir}/1002-arm64-dts-allwinner-add-ohci-ehci-to-h5-nanopi."                # Nanopi Neo Plus 2 (by Furkan?)
-patch -Np1 -i.patch"%{srcdir}/1003-drm-bridge-analogix_dp-Add-enable_psr-param."                   # Pinebook Pro;  From list: https://patchwork.kernel.org/project/dri-devel/patch/20200626033023.24214-2-shawn@anastas.io/ (no updates since June 2020)
-patch -Np1 -i.patch"%{srcdir}/1004-gpu-drm-add-new-display-resolution-2560x1440."                  # Odroid;  Not upstreamable
-patch -Np1 -i.patch"%{srcdir}/1005-panfrost-Silence-Panfrost-gem-shrinker-loggin."                 # Panfrost (preference patch, might not be upstreamable)
-patch -Np1 -i.patch"%{srcdir}/1006-arm64-dts-rockchip-Add-Firefly-Station-p1-support."             # Firefly Station P1 (by Furkan)
-patch -Np1 -i.patch"%{srcdir}/1007-rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay."     # RockPro64 (by @nuumio, perhaps upstreamable?)
-patch -Np1 -i.patch"%{srcdir}/1008-drm-meson-encoder-add-YUV422-output-support."                   # Meson G12B (applied in linux-next)
-patch -Np1 -i.patch"%{srcdir}/1009-arm64-dts-amlogic-add-initial-Beelink-GT1-Ultimate-dev."        # Beelink GT1 Ultimate (by Furkan)
-patch -Np1 -i.patch"%{srcdir}/1010-arm64-dts-amlogic-add-meson-g12b-ugoos-am6-plus."               # Meson Ugoos (by Furkan)
-patch -Np1 -i.patch"%{srcdir}/1011-drm-panfrost-scheduler-improvements."                           # Panfrost;  Will be submitted upstream by Dragan
-patch -Np1 -i.patch"%{srcdir}/1012-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-RockPr."          # RockPro64 (relies on patch 1008)
-patch -Np1 -i.patch"%{srcdir}/1013-drm-rockchip-support-gamma-control-on-RK3399."                  # RK3399 VOP;  From list: https://patchwork.kernel.org/project/linux-arm-kernel/cover/20211019215843.42718-1-sigmaris@gmail.com/ (no updates since October 2020)
-patch -Np1 -i.patch"%{srcdir}/1014-arm64-dts-rockchip-switch-to-hs200-on-rockpi4."                 # Radxa Rock Pi 4;  Temporary hotfix, not for upstreaming (by Dragan)
-patch -Np1 -i.patch"%{srcdir}/1015-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-Rock-P."          # Radxa Rock Pi 4 (relies on patch 1008)
-patch -Np1 -i.patch"%{srcdir}/1016-ASOC-sun9i-hdmi-audio-Initial-implementation."                  # Allwinner H6 HDMI audio (by Furkan)
-patch -Np1 -i.patch"%{srcdir}/1017-arm64-dts-allwinner-h6-Add-hdmi-sound-card."                    # Allwinner H6 HDMI audio (by Furkan)
-patch -Np1 -i.patch"%{srcdir}/1018-arm64-dts-allwinner-h6-Enable-hdmi-sound-card-on-boards."       # Allwinner H6 HDMI audio (by Furkan)
-patch -Np1 -i.patch"%{srcdir}/1019-arm64-dts-allwinner-add-OrangePi-3-LTS."                        # Orange Pi 3 LTS (by Furkan)
-patch -Np1 -i.patch"%{srcdir}/1020-arm64-dts-rockchip-add-rk3568-station-p2."                      # Firefly Station P2 (by Furkan)
-patch -Np1 -i.patch"%{srcdir}/1021-dt-bindings-rockchip-Add-Hardkernel-ODROID-M1-board."           # Odroid M1;  From list: https://patchwork.kernel.org/project/linux-rockchip/patch/20220329094446.415219-1-tobetter@gmail.com/
-patch -Np1 -i.patch"%{srcdir}/1022-arm64-dts-rockchip-Add-Hardkernel-ODROID-M1-board."             # Odroid M1;  From list, but heavily modified: https://patchwork.kernel.org/project/linux-rockchip/patch/20220329094446.415219-2-tobetter@gmail.com/
-patch -Np1 -i.patch"%{srcdir}/1023-arm64-dts-meson-radxa-zero-add-support-for-the-usb-t."          # Radxa Zero (by Furkan)
-patch -Np1 -i.patch"%{srcdir}/1024-arm64-dts-rockchip-add-OrangePi-4-LTS."                         # Orange Pi 4 LTS (by Furkan)
-patch -Np1 -i.patch"%{srcdir}/1025-Add-YT8531C-phy-support."                                       # Motorcomm PHY (by Furkan)
-patch -Np1 -i.patch"%{srcdir}/1026-add-phy-rockchip-Support-PCIe-v3."                              # PCIe3; From list: https://patchwork.kernel.org/project/linux-rockchip/patch/20220825193836.54262-4-linux@fw-web.de/
-patch -Np1 -i.patch"%{srcdir}/1027-arm64-dts-rockchip-rk3568-Add-PCIe-v3-nodes."                   # PCIe3; From list: https://patchwork.kernel.org/project/linux-rockchip/patch/20220825193836.54262-5-linux@fw-web.de/
-patch -Np1 -i.patch"%{srcdir}/2001-Bluetooth-Add-new-quirk-for-broken-local-ext-features."         # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-2-anarsoul@gmail.com/ (no updates since July 2020)
-patch -Np1 -i.patch"%{srcdir}/2002-Bluetooth-btrtl-add-support-for-the-RTL8723CS."                 # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-3-anarsoul@gmail.com/ (no updates since July 2020)
-patch -Np1 -i.patch"%{srcdir}/2003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook."              # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-4-anarsoul@gmail.com/ (no updates since July 2020)
-patch -Np1 -i.patch"%{srcdir}/2004-staging-add-rtl8723cs-driver."                                  # Realtek WiFi;  Not upstreamable (no longer applies)
-patch -Np1 -i.patch"%{srcdir}/2005-brcmfmac-USB-probing-provides-no-board-type."                   # Bluetooth;  Will be submitted upstream by Dragan
-patch -Np1 -i.patch"%{srcdir}/2006-arm64-dts-rockchip-Work-around-daughterboard-issues."           # Pinebook Pro microSD;  Will be submitted upstream by Dragan
-patch -Np1 -i.patch"%{srcdir}/3001-arm64-dts-rockchip-add-Quartz64-A-fan-pinctrl."                 # Quartz64 and associated patches that are still being upstreamed: START (applied in linux-next)
-patch -Np1 -i.patch"%{srcdir}/3002-arm64-dts-rockchip-enable-sdr-104-for-sdmmc-on-Quart."          # From Peter Geis tree:  https://gitlab.com/pgwipeout/linux-next.git (applied in linux-next)
-patch -Np1 -i.patch"%{srcdir}/3003-arm64-dts-rockchip-enable-sfc-controller-on-Quartz64."          # (applied in linux-next)
-patch -Np1 -i.patch"%{srcdir}/3004-arm64-dts-rockchip-Add-rk3568-PCIe2x1-controller."              # (applied in linux-next)
-patch -Np1 -i.patch"%{srcdir}/3005-arm64-dts-rockchip-Enable-PCIe-controller-on-quartz6."          # (applied in linux-next)
-patch -Np1 -i.patch"%{srcdir}/3006-arm64-dts-rockchip-rk356x-Add-VOP2-nodes."                      # (applied in linux-next)
-patch -Np1 -i.patch"%{srcdir}/3007-arm64-dts-rockchip-rk356x-Add-HDMI-nodes."                      # (applied in linux-next)
-patch -Np1 -i.patch"%{srcdir}/3008-arm64-dts-rockchip-enable-vop2-and-hdmi-tx-on-quartz."          # (applied in linux-next)
-patch -Np1 -i.patch"%{srcdir}/3009-arm64-dts-rockchip-enable-vop2-and-hdmi-tx-on-rock-3."          # (applied in linux-next)
-patch -Np1 -i.patch"%{srcdir}/3010-irqchip-gic-v3-add-hackaround-for-rk3568-its."
-patch -Np1 -i.patch"%{srcdir}/3011-fixup-arm64-dts-rockchip-Add-rk3568-PCIe2x1-controll."          # (applied in linux-next)
-patch -Np1 -i.patch"%{srcdir}/3012-arm64-dts-rockchip-Enable-video-output-on-Quartz64-B."
-patch -Np1 -i.patch"%{srcdir}/3013-arm64-dts-rockchip-Add-hdmi-cec-assigned-clocks-to-r."
-patch -Np1 -i.patch"%{srcdir}/3014-arm64-dts-rockchip-Add-PCIe-support-to-Quartz64-B."
-patch -Np1 -i.patch"%{srcdir}/3015-arm64-dts-rockchip-Add-Quartz64-B-eeprom."
-patch -Np1 -i.patch"%{srcdir}/3016-arm64-dts-rockchip-Add-PCIe-support-to-SoQuartz-CM4-."
-patch -Np1 -i.patch"%{srcdir}/3017-arm64-dts-rockchip-Enable-video-output-on-SoQuartz-C."
-patch -Np1 -i.patch"%{srcdir}/3018-dt-bindings-Add-Rockchip-rk817-battery-charger-suppo."
-patch -Np1 -i.patch"%{srcdir}/3019-mfd-Add-Rockchip-rk817-battery-charger-support."
-patch -Np1 -i.patch"%{srcdir}/3020-power-supply-Add-charger-driver-for-Rockchip-RK817."
-patch -Np1 -i.patch"%{srcdir}/3021-drm-panel-simple-Add-init-sequence-support."
-patch -Np1 -i.patch"%{srcdir}/3022-arm64-dts-rockchip-Move-Quartz64-A-to-mdio-setup."
-patch -Np1 -i.patch"%{srcdir}/3023-arm64-dts-rockchip-Add-Quartz64-A-battery-node."
-patch -Np1 -i.patch"%{srcdir}/3024-arm64-dts-rockchip-rk356x-Add-HDMI-audio-nodes."                # (applied in linux-next)
-patch -Np1 -i.patch"%{srcdir}/3025-arm64-dts-rockchip-Enable-HDMI-audio-on-Quartz64-A."            # (applied in linux-next)
-patch -Np1 -i.patch"%{srcdir}/3026-phy-rockchip-inno-usb2-Return-zero-after-otg-sync."             # From list: https://patchwork.kernel.org/project/linux-rockchip/patch/20220824122543.174730-1-pgwipeout@gmail.com/
-patch -Np1 -i.patch"%{srcdir}/3028-arm64-dts-rockchip-Add-HDMI-sound-node-to-Quartz64-B."
-patch -Np1 -i.patch"%{srcdir}/3029-arm64-dts-rockchip-Add-HDMI-sound-node-to-SoQuartz-C."
-patch -Np1 -i.patch"%{srcdir}/3030-arm64-dts-rockchip-Add-PCIe-2-nodes-to-quartz64-b."             # Quartz64 and associated patches that are still being upstreamed: END
+patch -Np1 -i "%{srcdir}/1001-arm64-dts-allwinner-add-hdmi-sound-to-pine-devices.patch"            # A64-based devices
+patch -Np1 -i "%{srcdir}/1002-arm64-dts-allwinner-add-ohci-ehci-to-h5-nanopi.patch"                # Nanopi Neo Plus 2 (by Furkan?)
+patch -Np1 -i "%{srcdir}/1003-drm-bridge-analogix_dp-Add-enable_psr-param.patch"                   # Pinebook Pro;  From list: https://patchwork.kernel.org/project/dri-devel/patch/20200626033023.24214-2-shawn@anastas.io/ (no updates since June 2020)
+patch -Np1 -i "%{srcdir}/1004-gpu-drm-add-new-display-resolution-2560x1440.patch"                  # Odroid;  Not upstreamable
+patch -Np1 -i "%{srcdir}/1005-panfrost-Silence-Panfrost-gem-shrinker-loggin.patch"                 # Panfrost (preference patch, might not be upstreamable)
+patch -Np1 -i "%{srcdir}/1006-arm64-dts-rockchip-Add-Firefly-Station-p1-support.patch"             # Firefly Station P1 (by Furkan)
+patch -Np1 -i "%{srcdir}/1007-rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch"     # RockPro64 (by @nuumio, perhaps upstreamable?)
+patch -Np1 -i "%{srcdir}/1008-drm-meson-encoder-add-YUV422-output-support.patch"                   # Meson G12B (applied in linux-next)
+patch -Np1 -i "%{srcdir}/1009-arm64-dts-amlogic-add-initial-Beelink-GT1-Ultimate-dev.patch"        # Beelink GT1 Ultimate (by Furkan)
+patch -Np1 -i "%{srcdir}/1010-arm64-dts-amlogic-add-meson-g12b-ugoos-am6-plus.patch"               # Meson Ugoos (by Furkan)
+patch -Np1 -i "%{srcdir}/1011-drm-panfrost-scheduler-improvements.patch"                           # Panfrost;  Will be submitted upstream by Dragan
+patch -Np1 -i "%{srcdir}/1012-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-RockPr.patch"          # RockPro64 (relies on patch 1008)
+patch -Np1 -i "%{srcdir}/1013-drm-rockchip-support-gamma-control-on-RK3399.patch"                  # RK3399 VOP;  From list: https://patchwork.kernel.org/project/linux-arm-kernel/cover/20211019215843.42718-1-sigmaris@gmail.com/ (no updates since October 2020)
+patch -Np1 -i "%{srcdir}/1014-arm64-dts-rockchip-switch-to-hs200-on-rockpi4.patch"                 # Radxa Rock Pi 4;  Temporary hotfix, not for upstreaming (by Dragan)
+patch -Np1 -i "%{srcdir}/1015-arm64-dts-rockchip-Add-PCIe-bus-scan-delay-to-Rock-P.patch"          # Radxa Rock Pi 4 (relies on patch 1008)
+patch -Np1 -i "%{srcdir}/1016-ASOC-sun9i-hdmi-audio-Initial-implementation.patch"                  # Allwinner H6 HDMI audio (by Furkan)
+patch -Np1 -i "%{srcdir}/1017-arm64-dts-allwinner-h6-Add-hdmi-sound-card.patch"                    # Allwinner H6 HDMI audio (by Furkan)
+patch -Np1 -i "%{srcdir}/1018-arm64-dts-allwinner-h6-Enable-hdmi-sound-card-on-boards.patch"       # Allwinner H6 HDMI audio (by Furkan)
+patch -Np1 -i "%{srcdir}/1019-arm64-dts-allwinner-add-OrangePi-3-LTS.patch"                        # Orange Pi 3 LTS (by Furkan)
+patch -Np1 -i "%{srcdir}/1020-arm64-dts-rockchip-add-rk3568-station-p2.patch"                      # Firefly Station P2 (by Furkan)
+patch -Np1 -i "%{srcdir}/1021-dt-bindings-rockchip-Add-Hardkernel-ODROID-M1-board.patch"           # Odroid M1;  From list: https://patchwork.kernel.org/project/linux-rockchip/patch/20220329094446.415219-1-tobetter@gmail.com/
+patch -Np1 -i "%{srcdir}/1022-arm64-dts-rockchip-Add-Hardkernel-ODROID-M1-board.patch"             # Odroid M1;  From list, but heavily modified: https://patchwork.kernel.org/project/linux-rockchip/patch/20220329094446.415219-2-tobetter@gmail.com/
+patch -Np1 -i "%{srcdir}/1023-arm64-dts-meson-radxa-zero-add-support-for-the-usb-t.patch"          # Radxa Zero (by Furkan)
+patch -Np1 -i "%{srcdir}/1024-arm64-dts-rockchip-add-OrangePi-4-LTS.patch"                         # Orange Pi 4 LTS (by Furkan)
+patch -Np1 -i "%{srcdir}/1025-Add-YT8531C-phy-support.patch"                                       # Motorcomm PHY (by Furkan)
+patch -Np1 -i "%{srcdir}/1026-add-phy-rockchip-Support-PCIe-v3.patch"                              # PCIe3; From list: https://patchwork.kernel.org/project/linux-rockchip/patch/20220825193836.54262-4-linux@fw-web.de/
+patch -Np1 -i "%{srcdir}/1027-arm64-dts-rockchip-rk3568-Add-PCIe-v3-nodes.patch"                   # PCIe3; From list: https://patchwork.kernel.org/project/linux-rockchip/patch/20220825193836.54262-5-linux@fw-web.de/
+patch -Np1 -i "%{srcdir}/2001-Bluetooth-Add-new-quirk-for-broken-local-ext-features.patch"         # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-2-anarsoul@gmail.com/ (no updates since July 2020)
+patch -Np1 -i "%{srcdir}/2002-Bluetooth-btrtl-add-support-for-the-RTL8723CS.patch"                 # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-3-anarsoul@gmail.com/ (no updates since July 2020)
+patch -Np1 -i "%{srcdir}/2003-arm64-allwinner-a64-enable-Bluetooth-On-Pinebook.patch"              # Bluetooth;  From list: https://patchwork.kernel.org/project/bluetooth/patch/20200705195110.405139-4-anarsoul@gmail.com/ (no updates since July 2020)
+patch -Np1 -i "%{srcdir}/2004-staging-add-rtl8723cs-driver.patch"                                  # Realtek WiFi;  Not upstreamable (no longer applies)
+patch -Np1 -i "%{srcdir}/2005-brcmfmac-USB-probing-provides-no-board-type.patch"                   # Bluetooth;  Will be submitted upstream by Dragan
+patch -Np1 -i "%{srcdir}/2006-arm64-dts-rockchip-Work-around-daughterboard-issues.patch"           # Pinebook Pro microSD;  Will be submitted upstream by Dragan
+patch -Np1 -i "%{srcdir}/3001-arm64-dts-rockchip-add-Quartz64-A-fan-pinctrl.patch"                 # Quartz64 and associated patches that are still being upstreamed: START (applied in linux-next)
+patch -Np1 -i "%{srcdir}/3002-arm64-dts-rockchip-enable-sdr-104-for-sdmmc-on-Quart.patch"          # From Peter Geis tree:  https://gitlab.com/pgwipeout/linux-next.git (applied in linux-next)
+patch -Np1 -i "%{srcdir}/3003-arm64-dts-rockchip-enable-sfc-controller-on-Quartz64.patch"          # (applied in linux-next)
+patch -Np1 -i "%{srcdir}/3004-arm64-dts-rockchip-Add-rk3568-PCIe2x1-controller.patch"              # (applied in linux-next)
+patch -Np1 -i "%{srcdir}/3005-arm64-dts-rockchip-Enable-PCIe-controller-on-quartz6.patch"          # (applied in linux-next)
+patch -Np1 -i "%{srcdir}/3006-arm64-dts-rockchip-rk356x-Add-VOP2-nodes.patch"                      # (applied in linux-next)
+patch -Np1 -i "%{srcdir}/3007-arm64-dts-rockchip-rk356x-Add-HDMI-nodes.patch"                      # (applied in linux-next)
+patch -Np1 -i "%{srcdir}/3008-arm64-dts-rockchip-enable-vop2-and-hdmi-tx-on-quartz.patch"          # (applied in linux-next)
+patch -Np1 -i "%{srcdir}/3009-arm64-dts-rockchip-enable-vop2-and-hdmi-tx-on-rock-3.patch"          # (applied in linux-next)
+patch -Np1 -i "%{srcdir}/3010-irqchip-gic-v3-add-hackaround-for-rk3568-its.patch"
+patch -Np1 -i "%{srcdir}/3011-fixup-arm64-dts-rockchip-Add-rk3568-PCIe2x1-controll.patch"          # (applied in linux-next)
+patch -Np1 -i "%{srcdir}/3012-arm64-dts-rockchip-Enable-video-output-on-Quartz64-B.patch"
+patch -Np1 -i "%{srcdir}/3013-arm64-dts-rockchip-Add-hdmi-cec-assigned-clocks-to-r.patch"
+patch -Np1 -i "%{srcdir}/3014-arm64-dts-rockchip-Add-PCIe-support-to-Quartz64-B.patch"
+patch -Np1 -i "%{srcdir}/3015-arm64-dts-rockchip-Add-Quartz64-B-eeprom.patch"
+patch -Np1 -i "%{srcdir}/3016-arm64-dts-rockchip-Add-PCIe-support-to-SoQuartz-CM4-.patch"
+patch -Np1 -i "%{srcdir}/3017-arm64-dts-rockchip-Enable-video-output-on-SoQuartz-C.patch"
+patch -Np1 -i "%{srcdir}/3018-dt-bindings-Add-Rockchip-rk817-battery-charger-suppo.patch"
+patch -Np1 -i "%{srcdir}/3019-mfd-Add-Rockchip-rk817-battery-charger-support.patch"
+patch -Np1 -i "%{srcdir}/3020-power-supply-Add-charger-driver-for-Rockchip-RK817.patch"
+patch -Np1 -i "%{srcdir}/3021-drm-panel-simple-Add-init-sequence-support.patch"
+patch -Np1 -i "%{srcdir}/3022-arm64-dts-rockchip-Move-Quartz64-A-to-mdio-setup.patch"
+patch -Np1 -i "%{srcdir}/3023-arm64-dts-rockchip-Add-Quartz64-A-battery-node.patch"
+patch -Np1 -i "%{srcdir}/3024-arm64-dts-rockchip-rk356x-Add-HDMI-audio-nodes.patch"                # (applied in linux-next)
+patch -Np1 -i "%{srcdir}/3025-arm64-dts-rockchip-Enable-HDMI-audio-on-Quartz64-A.patch"            # (applied in linux-next)
+patch -Np1 -i "%{srcdir}/3026-phy-rockchip-inno-usb2-Return-zero-after-otg-sync.patch"             # From list: https://patchwork.kernel.org/project/linux-rockchip/patch/20220824122543.174730-1-pgwipeout@gmail.com/
+patch -Np1 -i "%{srcdir}/3028-arm64-dts-rockchip-Add-HDMI-sound-node-to-Quartz64-B.patch"
+patch -Np1 -i "%{srcdir}/3029-arm64-dts-rockchip-Add-HDMI-sound-node-to-SoQuartz-C.patch"
+patch -Np1 -i "%{srcdir}/3030-arm64-dts-rockchip-Add-PCIe-2-nodes-to-quartz64-b.patch"             # Quartz64 and associated patches that are still being upstreamed: END
 
 # add sourcerelease to extraversion
 sed -ri.patch"s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" Makefile
