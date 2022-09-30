@@ -2,12 +2,12 @@
 Packager: Bengt Fredh <bengt@fredhs.net> 
 
 %define linuxrel 5.19
-%define version 5.19.9
+%define version 5.19.12
 %define sourcerelease 1
 %define rpmrelease 200.fc36
 %define release %{sourcerelease}%{?dist}
 %define srcdir ${RPM_SOURCE_DIR}/manjaro-linux
-%define srccommit 724a05775fd788b04431ed65e7ea7c7ffc16abe3
+%define srccommit f6f096ff802f81524998d12ad6f58f9e579dc059
 
 Summary: Kernel Pinebook Pro
 Name: kernel-pbp
@@ -88,24 +88,26 @@ patch -Np1 -i "%{srcdir}/3008-arm64-dts-rockchip-enable-vop2-and-hdmi-tx-on-quar
 patch -Np1 -i "%{srcdir}/3009-arm64-dts-rockchip-enable-vop2-and-hdmi-tx-on-rock-3.patch"          # (applied in linux-next)
 patch -Np1 -i "%{srcdir}/3010-irqchip-gic-v3-add-hackaround-for-rk3568-its.patch"
 patch -Np1 -i "%{srcdir}/3011-fixup-arm64-dts-rockchip-Add-rk3568-PCIe2x1-controll.patch"          # (applied in linux-next)
-patch -Np1 -i "%{srcdir}/3012-arm64-dts-rockchip-Enable-video-output-on-Quartz64-B.patch"
+patch -Np1 -i "%{srcdir}/3012-arm64-dts-rockchip-Enable-video-output-on-Quartz64-B.patch"          # (applied in linux-next)
 patch -Np1 -i "%{srcdir}/3013-arm64-dts-rockchip-Add-hdmi-cec-assigned-clocks-to-r.patch"
 patch -Np1 -i "%{srcdir}/3014-arm64-dts-rockchip-Add-PCIe-support-to-Quartz64-B.patch"
 patch -Np1 -i "%{srcdir}/3015-arm64-dts-rockchip-Add-Quartz64-B-eeprom.patch"
 patch -Np1 -i "%{srcdir}/3016-arm64-dts-rockchip-Add-PCIe-support-to-SoQuartz-CM4-.patch"
 patch -Np1 -i "%{srcdir}/3017-arm64-dts-rockchip-Enable-video-output-on-SoQuartz-C.patch"
-patch -Np1 -i "%{srcdir}/3018-dt-bindings-Add-Rockchip-rk817-battery-charger-suppo.patch"
-patch -Np1 -i "%{srcdir}/3019-mfd-Add-Rockchip-rk817-battery-charger-support.patch"
+patch -Np1 -i "%{srcdir}/3018-dt-bindings-Add-Rockchip-rk817-battery-charger-suppo.patch"          # (applied in linux-next)
+patch -Np1 -i "%{srcdir}/3019-mfd-Add-Rockchip-rk817-battery-charger-support.patch"                # (applied in linux-next)
 patch -Np1 -i "%{srcdir}/3020-power-supply-Add-charger-driver-for-Rockchip-RK817.patch"
 patch -Np1 -i "%{srcdir}/3021-drm-panel-simple-Add-init-sequence-support.patch"
 patch -Np1 -i "%{srcdir}/3022-arm64-dts-rockchip-Move-Quartz64-A-to-mdio-setup.patch"
 patch -Np1 -i "%{srcdir}/3023-arm64-dts-rockchip-Add-Quartz64-A-battery-node.patch"
 patch -Np1 -i "%{srcdir}/3024-arm64-dts-rockchip-rk356x-Add-HDMI-audio-nodes.patch"                # (applied in linux-next)
 patch -Np1 -i "%{srcdir}/3025-arm64-dts-rockchip-Enable-HDMI-audio-on-Quartz64-A.patch"            # (applied in linux-next)
-patch -Np1 -i "%{srcdir}/3026-phy-rockchip-inno-usb2-Return-zero-after-otg-sync.patch"             # From list: https://patchwork.kernel.org/project/linux-rockchip/patch/20220824122543.174730-1-pgwipeout@gmail.com/
-patch -Np1 -i "%{srcdir}/3028-arm64-dts-rockchip-Add-HDMI-sound-node-to-Quartz64-B.patch"
+patch -Np1 -i "%{srcdir}/3026-phy-rockchip-inno-usb2-Return-zero-after-otg-sync.patch"             # From list: https://patchwork.kernel.org/project/linux-rockchip/patch/20220824122543.174730-1-pgwipeout@gmail.com/ (applied in linux-next)
+patch -Np1 -i "%{srcdir}/3027-arm64-dts-rockchip-Enable-video-output-on-rk3566-roc-pc.patch"       # Station M2; (by Furkan)
+patch -Np1 -i "%{srcdir}/3028-arm64-dts-rockchip-Add-HDMI-sound-node-to-Quartz64-B.patch"          # (applied in linux-next)
 patch -Np1 -i "%{srcdir}/3029-arm64-dts-rockchip-Add-HDMI-sound-node-to-SoQuartz-C.patch"
-patch -Np1 -i "%{srcdir}/3030-arm64-dts-rockchip-Add-PCIe-2-nodes-to-quartz64-b.patch"             # Quartz64 and associated patches that are still being upstreamed: END
+patch -Np1 -i "%{srcdir}/3030-arm64-dts-rockchip-Add-PCIe-2-nodes-to-quartz64-b.patch"             # Quartz64 and associated patches that are still being upstreamed: END (applied in linux-next)
+patch -Np1 -i "%{srcdir}/3031-board-rock3a-gmac1.patch"                                            # Rock 3A; From Armbian: https://github.com/armbian/build/blob/master/patch/kernel/archive/rockchip64-5.19/board-rock3a-gmac1.patch
 
 # add sourcerelease to extraversion
 sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-%{sourcerelease}|" Makefile
@@ -182,6 +184,8 @@ Vanilla kernel Modules with Fedora config patched for Pinebook Pro.
 dracut -f --kernel-image /boot/Image /boot/initramfs-linux.img --kver %{version}-%{sourcerelease} 1> /dev/null 2>&1
 
 %changelog
+* Sat Oct 01 2022 Bengt Fredh <bengt@fredhs.net> - 5.19.12-1
+- Bump version kernel-pbp 5.19.12-1
 * Fri Sep 16 2022 Bengt Fredh <bengt@fredhs.net> - 5.19.9-1
 - Bump version kernel-pbp 5.19.9-1
 * Thu Aug 18 2022 Bengt Fredh <bengt@fredhs.net> - 5.18.18-1
