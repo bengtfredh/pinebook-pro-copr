@@ -1,9 +1,10 @@
 Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define name pinebookpro-suspend
-%define version 2
-%define sourcerelease 4
-%define release %{sourcerelease}%{?dist}
+# renovate: datasource=git-refs depName=https://github.com/bengtfredh/pinebook-pro-copr.git currentValue=master
+%define commit 3f28170301256c9eacdcd9b3f7fc9994c3e1ca9b
+%define version 20201112
+%define release 1%{?dist}
 
 Summary: Enable suspend2idle
 Name: %{name}
@@ -12,7 +13,7 @@ Release: %{release}
 License: GPL2
 URL: https://github.com/bengtfredh/pinebook-pro-copr.git
 ExclusiveArch: aarch64
-Source0: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/master/pinebookpro-suspend/s2idle.conf
+Source0: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/%{commit}/pinebookpro-suspend/s2idle.conf
 Requires: acpid
 
 %global debug_package %{nil}

@@ -1,9 +1,10 @@
 Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define name ap6256-firmware
-%define version 2020.02
-%define sourcerelease 10
-%define release %{sourcerelease}%{?dist}
+# renovate: datasource=git-refs depName=https://gitlab.manjaro.org/manjaro-arm/packages/community/ap6256-firmware.git currentValue=master
+%define commit 056d5f6776e515f90bbbbead1be06857aaef17d0
+%define version 20220515
+%define release 1%{?dist}
 
 Summary: ap6256-firmware
 Name: %{name}
@@ -22,7 +23,7 @@ Firmware files for the ap6256 wifi/bt module
 %prep
 git clone https://gitlab.manjaro.org/manjaro-arm/packages/community/%{name}.git
 cd %{name}
-git checkout 056d5f6776e515f90bbbbead1be06857aaef17d0
+git checkout %{commit}
 %setup -c -T
 
 %build

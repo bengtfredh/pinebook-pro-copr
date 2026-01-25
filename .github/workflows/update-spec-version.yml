@@ -1,0 +1,74 @@
+name: Update spec version from commit date
+
+on:
+  pull_request:
+    branches: [master]
+    paths:
+      - "**/*.spec"
+
+jobs:
+  update-version:
+    if: github.actor == 'renovate[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update spec versions
+        run: |
+          for spec in $(git diff --name-only origin/master -- '*.spec'); do
+            echo "Processing $spec"
+
+            # Extract repo URL and commit from spec file
+            REPO_URL=$(grep '# renovate:' "$spec" | sed 's/.*depName=\([^ ]*\).*/\1/')
+            COMMIT=$(grep '%define commit' "$spec" | awk '{print $3}')
+
+            if [[ -z "$REPO_URL" || -z "$COMMIT" ]]; then
+              echo "Could not extract repo URL or commit from $spec"
+              continue
+            fi
+
+            echo "Repo: $REPO_URL"
+            echo "Commit: $COMMIT"
+
+            # Handle GitLab Manjaro
+            if [[ "$REPO_URL" =~ gitlab\.manjaro\.org/(.+)\.git$ ]]; then
+              PROJECT_PATH="${BASH_REMATCH[1]}"
+              ENCODED_PATH=$(echo "$PROJECT_PATH" | sed 's/\//%2F/g')
+
+              COMMIT_DATE=$(curl -s "https://gitlab.manjaro.org/api/v4/projects/${ENCODED_PATH}/repository/commits/${COMMIT}" | \
+                jq -r '.committed_date // empty')
+
+            # Handle GitHub
+            elif [[ "$REPO_URL" =~ github\.com/([^/]+)/([^/]+)\.git$ ]]; then
+              OWNER="${BASH_REMATCH[1]}"
+              REPO="${BASH_REMATCH[2]}"
+
+              COMMIT_DATE=$(curl -s "https://api.github.com/repos/${OWNER}/${REPO}/commits/${COMMIT}" | \
+                jq -r '.commit.committer.date // empty')
+            else
+              echo "Unsupported repo URL: $REPO_URL"
+              continue
+            fi
+
+            if [[ -n "$COMMIT_DATE" ]]; then
+              # Extract YYYYMMDD from ISO date
+              VERSION=$(echo "$COMMIT_DATE" | cut -c1-10 | tr -d '-')
+
+              echo "Updating version to $VERSION"
+              sed -i "s/^%define version [0-9]\{8\}$/%define version ${VERSION}/" "$spec"
+            else
+              echo "Failed to fetch commit date"
+            fi
+          done
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet || (git add -A && git commit -m "Update spec versions from commit dates" && git push)

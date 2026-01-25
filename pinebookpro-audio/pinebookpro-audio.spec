@@ -1,9 +1,10 @@
 # Maintainer: Bengt Fredh <bengt@fredhs.net>
 
 %define name pinebookpro-audio
-%define version 2
-%define sourcerelease 1
-%define release %{sourcerelease}%{?dist}
+# renovate: datasource=git-refs depName=https://github.com/bengtfredh/pinebook-pro-copr.git currentValue=master
+%define commit 3f0b0e47e5d3af60103e3f5c949ba2f482ad9acc
+%define version 20201112
+%define release 1%{?dist}
 
 Summary: Pinebook Pro audio
 Name: %{name}
@@ -12,7 +13,7 @@ Release: %{release}
 License: GPL2
 URL: https://github.com/bengtfredh/pinebook-pro-copr.git
 ExclusiveArch: aarch64
-Source0: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/master/pinebookpro-audio/asound.state
+Source0: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/%{commit}/pinebookpro-audio/asound.state
 
 %global debug_package %{nil}
 

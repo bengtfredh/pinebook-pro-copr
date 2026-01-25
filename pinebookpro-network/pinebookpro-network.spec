@@ -1,9 +1,10 @@
 # Maintainer: Bengt Fredh <bengt@fredhs.net>
 
 %define name pinebookpro-network
-%define version 1
-%define sourcerelease 1
-%define release %{sourcerelease}%{?dist}
+# renovate: datasource=git-refs depName=https://github.com/bengtfredh/pinebook-pro-copr.git currentValue=master
+%define commit 1d9cb0306060fb33a085271401a3b7d8dc763f08
+%define version 20201112
+%define release 1%{?dist}
 
 Summary: Pinebook Pro Network fixes
 Name: %{name}
@@ -12,7 +13,7 @@ Release: %{release}
 License: GPL2
 URL: https://github.com/bengtfredh/pinebook-pro-copr.git
 ExclusiveArch: aarch64
-Source0: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/master/pinebookpro-network/disable-random-mac.conf
+Source0: https://raw.githubusercontent.com/bengtfredh/pinebook-pro-copr/%{commit}/pinebookpro-network/disable-random-mac.conf
 
 %global debug_package %{nil}
 

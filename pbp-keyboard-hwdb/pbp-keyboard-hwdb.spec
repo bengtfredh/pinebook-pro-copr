@@ -2,9 +2,10 @@
 Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define name pbp-keyboard-hwdb
-%define version 20200629
-%define sourcerelease 1
-%define release %{sourcerelease}%{?dist}
+# renovate: datasource=git-refs depName=https://gitlab.manjaro.org/manjaro-arm/packages/community/pinebookpro-post-install.git currentValue=master
+%define commit 20740eb361f24d5a52568888096390bf164c6438
+%define version 20220720
+%define release 1%{?dist}
 
 Summary: Pinebook Pro keyboard hwdb
 Name: %{name}
@@ -13,7 +14,7 @@ Release: %{release}
 License: GPL2
 URL: https://gitlab.manjaro.org/manjaro-arm/packages/community/pinebookpro-post-install.git
 ExclusiveArch: aarch64
-Source0: https://gitlab.manjaro.org/manjaro-arm/packages/community/pinebookpro-post-install/-/raw/master/10-usb-keyboard.hwdb
+Source0: https://gitlab.manjaro.org/manjaro-arm/packages/community/pinebookpro-post-install/-/raw/%{commit}/10-usb-keyboard.hwdb
 
 %global debug_package %{nil}
 
