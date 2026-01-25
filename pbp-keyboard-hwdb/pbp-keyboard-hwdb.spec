@@ -1,4 +1,4 @@
-# Maintainer: Bengt Fredh <bengt@fredhs.net>
+Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define name pbp-keyboard-hwdb
 %define version 20200629

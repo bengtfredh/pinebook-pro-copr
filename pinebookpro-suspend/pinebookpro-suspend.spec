@@ -1,4 +1,4 @@
-# Maintainer: Bengt Fredh <bengt@fredhs.net>
+Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define name pinebookpro-suspend
 %define version 2

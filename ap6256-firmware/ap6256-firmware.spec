@@ -1,4 +1,4 @@
-# Maintainer: Bengt Fredh <bengt@fredhs.net>
+Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define name ap6256-firmware
 %define version 2020.02
