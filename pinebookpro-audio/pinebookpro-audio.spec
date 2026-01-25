@@ -2,7 +2,7 @@
 
 %define name pinebookpro-audio
 # renovate: datasource=git-refs depName=https://github.com/bengtfredh/pinebook-pro-copr.git currentValue=master
-%define commit e3cce91a5e12ecc5c1b7dfdc7cf146db94b6a5f2
+%define commit 03ff2ed0cf68986ffc62e4ce1feee0450e1f7c3a
 %define version 20201112
 %define release 1%{?dist}
 
