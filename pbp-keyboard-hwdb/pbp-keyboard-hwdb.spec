@@ -1,3 +1,4 @@
+# Credits: Dan Johansen <strit@manjaro.org>
 Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define name pbp-keyboard-hwdb
@@ -12,7 +13,7 @@ Release: %{release}
 License: GPL2
 URL: https://gitlab.manjaro.org/manjaro-arm/packages/community/pinebookpro-post-install.git
 ExclusiveArch: aarch64
-Source0: https://gitlab.manjaro.org/manjaro-arm/packages/community/pinebookpro-post-install/-/raw/master/10-usb-kbd.hwdb
+Source0: https://gitlab.manjaro.org/manjaro-arm/packages/community/pinebookpro-post-install/-/raw/master/10-usb-keyboard.hwdb
 
 %global debug_package %{nil}
 
@@ -26,10 +27,10 @@ Hwdb configuration for Pinebook Pro keyboard.
 
 %install
 mkdir %{buildroot}/etc/udev/hwdb.d -p
-install -Dm644 ${RPM_SOURCE_DIR}/10-usb-kbd.hwdb -t %{buildroot}/etc/udev/hwdb.d/
+install -Dm644 ${RPM_SOURCE_DIR}/10-usb-keyboard.hwdb -t %{buildroot}/etc/udev/hwdb.d/
 
 %files
-%config /etc/udev/hwdb.d/10-usb-kbd.hwdb
+%config /etc/udev/hwdb.d/10-usb-keyboard.hwdb
 
 %changelog
 %autochangelog
