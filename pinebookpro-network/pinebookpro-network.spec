@@ -2,7 +2,7 @@
 
 %define name pinebookpro-network
 # renovate: datasource=git-refs depName=https://github.com/bengtfredh/pinebook-pro-copr.git currentValue=master
-%define commit 1d9cb0306060fb33a085271401a3b7d8dc763f08
+%define commit 65d21d85ade5f07b11dfd5496662c1e01c48a221
 %define version 20201112
 %define release 1%{?dist}
 

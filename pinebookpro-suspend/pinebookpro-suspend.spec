@@ -2,7 +2,7 @@ Packager: Bengt Fredh <bengt@fredhs.net>
 
 %define name pinebookpro-suspend
 # renovate: datasource=git-refs depName=https://github.com/bengtfredh/pinebook-pro-copr.git currentValue=master
-%define commit 3f28170301256c9eacdcd9b3f7fc9994c3e1ca9b
+%define commit 65d21d85ade5f07b11dfd5496662c1e01c48a221
 %define version 20201112
 %define release 1%{?dist}
 
