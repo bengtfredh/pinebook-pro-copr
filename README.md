@@ -14,6 +14,3 @@ SPEC location | Role | Status | Package build location
 
 ## Quick Enable
 $ `dnf copr enable aptupdate/pinebook-pro`
-
-## Credits
-https://github.com/e-minguez
