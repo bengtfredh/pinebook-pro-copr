@@ -1,4 +1,4 @@
-Packager: Bengt Fredh <bengt@fredhs.net>
+# Maintainer: Bengt Fredh <bengt@fredhs.net>
 
 %define name pinebookpro-suspend
 %define version 2
@@ -33,19 +33,10 @@ install -Dm644 ${RPM_SOURCE_DIR}/s2idle.conf -t %{buildroot}/etc/systemd/sleep.c
 %config(noreplace) /etc/systemd/sleep.conf.d/s2idle.conf
 
 %post
-sed -i "s/^action=.*/action=/g" /etc/acpi/events/powerconf
-systemctl enable acpid
-
-%preun
+if [ -f /etc/acpi/events/powerconf ]; then
+    sed -i "s/^action=.*/action=/g" /etc/acpi/events/powerconf
+fi
+systemctl enable acpid || :
 
 %changelog
-* Tue Nov 17 2020 Bengt Fredh <bengt@fredhs.net> - 2-4
-- Fix install file
-* Thu Nov 13 2020 Bengt Fredh <bengt@fredhs.net> - 2-3
-- Fix post script
-* Thu Nov 12 2020 Bengt Fredh <bengt@fredhs.net> - 2-2
-- Fix source path
-* Thu Nov 12 2020 Bengt Fredh <bengt@fredhs.net> - 2-1
-- Changed following man sleep.conf
-* Wed Oct 28 2020 Bengt Fredh <bengt@fredhs.net> - 1-1
-- First version
+%autochangelog

@@ -1,4 +1,4 @@
-# Maintainer: Dan Johansen <strit@manjaro.org>
+# Maintainer: Bengt Fredh <bengt@fredhs.net>
 
 %define name ap6256-firmware
 %define version 2020.02
@@ -41,14 +41,5 @@ ln -s brcmfmac43456-sdio.AP6256.txt %{buildroot}/usr/lib/firmware/brcm/brcmfmac4
 %files
 /usr/lib/firmware/
 
-%post
-
-%preun
-
 %changelog
-* Sat Aug 06 2022 Bengt Fredh <bengt@fredhs.net> - 2020.02-10
-- Clean up
-* Sat Aug 06 2022 Bengt Fredh <bengt@fredhs.net> - 2020.02-6
-- Clean up
-* Mon Oct 12 2020 Bengt Fredh <bengt@fredhs.net> - 2020.02-5
-- First version
+%autochangelog

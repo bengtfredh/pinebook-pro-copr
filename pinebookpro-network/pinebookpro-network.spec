@@ -1,4 +1,4 @@
-Packager: Bengt Fredh <bengt@fredhs.net>
+# Maintainer: Bengt Fredh <bengt@fredhs.net>
 
 %define name pinebookpro-network
 %define version 1
@@ -31,10 +31,5 @@ install -Dm644 ${RPM_SOURCE_DIR}/disable-random-mac.conf -t %{buildroot}/etc/Net
 %files
 %config(noreplace) /etc/NetworkManager/conf.d/disable-random-mac.conf
 
-%post
-
-%preun
-
 %changelog
-* Thu Nov 12 2020 Bengt Fredh <bengt@fredhs.net> - 1-1
-- First release
+%autochangelog
